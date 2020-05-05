@@ -9,7 +9,7 @@
 
 #include "stdafx.h"
 
-#include "D:\SourceCode\FlashDTA_sourcecode\DLL_src\DP\main_api.cpp"
+#include "D:\SourceCode\STALite_sourcecode\src\DLL_src\DP\main_api.cpp"
 
 
 int main(int argc, TCHAR* argv[], TCHAR* envp[])
