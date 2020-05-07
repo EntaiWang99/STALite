@@ -5,7 +5,7 @@ b = 2
 
 def fun_c():
     import ctypes
-    cdll = ctypes.cdll.LoadLibrary(r"D:\SourceCode\FlashDTA_sourcecode\test\STALite.dll")
+    cdll = ctypes.cdll.LoadLibrary(r"D:\SourceCode\STALite_sourcecode\release\STALite.dll")
     time_start = time.time()
 
     network_compu = cdll.network_assignment

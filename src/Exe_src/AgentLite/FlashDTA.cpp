@@ -14,7 +14,7 @@
 
 int main(int argc, TCHAR* argv[], TCHAR* envp[])
 {
-	int iteration_number = 5;
+	int iteration_number = 20;
 	int b = 0;
 	network_assignment(iteration_number, b);
 

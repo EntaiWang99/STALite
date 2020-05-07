@@ -5,11 +5,11 @@
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LocalDebuggerWorkingDirectory>D:\SourceCode\STALite_sourcecode\dataset\chunyun</LocalDebuggerWorkingDirectory>
+    <LocalDebuggerWorkingDirectory>D:\SourceCode\STALite_sourcecode\dataset\Braess's_Paradox_Network_Traffic_Assignment</LocalDebuggerWorkingDirectory>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LocalDebuggerWorkingDirectory>C:\works\Flash\last - v1</LocalDebuggerWorkingDirectory>
+    <LocalDebuggerWorkingDirectory>D:\SourceCode\STALite_sourcecode\dataset\Braess's_Paradox_Network_Traffic_Assignment</LocalDebuggerWorkingDirectory>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

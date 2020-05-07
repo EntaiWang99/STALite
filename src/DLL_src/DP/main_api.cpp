@@ -610,16 +610,41 @@ public:
 	float PCE;
 };
 
+class CPathNodeSequence {
+public:
+vector<int> path_node_vector;
+float path_volume;  // path volume
+float path_travel_time;
+float path_distance;
+float path_cost;
+
+
+CPathNodeSequence()
+{
+	path_cost = 0;
+	path_volume = 0;
+	path_travel_time = 0;
+	path_distance = 0;
+
+}
+
+
+};
+
+
 class CDemand_Info {
 public:
-	float volume;
+
 	float cost;
 	float time;
 	float distance;
-	vector<int> path_node_vector;
+	float od_volume;  // od volume
+
+	std::map <int, CPathNodeSequence> path_node_sequence_map;  // first key is the sum of node id;
+
 	CDemand_Info()
 	{
-		volume = 0;
+		od_volume = 0;
 		cost = 0;
 		time = 0;
 		distance = 0;
@@ -634,7 +659,7 @@ public:
 		g_origin_demand_array = NULL;
 		//pls check following 7 settings before running programmer
 		g_number_of_threads = 4000;
-		g_number_of_K_paths = 2;
+		g_number_of_K_paths = 20;
 		g_number_of_demand_periods = 24;
 		g_reassignment_tau0 = 999;
 
@@ -652,8 +677,8 @@ public:
 		g_number_of_zones = number_of_zones;
 		g_number_of_agent_types = number_of_agent_types;
 
-		g_demand_array = Allocate4DDynamicArray<CDemand_Info>(number_of_zones, number_of_zones, number_of_agent_types, _MAX_TIMEPERIODS);
-		g_origin_demand_array = Allocate3DDynamicArray<float>(number_of_zones, number_of_agent_types, _MAX_TIMEPERIODS);
+		g_demand_array = Allocate4DDynamicArray<CDemand_Info>(number_of_zones, number_of_zones, max(1, number_of_agent_types), _MAX_TIMEPERIODS);
+		g_origin_demand_array = Allocate3DDynamicArray<float>(number_of_zones, max(1, number_of_agent_types), _MAX_TIMEPERIODS);
 
 
 		for (int i = 0;i < number_of_zones;i++)
@@ -1756,7 +1781,7 @@ void g_ReadDemandFileBasedOnDemandFileList(Assignment& assignment)
 						}
 
 						assignment.total_demand[agent_type_no][demand_period_no] += demand_value;
-						assignment.g_demand_array[from_zone_seq_no][to_zone_seq_no][agent_type_no][demand_period_no].volume += demand_value;
+						assignment.g_demand_array[from_zone_seq_no][to_zone_seq_no][agent_type_no][demand_period_no].od_volume += demand_value;
 						assignment.total_demand_volume += demand_value;
 						assignment.g_origin_demand_array[from_zone_seq_no][agent_type_no][demand_period_no] += demand_value;
 
@@ -1887,7 +1912,7 @@ void g_ReadDemandFileBasedOnDemandFileList(Assignment& assignment)
 						g_agbmagent_vector.push_back(agent);
 
 						assignment.total_demand[agent_type_no][demand_period_no] += number_of_vehicles;
-						assignment.g_demand_array[from_zone_seq_no][to_zone_seq_no][agent_type_no][demand_period_no].volume += number_of_vehicles;
+						assignment.g_demand_array[from_zone_seq_no][to_zone_seq_no][agent_type_no][demand_period_no].od_volume += number_of_vehicles;
 						assignment.total_demand_volume += number_of_vehicles;
 						assignment.g_origin_demand_array[from_zone_seq_no][type][demand_period_no] += number_of_vehicles;
 					}
@@ -1938,18 +1963,30 @@ void g_ReadInputData(Assignment& assignment)
 
 			CDemand_Period demand_period;
 
-
 			if (parser_demand_period.GetValueByFieldName("demand_period_id", demand_period.demand_period_id) == false)
+			{
+				cout << "Error: Field demand_period_id in file demand_period cannot be read." << endl;
+				g_ProgramStop();
 				break;
+			}
 
 			if (parser_demand_period.GetValueByFieldName("demand_period", demand_period.demand_period) == false)
+			{
+				cout << "Error: Field demand_period in file demand_period cannot be read." << endl;
+				g_ProgramStop();
 				break;
+			}
+			
 
 
 			vector<float> global_minute_vector;
 
 			if (parser_demand_period.GetValueByFieldName("time_period", demand_period.time_period) == false)
+			{ 
+				cout << "Error: Field time_period in file demand_period cannot be read." << endl;
+				g_ProgramStop();
 				break;
+			}
 
 			vector<string> input_string;
 			input_string.push_back(demand_period.time_period);
@@ -1972,10 +2009,17 @@ void g_ReadInputData(Assignment& assignment)
 
 		}
 		parser_demand_period.CloseCSVFile();
+
+		if(assignment.g_DemandPeriodVector.size() == 0)
+		{
+		cout << "Error:  File demand_period.csv has no information." << endl;
+		g_ProgramStop();
+		}
+
 	}
 	else
 	{
-		cout << "Error: File input_agent_type.csv cannot be opened.\n It might be currently used and locked by EXCEL." << endl;
+		cout << "Error: File demand_period.csv cannot be opened.\n It might be currently used and locked by EXCEL." << endl;
 		g_ProgramStop();
 	}
 
@@ -2001,7 +2045,9 @@ void g_ReadInputData(Assignment& assignment)
 			CAgent_type agent_type;
 
 			if (parser_agent_type.GetValueByFieldName("agent_type", agent_type.agent_type) == false)
+			{
 				break;
+			}
 
 			parser_agent_type.GetValueByFieldName("VOT", agent_type.value_of_time);
 			parser_agent_type.GetValueByFieldName("PCE", agent_type.PCE);
@@ -2016,10 +2062,16 @@ void g_ReadInputData(Assignment& assignment)
 
 		}
 		parser_agent_type.CloseCSVFile();
+
+		if (assignment.g_AgentTypeVector.size() == 0 )
+		{
+			cout << "Error: File agent_type.csv does not contain information." << endl;
+		}
+
 	}
 	else
 	{
-		cout << "Error: File input_agent_type.csv cannot be opened.\n It might be currently used and locked by EXCEL." << endl;
+		cout << "Error: File agent_type.csv cannot be opened.\n It might be currently used and locked by EXCEL." << endl;
 		g_ProgramStop();
 	}
 
@@ -2157,11 +2209,11 @@ void g_ReadInputData(Assignment& assignment)
 				parser_link.GetValueByFieldName(VDF_field_name, link.VDF_period[tau].beta);
 
 
-				sprintf_s (VDF_field_name, "VDF_mu%d", demand_period_id);
-				parser_link.GetValueByFieldName(VDF_field_name, link.VDF_period[tau].mu);
+				//sprintf_s (VDF_field_name, "VDF_mu%d", demand_period_id);
+				//parser_link.GetValueByFieldName(VDF_field_name, link.VDF_period[tau].mu);
 
-				sprintf_s (VDF_field_name, "VDF_gamma%d", demand_period_id);
-				parser_link.GetValueByFieldName(VDF_field_name, link.VDF_period[tau].gamma);
+				//sprintf_s (VDF_field_name, "VDF_gamma%d", demand_period_id);
+				//parser_link.GetValueByFieldName(VDF_field_name, link.VDF_period[tau].gamma);
 
 				link.VDF_period[tau].starting_time_slot_no = assignment.g_DemandPeriodVector[tau].starting_time_slot_no;
 				link.VDF_period[tau].ending_time_slot_no = assignment.g_DemandPeriodVector[tau].ending_time_slot_no;
@@ -2276,7 +2328,7 @@ void g_output_simulation_result(Assignment& assignment)
 	else
 	{
 		// Option 2: BPR_X function
-		fprintf(g_pFileLinkMOE, "road_link_id,from_node_id,to_node_id,time_period,volume,travel_time,notes\n");
+		fprintf(g_pFileLinkMOE, "road_link_id,from_node_id,to_node_id,time_period,volume,travel_time,speed,notes\n");
 		for (int l = 0; l < g_link_vector.size(); l++) //Initialization for all nodes
 		{
 			for (int tau = 0; tau < assignment.g_number_of_demand_periods; tau++)
@@ -2285,7 +2337,7 @@ void g_output_simulation_result(Assignment& assignment)
 
 				if (ii == 0)
 				{
-					fprintf(g_pFileLinkMOE, "%s,%s,%s,%s,%.3f,%.3f,%s\n",
+					fprintf(g_pFileLinkMOE, "%s,%s,%s,%s,%.3f,%.3f,%.3f,%s\n",
 						g_link_vector[l].link_id.c_str(),
 
 						g_node_vector[g_link_vector[l].from_node_seq_no].node_id.c_str(), 
@@ -2294,6 +2346,7 @@ void g_output_simulation_result(Assignment& assignment)
 						g_link_vector[l].VDF_period[tau].period.c_str(),
 						g_link_vector[l].flow_volume_per_period[tau],
 						g_link_vector[l].VDF_period[tau].avg_travel_time,
+						g_link_vector[l].length / (g_link_vector[l].VDF_period[tau].avg_travel_time/60.0),  /* 60.0 is used to convert min to hour */
 						"period-based");
 				}
 				else
@@ -2342,32 +2395,38 @@ void g_output_simulation_result(Assignment& assignment)
 					for (int tau = 0; tau < assignment.g_DemandPeriodVector.size(); tau++)
 					{
 
-						if (assignment.g_demand_array[i][j][dt][tau].volume > 0)
+						if (assignment.g_demand_array[i][j][dt][tau].od_volume > 0)
 						{
-							fprintf(g_pFileODMOE, "%d,%d,%d,%s,%s,%s,%s,%.1f,%.1f,%.1f,%.4f,",
-								count,
-								g_zone_vector[i].zone_id,
-								g_zone_vector[j].zone_id,
-								g_node_vector[g_zone_vector[i].node_seq_no].node_id.c_str(),
-								g_node_vector[g_zone_vector[j].node_seq_no].node_id.c_str(),
-								assignment.g_AgentTypeVector[dt].agent_type.c_str(),
-								assignment.g_DemandPeriodVector[tau].demand_period.c_str(),
-								assignment.g_demand_array[i][j][dt][tau].volume,
-								assignment.g_demand_array[i][j][dt][tau].cost,
-								assignment.g_demand_array[i][j][dt][tau].time,
-								assignment.g_demand_array[i][j][dt][tau].distance
+							std::map<int, CPathNodeSequence>::iterator it;
 
-							);
-
-
-							for (int ni = assignment.g_demand_array[i][j][dt][tau].path_node_vector.size() - 1; ni >= 0; ni--)
+							// scan through the map with different node sum for different paths
+							for (it = assignment.g_demand_array[i][j][dt][tau].path_node_sequence_map.begin();
+								it != assignment.g_demand_array[i][j][dt][tau].path_node_sequence_map.end(); it++)
 							{
-								fprintf(g_pFileODMOE, "%s;", g_node_vector[assignment.g_demand_array[i][j][dt][tau].path_node_vector[ni]].node_id.c_str());
+
+								fprintf(g_pFileODMOE, "%d,%d,%d,%s,%s,%s,%s,%.1f,%.1f,%.1f,%.4f,",
+									count,
+									g_zone_vector[i].zone_id,
+									g_zone_vector[j].zone_id,
+									g_node_vector[g_zone_vector[i].node_seq_no].node_id.c_str(),
+									g_node_vector[g_zone_vector[j].node_seq_no].node_id.c_str(),
+									assignment.g_AgentTypeVector[dt].agent_type.c_str(),
+									assignment.g_DemandPeriodVector[tau].demand_period.c_str(),
+									it->second.path_volume / assignment.g_number_of_K_paths * assignment.g_demand_array[i][j][dt][tau].od_volume ,
+									it->second.path_cost,
+									it->second.path_travel_time,
+									it->second.path_distance);
+
+
+								for (int ni = it->second.path_node_vector.size() - 1; ni >= 0; ni--)
+								{
+									fprintf(g_pFileODMOE, "%s;", g_node_vector[it->second.path_node_vector[ni]].node_id.c_str());
+
+								}
+								fprintf(g_pFileODMOE, "\n");
 
 							}
-
 							count++;
-							fprintf(g_pFileODMOE, "\n");
 						}
 					}
 	}
@@ -2495,10 +2554,14 @@ int NetworkForSP::calculate_TD_link_flow(Assignment& assignment, int iteration_n
 			int destination_zone_seq_no = assignment.g_zoneid_to_zone_seq_no_mapping[g_node_vector[i].zone_id];
 
 			float car_ratio = 1;// assignment.g_AgentTypeVector[agent_type].PCE;
-			float volume = assignment.g_demand_array[m_origin_zone_seq_no][destination_zone_seq_no][agent_type][m_demand_time_period_no].volume * car_ratio*k_path_prob;
+			float volume = assignment.g_demand_array[m_origin_zone_seq_no][destination_zone_seq_no][agent_type][m_demand_time_period_no].od_volume * car_ratio*k_path_prob;
 
 			if (volume > 0.000001)
 			{
+
+				float path_travel_time = 0;
+				float path_distance = 0;
+
 				vector<int> temp_path_node_vector; //node seq vector for each ODK, zhuge
 
 				int current_node_seq_no = i;  // destination node
@@ -2513,10 +2576,14 @@ int NetworkForSP::calculate_TD_link_flow(Assignment& assignment, int iteration_n
 					{
 						current_link_seq_no = m_link_predecessor[current_node_seq_no];
 
+
 						// fetch m_link_predecessor to mark the link volume
 
 						if (current_link_seq_no >= 0 && current_link_seq_no < assignment.g_number_of_links)
 						{
+							path_travel_time += g_link_vector[current_link_seq_no].travel_time_per_period[m_demand_time_period_no];
+							path_distance += g_link_vector[current_link_seq_no].length;
+
 							//static
 							//link_volume[current_link_seq_no] += (destination_k_path_prob[d] * destination_OD_volume[d][assignment.g_AgentTypeVector[i]][tau]);
 
@@ -2536,13 +2603,51 @@ int NetworkForSP::calculate_TD_link_flow(Assignment& assignment, int iteration_n
 				//fprintf(g_pFileDebugLog, "\n");
 
 				// we obtain the cost, time, distance from the last tree-k 
-				if (m_iteration_k == assignment.g_number_of_K_paths - 1)  // last tree-k iteration for the total number of iterations
+
+				if (m_iteration_k == iteration_number_outterloop)  // we only use the last newly generated path from the path tree;
 				{
-					assignment.g_demand_array[m_origin_zone_seq_no][destination_zone_seq_no][agent_type][m_demand_time_period_no].cost = m_node_label_cost[i];
-					assignment.g_demand_array[m_origin_zone_seq_no][destination_zone_seq_no][agent_type][m_demand_time_period_no].time = m_label_time_array[i];
-					assignment.g_demand_array[m_origin_zone_seq_no][destination_zone_seq_no][agent_type][m_demand_time_period_no].distance = m_label_distance_array[i];
-					assignment.g_demand_array[m_origin_zone_seq_no][destination_zone_seq_no][agent_type][m_demand_time_period_no].path_node_vector = temp_path_node_vector;
+
+					// get node sum
+						int node_sum = 0;
+						for (int i = 0; i < temp_path_node_vector.size(); i++)
+						{
+							node_sum += temp_path_node_vector[i];
+						}
+
+
+						if( assignment.g_demand_array[m_origin_zone_seq_no][destination_zone_seq_no][agent_type][m_demand_time_period_no].path_node_sequence_map .find(node_sum) == assignment.g_demand_array[m_origin_zone_seq_no][destination_zone_seq_no][agent_type][m_demand_time_period_no].path_node_sequence_map.end())
+							// we cannot find a path with the same node sum, so we need to add this path into the map, 
+						{ 
+							// add this unique path
+							assignment.g_demand_array[m_origin_zone_seq_no][destination_zone_seq_no][agent_type][m_demand_time_period_no].time = m_label_time_array[i];
+							assignment.g_demand_array[m_origin_zone_seq_no][destination_zone_seq_no][agent_type][m_demand_time_period_no].distance = m_label_distance_array[i];
+							assignment.g_demand_array[m_origin_zone_seq_no][destination_zone_seq_no][agent_type][m_demand_time_period_no].path_node_sequence_map[node_sum].path_node_vector = temp_path_node_vector;
+
+						}
+
+						assignment.g_demand_array[m_origin_zone_seq_no][destination_zone_seq_no][agent_type][m_demand_time_period_no].path_node_sequence_map[node_sum].path_volume += 1;
+
+
 				}
+
+				// at the last iteration of K-outter iteration, we also update path _travel time
+
+				if (iteration_number_outterloop == assignment.g_number_of_K_paths-1)  // we only use the last newly generated path from the path tree;
+				{
+
+					// get node sum
+					int node_sum = 0;
+					for (int i = 0; i < temp_path_node_vector.size(); i++)
+					{
+						node_sum += temp_path_node_vector[i];
+					}
+
+					assignment.g_demand_array[m_origin_zone_seq_no][destination_zone_seq_no][agent_type][m_demand_time_period_no].path_node_sequence_map[node_sum].path_travel_time = path_travel_time;
+					assignment.g_demand_array[m_origin_zone_seq_no][destination_zone_seq_no][agent_type][m_demand_time_period_no].path_node_sequence_map[node_sum].path_distance = path_distance;
+					
+
+				}
+
 
 			}
 		}
