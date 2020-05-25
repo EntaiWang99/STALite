@@ -9,12 +9,12 @@
 
 #include "stdafx.h"
 
-#include "D:\SourceCode\STALite_sourcecode\src\DLL_src\DP\main_api.cpp"
+#include "C:\SourceCode\STALite_sourcecode\STALite_sourcecode\src\DLL_src\DP\main_api.cpp"
 
 
 int main(int argc, TCHAR* argv[], TCHAR* envp[])
 {
-	int iteration_number = 20;
+	int iteration_number = 2;
 	int b = 0;
 	network_assignment(iteration_number, b);
 

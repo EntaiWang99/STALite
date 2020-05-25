@@ -8,6 +8,8 @@
 // http://www.gnu.org/licenses/gpl-howto.html
 
 
+extern void g_ProgramStop();
+
 #include <iostream>
 #include <fstream>
 #include <list> 
@@ -15,8 +17,7 @@
 #include <algorithm>
 #include <time.h>
 #include <functional>
-#include <stdio.h>   
-#include <math.h>
+#include<stdio.h>   
 
 
 #include <stack>
@@ -24,14 +25,12 @@
 #include <vector>
 #include <map>
 #include <sstream>
-
 using namespace std;
 using std::string;
 using std::ifstream;
 using std::vector;
 using std::map;
 using std::istringstream;
-using std::max;
 template <typename T>
 
 // some basic parameters setting
@@ -44,7 +43,7 @@ template <typename T>
 #define _MAX_DEMANDTYPES 5 //because of the od demand store format,the MAX_demandtype must >=g_DEMANDTYPES.size()+1
 #define _MAX_TIMEPERIODS 6
 
-#define _MAX_TIMESLOT_PerPeriod 100 // max 96 15-min slots per day
+#define _MAX_TIMESLOT_PerPeriod 40
 
 #define MIN_PER_TIMESLOT 15
 
@@ -55,18 +54,12 @@ template <typename T>
 #define _MAX_STRING_LINE 30000
 #define FLAG_PEORIOD_TIMESLOT 0
 
-#define sprintf_s sprintf
 
 FILE* g_pFileDebugLog = NULL;
 FILE* g_pFileOutputLog = NULL;
 
-void fopen_ss(FILE **file, const char *fileName, const char *mode)
-{
-	*file = fopen(fileName, mode);
-}
+extern FILE* g_pFileDebugLog;
 
-
-void g_ProgramStop();
 
 
 //below shows where the functions used in Agentlite.cpp come from!
@@ -608,50 +601,14 @@ class CAgent_type {
 public:
 	CAgent_type()
 	{
-		value_of_time = 1;
+		value_of_time = 10;
 		PCE = 1.0;
 	}
 
 	string agent_type;
 	float value_of_time;  // dollar per hour
 	float PCE;
-
 };
-
-class CLinkType
-{
-public:
-	int link_type;
-	string link_type_name;
-	string agent_type_list;
-
-	int number_of_links;
-
-
-	CLinkType()
-	{
-		number_of_links = 0;
-
-	}
-
-	bool AllowAgentType(string agent_type)
-	{
-		if (agent_type_list.size() == 0)
-			return true;
-		else
-		{
-			if (agent_type_list.find(agent_type) != string::npos)
-				return true;
-			else
-				return false;
-
-
-		}
-	}
-
-
-};
-
 
 class CPathNodeSequence {
 public:
@@ -776,7 +733,6 @@ public:
 
 	std::vector<CDemand_Period> g_DemandPeriodVector;
 	std::vector<CAgent_type> g_AgentTypeVector;
-	std::map<int, CLinkType> g_LinkTypeMap;
 
 	std::map<string, int> demand_period_to_seqno_mapping;
 	std::map<string, int> agent_type_2_seqno_mapping;
@@ -802,10 +758,6 @@ public:
 	CVDF_Period()
 	{
 		m = 0.5;
-		VOC = 0;
-		gamma = 3.47;
-		mu = 1000;
-
 	}
 
 
@@ -819,13 +771,12 @@ public:
 	float beta;
 	float capacity;
 	float FFTT;
-	float VOC;
 
 	//updated BPR-X parameters
 	float gamma;
 	float mu;
 	float m;
-	float congestion_period_P;
+
 	// inpput
 	float volume;
 
@@ -838,10 +789,6 @@ public:
 	float waiting_time[_MAX_TIMESLOT_PerPeriod];
 	float arrival_rate[_MAX_TIMESLOT_PerPeriod];
 
-	float discharge_rate[_MAX_TIMESLOT_PerPeriod];
-	float travel_time[_MAX_TIMESLOT_PerPeriod];
-
-	
 	float get_waiting_time(int relative_time_slot_no)
 	{
 		if (relative_time_slot_no >=0 && relative_time_slot_no < _MAX_TIMESLOT_PerPeriod)
@@ -859,18 +806,16 @@ public:
 
 	float  PeroformBPR(float volume)
 	{
-		VOC = volume / max(0.00001f, capacity);
-		avg_travel_time = FFTT * (1 + alpha * pow(volume / max(0.00001f, capacity), beta));
+		avg_travel_time = FFTT * (1 + alpha * pow(volume / max(0.00001, capacity), beta));
 
-		return FFTT * (1 + alpha * pow(volume / max(0.00001f, capacity), beta));
+		return FFTT * (1 + alpha * pow(volume / max(0.00001, capacity), beta));
 
 		// volume --> avg_traveltime
-	
+
 	}
 
 	float PeroformBPR_X(float volume)
 	{
-		congestion_period_P = 0;
 		// Step 1: Initialization
 		int L = ending_time_slot_no - starting_time_slot_no;  // in 15 min slot
 
@@ -882,27 +827,30 @@ public:
 		{
 			waiting_time[t] = 0;
 			arrival_rate[t] = 0;
-			discharge_rate[t]= mu/2.0;
-			travel_time[t] = FFTT;
 		}
-		avg_waiting_time = 0;
-		avg_travel_time = FFTT + avg_waiting_time;
-
 		//int L = ending_time_slot_no - starting_time_slot_no;  // in 15 min slot
 
 		// Case 1
 		if (volume <= L * mu / 2)
 		{
-			// still keep 0 waiting time for all time period
-			congestion_period_P = 0;
-
+			float P = 0;
+			t0 = mid_time_slot_no - P / 2.0;
+			t3 = mid_time_slot_no + P / 2.0;
+			int t2 = m * (t3 - t0) + t0;
+			for (int t = 0; t <= L; t++)
+			{
+				waiting_time[t] = 0;
+				arrival_rate[t] = (volume / L);
+			}
+			avg_waiting_time = 0;
+			//cout << avg_waiting_time << endl;
+			avg_travel_time = FFTT + avg_waiting_time;
 		}
-		else
-		{
-			//if (volume > L * mu / 2 ) // Case 2
-			float P = min(L, volume * 2 / mu - L);  // if  volume > L * mu then P is set the the maximum of L: case 3
-			congestion_period_P = P/4.0;  // unit: hour
 
+		// Case 2
+		if (volume > L * mu / 2 && volume <= (L * mu / 2) + L)
+		{
+			float P = volume * 2 / mu - L;
 			t0 = mid_time_slot_no - P / 2.0;
 			t3 = mid_time_slot_no + P / 2.0;
 			int t2 = m * (t3 - t0) + t0;
@@ -913,23 +861,16 @@ public:
 				{
 					waiting_time[tt] = 0;
 					arrival_rate[tt] = mu / 2;
-					discharge_rate[tt] = mu / 2.0;
-					travel_time[tt] = FFTT;
-
 				}
-				if (time >= t0 && time <= t3)
+				if (time > t0 && time <= t3)
 				{
 					waiting_time[tt] = 1 / (4.0*mu) *gamma *(time - t0)*(time - t0) * (time - t3)*(time - t3);
 					arrival_rate[tt] = gamma * (time - t0)*(time - t2)*(time - t3) + mu;
-					discharge_rate[tt] = mu;
-					travel_time[tt] = FFTT + waiting_time[tt];
 				}
 				if (time > t3)
 				{
 					waiting_time[tt] = 0;
 					arrival_rate[tt] = mu / 2;
-					discharge_rate[tt] = mu / 2.0;
-					travel_time[tt] = FFTT;
 				}
 				avg_waiting_time = gamma / (120 * mu)*pow(P, 4.0);
 				//cout << avg_waiting_time << endl;
@@ -937,9 +878,63 @@ public:
 			}
 		}
 
+		// Case 3
+		if (volume > (L * mu / 2) + L)
+		{
+			float P = volume * 2 / mu - L;
+			t0 = mid_time_slot_no - P / 2.0;
+			t3 = mid_time_slot_no + P / 2.0;
+			int t2 = m * (t3 - t0) + t0;
+			for (int tt = 0; tt <= L; tt++)
+			{
+				int time = starting_time_slot_no + tt;
+				waiting_time[tt] = 1 / (4.0*mu) *gamma *(time - t0)*(time - t0) * (time - t3)*(time - t3);
+				arrival_rate[tt] = gamma * (time - t0)*(time - t2)*(time - t3) + mu;
+				if (arrival_rate[tt] < 0)
+					avg_waiting_time = gamma / (120 * mu)*pow(P, 4.0);
+				//cout << avg_waiting_time << endl;
+				avg_travel_time = FFTT + avg_waiting_time;
+			}
+		}
+		//cout << avg_travel_time << endl;
 		return avg_travel_time;
 
+		//float P1 = max(0,volume * 2 / mu - L);
+		//float P = min(P1, L);
+		////float mid_time_slot_no = starting_time_slot_no + L / 2.0;  // t1;
+		//t0 = mid_time_slot_no - P / 2.0;
+		//t3 = mid_time_slot_no + P / 2.0;
+
+		//for (int t = 0; t <= L; t++)
+		//{
+		//	waiting_time[t] = 0;
+		//	arrival_rate[t] = 0;
+		//}
+
+		//int t;
+
+		//for (int tt = 0; tt <= P; tt++)
+		//{
+		//	t = t0 + tt;
+		//	waiting_time[t- starting_time_slot_no] = 1 / (4.0*mu) *gamma *(t - t0)*(t - t0) * (t - t3)*(t - t3);
+		//}
+
+		//if (volume>0)
+		//{ 
+		//	int t2 = m * (t3 - t0) + t0;
+		//	for (int tt = 0; tt <= L; tt++)
+		//	{
+		//		t = tt + starting_time_slot_no;
+		//		arrival_rate[t - starting_time_slot_no] = gamma * (t - t0)*(t - t2)*(t - t3) + mu;
+		//	}
+		//}
+		//
+
+		//float avg_w = gamma / (120 * mu)*pow(P, 4.0) * (P / L) + 0 * (L - P) / L;
+		//return (FFTT + avg_w);
+		//
 	}
+
 };
 
 
@@ -950,7 +945,7 @@ public:
 	{
 
 		free_flow_travel_time_in_min = 1;
-		cost = 0;
+
 		for (int tau = 0; tau < _MAX_TIMEPERIODS; tau++)
 		{
 			flow_volume_per_period[tau] = 0;
@@ -967,6 +962,7 @@ public:
 			//cost_perhour[tau] = 0;
 		}
 		link_spatial_capacity = 100;
+
 
 	}
 
@@ -999,8 +995,6 @@ public:
 	string link_id;
 	int from_node_seq_no;
 	int to_node_seq_no;
-	int link_type;
-	float cost;
 
 
 	float fftt;
@@ -1026,6 +1020,9 @@ public:
 	float queue_length_perslot[_MAX_TIMEPERIODS];  // # of vehicles in the vertical point queue
 	float travel_time_per_period[_MAX_TIMEPERIODS];
 
+
+	string agent_type_code;
+
 	int number_of_periods;
 
 	float length;
@@ -1042,12 +1039,12 @@ public:
 	float get_VOC_ratio(int tau)
 	{
 
-		return (flow_volume_per_period[tau] + TDBaseFlow[tau]) / max(0.00001f, TDBaseCap[tau]);
+		return (flow_volume_per_period[tau] + TDBaseFlow[tau]) / max(0.00001, TDBaseCap[tau]);
 	}
 
 	float get_speed(int tau)
 	{
-		return length / max(travel_time_per_period[tau], 0.0001f) * 60;  // per hour
+		return length / max(travel_time_per_period[tau], 0.0001) * 60;  // per hour
 	}
 
 
@@ -1068,14 +1065,10 @@ public:
 	int node_seq_no;  // sequence number 
 	string node_id;      //external node number 
 	int zone_id = -1;
-
 	double x;
 	double y;
 
-	std::vector<int> m_outgoing_link_seq_no_vector;
-	std::vector<int> m_to_node_seq_no_vector;
-
-
+	std::vector<CLink> m_outgoing_link_vector;
 
 };
 
@@ -1130,16 +1123,8 @@ public:
 
 	NetworkForSP()
 	{
+		//pFileAgentPathLog = NULL;
 	}
-
-
-	int  m_origin_node; // assigned nodes for computing 
-	int  m_origin_zone_seq_no;
-	int  m_demand_time_period_no; // assigned nodes for computing 
-	int  m_agent_type_no; // assigned nodes for computing 
-	float m_value_of_time;
-
-	std::vector<CNode> m_node_vector;  // local copy of node vector, based on agent type and origin node
 
 	int m_threadNo;  // internal thread number 
 
@@ -1156,6 +1141,10 @@ public:
 	int* m_link_predecessor;  // predecessor for this node points to the previous link that updates its label cost (as part of optimality condition) (for easy referencing)
 
 	int  m_iteration_k;
+	int  m_origin_node; // assigned nodes for computing 
+	int  m_origin_zone_seq_no;
+	int  m_demand_time_period_no; // assigned nodes for computing 
+	int  m_agent_type_no; // assigned nodes for computing 
 
 	// major function 1:  allocate memory and initialize the data 
 	void AllocateMemory(int number_of_nodes)
@@ -1168,57 +1157,7 @@ public:
 		m_node_predecessor = new int[number_of_nodes];  //5
 		m_link_predecessor = new int[number_of_nodes];  //6
 		m_node_label_cost = new float[number_of_nodes];  //7
-
 	}
-
-	void BuildNetwork(Assignment& assignment)
-	{
-
-		for (int i = 0; i < assignment.g_number_of_nodes; i++) //Initialization for all non-origin nodes
-		{
-			CNode node;  // create a node object 
-
-			node.node_id = g_node_vector[i].node_id;
-			node.node_seq_no = g_node_vector[i].node_seq_no;
-
-			for (int j = 0; j < g_node_vector[i].m_outgoing_link_seq_no_vector.size(); j++)
-			{
-				
-
-				int link_seq_no = g_node_vector[i].m_outgoing_link_seq_no_vector[j];
-
-				
-				if(assignment.g_LinkTypeMap[g_link_vector[link_seq_no].link_type].AllowAgentType (assignment.g_AgentTypeVector[m_agent_type_no].agent_type ))  // only predefined allowed agent type can be considered
-				{ 
-					int from_node_seq_no = g_link_vector[link_seq_no].from_node_seq_no;
-
-					int zone_seq_no = -1;
-					
-					
-				if(g_node_vector[i].zone_id >= 1)
-					zone_seq_no  = assignment.g_zoneid_to_zone_seq_no_mapping[g_node_vector[from_node_seq_no].zone_id];
-
-					if (zone_seq_no != -1 && zone_seq_no != m_origin_zone_seq_no)
-					{
-						//skip the incoming node if it is belongs to a zone with zone id/no different from the current zone id
-					}else
-					{ 
-
-					node.m_outgoing_link_seq_no_vector.push_back(link_seq_no);
-					node.m_to_node_seq_no_vector.push_back(g_node_vector[i].m_to_node_seq_no_vector[j]);
-					}
-				}
-
-			}
-
-			m_node_vector.push_back(node);
-
-		}
-		m_value_of_time = assignment.g_AgentTypeVector[m_agent_type_no].value_of_time;
-	}
-	
-
-
 
 	~NetworkForSP()
 	{
@@ -1243,7 +1182,9 @@ public:
 		if (m_node_label_cost != NULL)  //7
 			delete m_node_label_cost;
 
-			   
+
+
+
 		if (m_link_predecessor != NULL)
 			delete m_link_predecessor;
 
@@ -1313,10 +1254,6 @@ public:
 	int optimal_label_correcting(Assignment& assignment, int iteration_k)
 
 	{
-		if (iteration_k == 0)
-		{
-			BuildNetwork(assignment);  // based on agent type and link type
-		}
 		int shortest_path_debugging_flag = 0;
 		FILE* pFileDebugLog = NULL;
 		if (m_iteration_k != iteration_k)
@@ -1326,7 +1263,7 @@ public:
 		int agent_type = m_agent_type_no; // assigned nodes for computing 
 
 		int internal_debug_flag = 0;
-		if (m_node_vector[origin_node].m_outgoing_link_seq_no_vector.size() == 0)
+		if (g_node_vector[origin_node].m_outgoing_link_vector.size() == 0)
 		{
 			return 0;
 		}
@@ -1362,36 +1299,34 @@ public:
 			//	fprintf(pFileDebugLog, "SP: SE node: %d\n", g_node_vector[from_node].node_id);
 
 			//scan all outbound nodes of the current node
-			for (int i = 0; i < m_node_vector[from_node].m_outgoing_link_seq_no_vector.size(); i++)  // for each link (i,j) belong A(i)
+			for (int i = 0; i < g_node_vector[from_node].m_outgoing_link_vector.size(); i++)  // for each link (i,j) belong A(i)
 			{
 
-				int to_node = m_node_vector[from_node].m_to_node_seq_no_vector[i];
+				int to_node = g_node_vector[from_node].m_outgoing_link_vector[i].to_node_seq_no;
 
 				/*if (to_node == origin_node)
 					continue;*/
 
 				bool  b_node_updated = false;
-				/*if (g_link_vector[m_node_vector[from_node].m_outgoing_link_seq_no_vector[i].link_seq_no].TollMAP[assignment.g_AgentTypeVector[agent_type]] / max(0.0001, assignment.g_VOT_PerDemandType_MAP[assignment.g_AgentTypeVector[agent_type]]) * 60.0f > 0)
+				/*if (g_link_vector[g_node_vector[from_node].m_outgoing_link_vector[i].link_seq_no].TollMAP[assignment.g_AgentTypeVector[agent_type]] / max(0.0001, assignment.g_VOT_PerDemandType_MAP[assignment.g_AgentTypeVector[agent_type]]) * 60.0f > 0)
 				{
-					int a = g_link_vector[m_node_vector[from_node].m_outgoing_link_seq_no_vector[i].link_seq_no].TollMAP[assignment.g_AgentTypeVector[agent_type]] / max(0.0001, assignment.g_VOT_PerDemandType_MAP[assignment.g_AgentTypeVector[agent_type]]) * 60.0f;
+					int a = g_link_vector[g_node_vector[from_node].m_outgoing_link_vector[i].link_seq_no].TollMAP[assignment.g_AgentTypeVector[agent_type]] / max(0.0001, assignment.g_VOT_PerDemandType_MAP[assignment.g_AgentTypeVector[agent_type]]) * 60.0f;
 					cout << "a" << endl;
 				}*/
 
-				int link_sqe_no = m_node_vector[from_node].m_outgoing_link_seq_no_vector[i];
-				float new_time = m_label_time_array[from_node] + g_link_vector[link_sqe_no].travel_time_per_period[m_demand_time_period_no];
-				float new_distance = m_label_distance_array[from_node] + g_link_vector[link_sqe_no].length;
+				float new_time = m_label_time_array[from_node] + g_link_vector[g_node_vector[from_node].m_outgoing_link_vector[i].link_seq_no].travel_time_per_period[m_demand_time_period_no];
+				float new_distance = m_label_distance_array[from_node] + g_link_vector[g_node_vector[from_node].m_outgoing_link_vector[i].link_seq_no].length;
 
-				float new_to_node_cost = m_node_label_cost[from_node] + g_link_vector[link_sqe_no].travel_time_per_period[m_demand_time_period_no]* m_value_of_time + g_link_vector[link_sqe_no].cost;
+				float new_to_node_cost = m_node_label_cost[from_node] + g_link_vector[g_node_vector[from_node].m_outgoing_link_vector[i].link_seq_no].travel_time_per_period[m_demand_time_period_no] + 0;
 
-				//g_link_vector[m_node_vector[from_node].m_outgoing_link_seq_no_vector[i].link_seq_no].TollMAP[agent_type]] / max(0.0001, assignment.g_AgentTypeVector [agent_type]);
-								//float new_to_node_cost_withouttoll = m_node_label_cost_withouttoll[from_node] + m_link_cost_withouttoll_array[link_entering_time_interval][agent_type][m_node_vector[from_node].m_outgoing_link_seq_no_vector[i].link_seq_no];
-
+				//g_link_vector[g_node_vector[from_node].m_outgoing_link_vector[i].link_seq_no].TollMAP[agent_type]] / max(0.0001, assignment.g_AgentTypeVector [agent_type]);
+								//float new_to_node_cost_withouttoll = m_node_label_cost_withouttoll[from_node] + m_link_cost_withouttoll_array[link_entering_time_interval][agent_type][g_node_vector[from_node].m_outgoing_link_vector[i].link_seq_no];
 								/*if (shortest_path_debugging_flag)
 								{
 									fprintf(pFileDebugLog, "SP: checking from node %d, to node %d  cost = %d\n",
 										g_node_vector[from_node].node_id,
 										g_node_vector[to_node].node_id,
-										new_to_node_cost, g_node_vector[from_node].m_outgoing_link_seq_no_vector[i].cost);
+										new_to_node_cost, g_node_vector[from_node].m_outgoing_link_vector[i].cost);
 								}*/
 
 				if (new_to_node_cost < m_node_label_cost[to_node]) // we only compare cost at the downstream node ToID at the new arrival time t
@@ -1399,8 +1334,8 @@ public:
 
 					if (shortest_path_debugging_flag)
 					{
-						fprintf(pFileDebugLog, "SP: updating node: %s current cost: %.2f, new cost %.2f\n",
-							m_node_vector[to_node].node_id.c_str(),
+						fprintf(pFileDebugLog, "SP: updating node: %d current cost: %.2f, new cost %.2f\n",
+							g_node_vector[to_node].node_id,
 							m_node_label_cost[to_node], new_to_node_cost);
 					}
 
@@ -1410,19 +1345,19 @@ public:
 
 					m_node_label_cost[to_node] = new_to_node_cost;
 					//m_node_label_cost_withouttoll[to_node] = new_to_node_cost_withouttoll;
-					int link_seq_no = m_node_vector[from_node].m_outgoing_link_seq_no_vector[i];
+					int link_seq_no = g_node_vector[from_node].m_outgoing_link_vector[i].link_seq_no;
 
 					m_node_predecessor[to_node] = from_node;  // pointer to previous physical NODE INDEX from the current label at current node and time
-					m_link_predecessor[to_node] = m_node_vector[from_node].m_outgoing_link_seq_no_vector[i];  // pointer to previous physical NODE INDEX from the current label at current node and time
+					m_link_predecessor[to_node] = g_node_vector[from_node].m_outgoing_link_vector[i].link_seq_no;  // pointer to previous physical NODE INDEX from the current label at current node and time
 
 					b_node_updated = true;
 
 					//if (shortest_path_debugging_flag)
 					//	fprintf(pFileDebugLog, "SP: add node %d into SE List\n",
-					//		m_node_vector[to_node].node_id);
+					//		g_node_vector[to_node].node_id);
 
 					//to_node is zone centroid and not origin_node,is to make sure no passing zones, only needed in network with connector
-					/*if (m_node_vector[to_node].zone_id != -1 && to_node != origin_node)
+					/*if (g_node_vector[to_node].zone_id != -1 && to_node != origin_node)
 					{
 						m_node_status_array[to_node] = 1;
 					}*/
@@ -1443,8 +1378,8 @@ public:
 			}
 		}
 
-		//clock_t end_t = clock();
-		//clock_t total_t = (end_t - start_t);
+		clock_t end_t = clock();
+		clock_t total_t = (end_t - start_t);
 		//		cout << "( total time of shortest path calculation = " << total_t << " milliseconds" << " " << ")" << endl;
 
 
@@ -1701,7 +1636,7 @@ void g_ReadDemandFileBasedOnDemandFileList(Assignment& assignment)
 	}
 
 	cout << "number of zones = " << g_zone_vector.size() << endl;
-//	fprintf(g_pFileOutputLog, "number of zones =,%lu\n", g_zone_vector.size());
+	fprintf(g_pFileOutputLog, "number of zones =,%d\n", g_zone_vector.size());
 
 	assignment.InitializeDemandMatrix(g_zone_vector.size(), assignment.g_AgentTypeVector.size());
 
@@ -1793,7 +1728,7 @@ void g_ReadDemandFileBasedOnDemandFileList(Assignment& assignment)
 				FILE* st;
 				// read the file formaly after the test. 
 
-				fopen_ss(&st, file_name.c_str(), "r");
+				fopen_s(&st, file_name.c_str(), "r");
 				if (st != NULL)
 				{
 
@@ -2148,56 +2083,6 @@ void g_ReadInputData(Assignment& assignment)
 		g_ProgramStop();
 	}
 
-	cout << "Reading file link_type.csv..." << endl;
-
-	CCSVParser parser_link_type;
-
-	if (parser_link_type.OpenCSVFile("link_type.csv", true))
-	{
-
-		int line_no = 0;
-
-		while (parser_link_type.ReadRecord())
-		{
-			CLinkType element;
-
-			if (parser_link_type.GetValueByFieldName("link_type", element.link_type) == false)
-			{
-				if (line_no == 0)
-				{
-					cout << "Error: Field link_type cannot be found in file link_type.csv." << endl;
-					g_ProgramStop();
-				}
-				else
-				{  // read empty line
-					break;
-				}
-			}
-
-			if (assignment.g_LinkTypeMap.find(element.link_type) != assignment.g_LinkTypeMap.end())
-			{
-				cout << "Error: Field link_type " << element.link_type << " has been defined more than once in file link_type.csv." << endl;
-				g_ProgramStop();
-
-				break;
-			}
-
-
-			parser_link_type.GetValueByFieldName("agent_type_list", element.agent_type_list);
-
-			assignment.g_LinkTypeMap[element.link_type] = element;
-
-			line_no++;
-		}
-	}
-	else
-	{
-		cout << "Error: File link_type.csv cannot be opened.\n It might be currently used and locked by EXCEL." << endl;
-
-
-	}
-
-
 
 	assignment.g_number_of_nodes = 0;
 	assignment.g_number_of_links = 0;  // initialize  the counter to 0
@@ -2251,7 +2136,7 @@ void g_ReadInputData(Assignment& assignment)
 
 		cout << "number of nodes = " << assignment.g_number_of_nodes << endl;
 
-	//	fprintf(g_pFileOutputLog, "number of nodes =,%d\n", assignment.g_number_of_nodes);
+		fprintf(g_pFileOutputLog, "number of nodes =,%d\n", assignment.g_number_of_nodes);
 
 
 		parser.CloseCSVFile();
@@ -2291,10 +2176,13 @@ void g_ReadInputData(Assignment& assignment)
 			link.link_id = linkID;
 
 			parser_link.GetValueByFieldName("facility_type", link.type);
-			parser_link.GetValueByFieldName("link_type", link.link_type);
-			parser_link.GetValueByFieldName("cost", link.cost);
 
-				float length = 1.0; // km or mile
+			string agent_type_code;
+			if (!parser_link.GetValueByFieldName("agent_type_code", agent_type_code))
+				agent_type_code = "";
+			link.agent_type_code = agent_type_code;
+
+			float length = 1.0; // km or mile
 			float free_speed = 1.0;
 			float k_jam = 200;
 			parser_link.GetValueByFieldName("length", length);
@@ -2321,11 +2209,11 @@ void g_ReadInputData(Assignment& assignment)
 				parser_link.GetValueByFieldName(VDF_field_name, link.VDF_period[tau].beta);
 
 
-				sprintf_s (VDF_field_name, "VDF_mu%d", demand_period_id);
-				parser_link.GetValueByFieldName(VDF_field_name, link.VDF_period[tau].mu);
+				//sprintf_s (VDF_field_name, "VDF_mu%d", demand_period_id);
+				//parser_link.GetValueByFieldName(VDF_field_name, link.VDF_period[tau].mu);
 
-				sprintf_s (VDF_field_name, "VDF_gamma%d", demand_period_id);
-				parser_link.GetValueByFieldName(VDF_field_name, link.VDF_period[tau].gamma);
+				//sprintf_s (VDF_field_name, "VDF_gamma%d", demand_period_id);
+				//parser_link.GetValueByFieldName(VDF_field_name, link.VDF_period[tau].gamma);
 
 				link.VDF_period[tau].starting_time_slot_no = assignment.g_DemandPeriodVector[tau].starting_time_slot_no;
 				link.VDF_period[tau].ending_time_slot_no = assignment.g_DemandPeriodVector[tau].ending_time_slot_no;
@@ -2360,8 +2248,7 @@ void g_ReadInputData(Assignment& assignment)
 			// min // calculate link cost based length and speed limit // later we should also read link_capacity, calculate delay 
 
 
-			g_node_vector[internal_from_node_seq_no].m_outgoing_link_seq_no_vector.push_back(link.link_seq_no);  // add this link to the corresponding node as part of outgoing node/link
-			g_node_vector[internal_from_node_seq_no].m_to_node_seq_no_vector .push_back(link.to_node_seq_no);  // add this link to the corresponding node as part of outgoing node/link
+			g_node_vector[internal_from_node_seq_no].m_outgoing_link_vector.push_back(link);  // add this link to the corresponding node as part of outgoing node/link
 
 
 			g_link_vector.push_back(link);
@@ -2377,7 +2264,7 @@ void g_ReadInputData(Assignment& assignment)
 	// we now know the number of links
 	cout << "number of links = " << assignment.g_number_of_links << endl;
 
-//	fprintf(g_pFileOutputLog, "number of links =,%d\n", assignment.g_number_of_links);
+	fprintf(g_pFileOutputLog, "number of links =,%d\n", assignment.g_number_of_links);
 
 	parser_link.CloseCSVFile();
 
@@ -2397,10 +2284,42 @@ float _gap_relative_[_MAX_K_PATH];
 
 void g_output_simulation_result(Assignment& assignment)
 {
+	//int b_debug_detail_flag = 0;
+	//FILE* g_pFileLinkMOE = NULL;
+	//g_pFileLinkMOE = fopen_s("link_performance.csv", "w");
+	//if (g_pFileLinkMOE == NULL)
+	//{
+	//	cout << "File link_performance.csv cannot be opened." << endl;
+	//	g_ProgramStop();
+	//}
+	//else
+	//{
+	//	// Option 1: BPR function
+	//	fprintf(g_pFileLinkMOE, "link_id,time_period,volume,travel_time,density,voc_ratio,notes\n");
+
+	//	for (int l = 0; l < g_link_vector.size(); l++) //Initialization for all nodes
+	//	{
+	//		for (int tau = 0; tau < assignment.g_number_of_demand_periods; tau++)
+	//		{
+	//			CLink* pLink = &(g_link_vector[l]);
+
+	//			fprintf(g_pFileLinkMOE, "%s,%s,%.3f,%.3f,%.1f,%.1f,%s\n",
+	//				pLink->link_id.c_str(),
+	//				assignment.g_DemandPeriodVector[tau].demand_period.c_str(),
+	//				pLink->flow_volume_per_period[tau],
+	//				pLink->travel_time_per_period[tau],
+	//				-1,
+	//				pLink->get_VOC_ratio(tau),
+	//				"BPR model");
+
+	//		}
+	//	}
+	//}
+	//fclose(g_pFileLinkMOE);
 
 	int b_debug_detail_flag = 0;
 	FILE* g_pFileLinkMOE = NULL;
-	fopen_ss(&g_pFileLinkMOE,"link_performance.csv", "w");
+	fopen_s(&g_pFileLinkMOE,"link_performance.csv", "w");
 	if (g_pFileLinkMOE == NULL)
 	{
 		cout << "File link_performance.csv cannot be opened." << endl;
@@ -2408,64 +2327,58 @@ void g_output_simulation_result(Assignment& assignment)
 	}
 	else
 	{
-		// Option 2: BPR-X function
-		fprintf(g_pFileLinkMOE, "road_link_id,from_node_id,to_node_id,time_period,volume,travel_time,speed,VOC,notes\n");
+		// Option 2: BPR_X function
+		fprintf(g_pFileLinkMOE, "road_link_id,from_node_id,to_node_id,time_period,volume,travel_time,speed,notes\n");
 		for (int l = 0; l < g_link_vector.size(); l++) //Initialization for all nodes
 		{
 			for (int tau = 0; tau < assignment.g_number_of_demand_periods; tau++)
 			{
-				fprintf(g_pFileLinkMOE, "%s,%s,%s,%s,%.3f,%.3f,%.3f,%.3f,%s\n",
-					g_link_vector[l].link_id.c_str(),
+				int ii = FLAG_PEORIOD_TIMESLOT;
 
-					g_node_vector[g_link_vector[l].from_node_seq_no].node_id.c_str(),
-					g_node_vector[g_link_vector[l].to_node_seq_no].node_id.c_str(),
+				if (ii == 0)
+				{
+					fprintf(g_pFileLinkMOE, "%s,%s,%s,%s,%.3f,%.3f,%.3f,%s\n",
+						g_link_vector[l].link_id.c_str(),
 
-					g_link_vector[l].VDF_period[tau].period.c_str(),
-					g_link_vector[l].flow_volume_per_period[tau],
-					g_link_vector[l].VDF_period[tau].avg_travel_time,
-					g_link_vector[l].length / (g_link_vector[l].VDF_period[tau].avg_travel_time / 60.0),  /* 60.0 is used to convert min to hour */
-					g_link_vector[l].VDF_period[tau].VOC,
-					"period-based");
-
-			}
-		}
-
-		for (int l = 0; l < g_link_vector.size(); l++) //Initialization for all nodes
-		{
-			for (int tau = 0; tau < assignment.g_number_of_demand_periods; tau++)
-			{
-				
+						g_node_vector[g_link_vector[l].from_node_seq_no].node_id.c_str(), 
+						g_node_vector[g_link_vector[l].to_node_seq_no].node_id.c_str(),
+						
+						g_link_vector[l].VDF_period[tau].period.c_str(),
+						g_link_vector[l].flow_volume_per_period[tau],
+						g_link_vector[l].VDF_period[tau].avg_travel_time,
+						g_link_vector[l].length / (g_link_vector[l].VDF_period[tau].avg_travel_time/60.0),  /* 60.0 is used to convert min to hour */
+						"period-based");
+				}
+				else
+				{
 					int starting_time = g_link_vector[l].VDF_period[tau].starting_time_slot_no;
 					int ending_time = g_link_vector[l].VDF_period[tau].ending_time_slot_no;
 
 					for (int t = 0; t <= ending_time - starting_time; t++)
 					{
-						fprintf(g_pFileLinkMOE, "%s,%s,%s,%d,%.3f,%.3f,%.3f,%.3f,%s\n",
-
+						fprintf(g_pFileLinkMOE, "%s,%s,%.3f,%.3f,%s\n",
 							g_link_vector[l].link_id.c_str(),
-							g_node_vector[g_link_vector[l].from_node_seq_no].node_id.c_str(),
-							g_node_vector[g_link_vector[l].to_node_seq_no].node_id.c_str(),
-							t,
-							g_link_vector[l].VDF_period[tau].discharge_rate[t],
-							g_link_vector[l].VDF_period[tau].travel_time[t],
-							g_link_vector[l].length / g_link_vector[l].VDF_period[tau].travel_time[t] * 60.0,
-							g_link_vector[l].VDF_period[tau].congestion_period_P,
+							assignment.g_DemandPeriodVector[tau].demand_period.c_str(),
+							g_link_vector[l].VDF_period[tau].arrival_rate[t],
+//							g_link_vector[l].VDF_period[tau].waiting_time[t] + g_link_vector[l].VDF_period[tau].FFTT,
+							g_link_vector[l].VDF_period[tau].get_waiting_time(t) + g_link_vector[l].VDF_period[tau].FFTT,
+
+							
 							"timeslot-dependent");
 					}
 
 				}
 
+			}
+
 		}
-
-		
-
+	}
 
 	fclose(g_pFileLinkMOE);
-	}
 
 	//added by zhuge,to output the ODMOE 
 	FILE* g_pFileODMOE = NULL;
-	fopen_ss(&g_pFileODMOE,"agent.csv", "w");
+	fopen_s(&g_pFileODMOE,"agent.csv", "w");
 	if (g_pFileODMOE == NULL)
 	{
 		cout << "File agent.csv cannot be opened." << endl;
@@ -2623,7 +2536,7 @@ int NetworkForSP::calculate_TD_link_flow(Assignment& assignment, int iteration_n
 	if (m_iteration_k > iteration_number_outterloop)  // we only update available path tree;
 		return 0;
 
-	if (g_node_vector[origin_node].m_outgoing_link_seq_no_vector.size() == 0)
+	if (g_node_vector[origin_node].m_outgoing_link_vector.size() == 0)
 	{
 		return 0;
 	}
@@ -2754,8 +2667,8 @@ void  CLink::CalculateTD_VDFunction()
 	{
 		float starting_time_slot_no = assignment.g_DemandPeriodVector[tau].starting_time_slot_no;
 		float ending_time_slot_no = assignment.g_DemandPeriodVector[tau].ending_time_slot_no;
-		//travel_time_per_period[tau] = VDF_period[tau].PeroformBPR(flow_volume_per_period[tau]);
-		travel_time_per_period[tau] = VDF_period[tau].PeroformBPR_X(flow_volume_per_period[tau]);
+		travel_time_per_period[tau] = VDF_period[tau].PeroformBPR(flow_volume_per_period[tau]);
+		//travel_time_per_period[tau] = VDF_period[tau].PeroformBPR_X(flow_volume_per_period[tau]);
 
 	}
 }
@@ -2763,12 +2676,12 @@ void  CLink::CalculateTD_VDFunction()
 double network_assignment(int iteration_number, int b)
 {
 
-	//fopen_ss(&g_pFileOutputLog, "output_solution.csv", "w");
-	//if (g_pFileOutputLog == NULL)
-	//{
-	//	cout << "File output_solution.csv cannot be opened." << endl;
-	//	g_ProgramStop();
-	//}
+	fopen_s(&g_pFileOutputLog, "output_solution.csv", "w");
+	if (g_pFileOutputLog == NULL)
+	{
+		cout << "File output_solution.csv cannot be opened." << endl;
+		g_ProgramStop();
+	}
 
 	assignment.g_number_of_K_paths = iteration_number;
 

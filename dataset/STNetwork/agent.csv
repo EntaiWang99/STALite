@@ -1,2 +1,2 @@
 agent_id,o_zone_id,d_zone_id,o_node_id,d_node_id,agent_type,demand_period,volume,cost,travel_time,distance,node_sequence
-1,1,2,1,2,pax,AM,400.0,0.0,0.0,0.0000,2;
+1,1,2,101000,204000,p,AM,300.0,0.0,0.0,2.0000,101000;202000;203000;204000;
