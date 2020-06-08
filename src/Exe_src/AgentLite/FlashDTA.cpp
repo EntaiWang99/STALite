@@ -15,7 +15,31 @@
 int main(int argc, TCHAR* argv[], TCHAR* envp[])
 {
 	int iteration_number = 2;
-	int b = 0;
-	network_assignment(iteration_number, b);
+
+	int assignment_mode = 0;
+
+	CCSVParser parser_settings;
+
+	if (parser_settings.OpenCSVFile("settings.csv", true))
+	{
+
+		while (parser_settings.ReadRecord())
+		{
+			string field;
+			int value_int;
+
+			parser_settings.GetValueByFieldName("field", field);
+			parser_settings.GetValueByFieldName("value", value_int);
+
+			if (field == "number_of_iterations")
+				iteration_number = value_int;
+
+			if (field == "assignment_mode")
+				assignment_mode = value_int;
+
+		}
+	}
+
+	network_assignment(iteration_number, assignment_mode);
 
 }
