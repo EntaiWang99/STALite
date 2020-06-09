@@ -39,7 +39,7 @@ template <typename T>
 
 //Pls make sure the _MAX_K_PATH > Agentlite.cpp's g_number_of_K_paths+g_reassignment_number_of_K_paths and the _MAX_ZONE remain the same with .cpp's defination
 #define _MAX_LABEL_COST 99999.0
-#define _MAX_K_PATH 20 
+#define _MAX_K_PATH 40 
 #define _MAX_ZONE 70
 
 #define _MAX_AGNETTYPES 5 //because of the od demand store format,the MAX_demandtype must >=g_DEMANDTYPES.size()+1
@@ -717,7 +717,7 @@ public:
 		b_debug_detail_flag = 1;
 
 		g_pFileDebugLog = NULL;
-
+		assignment_mode = 0;  // default is UE
 	}
 
 	void InitializeDemandMatrix(int number_of_zones, int number_of_agent_types)
@@ -751,7 +751,7 @@ public:
 		}
 
 		g_DemandGlobalMultiplier = 1.0f;
-		assignment_mode = 0;  // default is UE
+
 
 	};
 	~Assignment()
@@ -1475,6 +1475,12 @@ public:
 				if (assignment.assignment_mode == 2)  // exterior panalty mode
 				{
 					new_to_node_cost += g_link_vector[link_sqe_no].exterior_penalty_derviative_per_period[m_demand_time_period_no][m_agent_type_no];
+				
+					if (new_to_node_cost < 0)
+					{
+						int test_flag = 1;
+					}
+				
 				}
 
 				//g_link_vector[m_node_vector[from_node].m_outgoing_link_seq_no_vector[i].link_seq_no].TollMAP[agent_type]] / max(0.0001, assignment.g_AgentTypeVector [agent_type]);
@@ -2468,7 +2474,7 @@ void g_ReadInputData(Assignment& assignment)
 				parser_link.GetValueByFieldName(VDF_field_name, link.VDF_period[tau].rho);
 
 				sprintf_s(VDF_field_name, "RUC_resource%d", demand_period_id);
-				parser_link.GetValueByFieldName(VDF_field_name, link.VDF_period[tau].rho);
+				parser_link.GetValueByFieldName(VDF_field_name, link.VDF_period[tau].ruc_base_resource,false);
 
 				link.VDF_period[tau].starting_time_slot_no = assignment.g_DemandPeriodVector[tau].starting_time_slot_no;
 				link.VDF_period[tau].ending_time_slot_no = assignment.g_DemandPeriodVector[tau].ending_time_slot_no;
@@ -2592,7 +2598,7 @@ void g_output_simulation_result(Assignment& assignment)
 					fprintf(g_pFileLinkMOE, "%.3f,", g_link_vector[l].volume_per_period_per_at[tau][at]);
 				}
 
-				fprintf(g_pFileLinkMOE, "%.3f,", g_link_vector[l].resource_per_period_per_at[tau]);
+				fprintf(g_pFileLinkMOE, "%.3f,", g_link_vector[l].resource_per_period[tau]);
 
 			}
 
@@ -2821,7 +2827,7 @@ void g_reset_link_volume(int number_of_links)
 		{
 			g_link_vector[l].flow_volume_per_period[tau] = 0;
 			g_link_vector[l].queue_length_perslot[tau] = 0;
-			g_link_vector[l].resource_per_period[tau] = (-1)* g_link_vector[l].VDF_period[tau].ruc_base_resource; // base as the reference value
+			g_link_vector[l].resource_per_period[tau] = g_link_vector[l].VDF_period[tau].ruc_base_resource; // base as the reference value
 
 			for (int at = 0; at < _MAX_AGNETTYPES; at++)
 			{
@@ -2984,6 +2990,29 @@ void  CLink::CalculateTD_VDFunction()
 	}
 }
 
+void update_link_volume_and_cost()
+{
+
+	for (int l = 0; l < g_link_vector.size(); l++)
+	{
+		//g_link_vector[l].tally_flow_volume_across_all_processors();
+		g_link_vector[l].CalculateTD_VDFunction();
+
+		for (int tau = 0; tau < assignment.g_DemandPeriodVector.size(); tau++)
+			for (int at = 0; at < assignment.g_AgentTypeVector.size(); at++)
+			{
+
+				float PCE_agent_type = assignment.g_AgentTypeVector[at].PCE_link_type_map[g_link_vector[l].link_type];
+
+				g_link_vector[l].calculate_marginal_cost_for_agent_type(tau, at, PCE_agent_type);
+
+				float CRU_agent_type = assignment.g_AgentTypeVector[at].CRU_link_type_map[g_link_vector[l].link_type];
+
+				g_link_vector[l].calculate_penalty_for_agent_type(tau, at, CRU_agent_type);
+
+			}
+	}
+}
 double network_assignment(int iteration_number, int assignment_mode)
 {
 
@@ -3026,6 +3055,10 @@ double network_assignment(int iteration_number, int assignment_mode)
 		start_t = clock();
 
 		g_reset_link_volume(g_link_vector.size());  // we can have a recursive formulat to reupdate the current link volume by a factor of k/(k+1), and use the newly generated path flow to add the additional 1/(k+1)
+
+		if(iteration_number == 0)
+			update_link_volume_and_cost();  // initialization at the first iteration of shortest path
+
 		//g_setup_link_cost_in_each_memory_block(iteration_number, assignment);
 #pragma omp parallel for  // step 3: C++ open mp automatically create n threads., each thread has its own computing thread on a cpu core 
 		for (int ProcessID = 0; ProcessID < g_NetworkForSP_vector.size(); ProcessID++) //changed by zhuge
@@ -3049,26 +3082,8 @@ double network_assignment(int iteration_number, int assignment_mode)
 		////step 3.2: calculate TD link travel time using TD inflow flow and capacity  
 		//					start_t_1 = clock();
 
-#pragma omp parallel for  // step collect all partial link volume to compute link volume across all zones
-		for (int l = 0; l < g_link_vector.size(); l++)
-		{
-			//g_link_vector[l].tally_flow_volume_across_all_processors();
-			g_link_vector[l].CalculateTD_VDFunction();
-
-				for (int tau = 0; tau < assignment.g_DemandPeriodVector.size(); tau++)
-					for (int at = 0; at < assignment.g_AgentTypeVector.size(); at++)
-					{
-						
-						float PCE_agent_type = assignment.g_AgentTypeVector[at].PCE_link_type_map[g_link_vector[l].link_type];
-
-						g_link_vector[l].calculate_marginal_cost_for_agent_type(tau, at, PCE_agent_type);
-
-						float CRU_agent_type = assignment.g_AgentTypeVector[at].PCE_link_type_map[g_link_vector[l].link_type];
-						g_link_vector[l].calculate_penalty_for_agent_type(tau, at, CRU_agent_type);
-
-					}
-		}
-
+//#pragma omp parallel for  // step collect all partial link volume to compute link volume across all zones
+		update_link_volume_and_cost();  // at the end of shortest path
 	}
 	cout << "Output for assignment with " << assignment.g_number_of_K_paths << " iterations. Done!" << endl;
 
