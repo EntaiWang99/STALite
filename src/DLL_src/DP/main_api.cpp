@@ -1072,7 +1072,7 @@ public:
 
 	int m_RandomSeed;
 	int link_seq_no;
-	string link_id;
+	int link_id;
 	int from_node_seq_no;
 	int to_node_seq_no;
 	int link_type;
@@ -1198,7 +1198,7 @@ public:
 	//int accessible_node_count;
 
 	int node_seq_no;  // sequence number 
-	string node_id;      //external node number 
+	int node_id;      //external node number 
 	int zone_id = -1;
 
 	double x;
@@ -1547,8 +1547,8 @@ public:
 
 					if (shortest_path_debugging_flag && assignment.g_pFileDebugLog != NULL)
 					{
-						fprintf(assignment.g_pFileDebugLog, "SP: updating node: %s current cost: %.2f, new cost %.2f\n",
-							m_node_vector[to_node].node_id.c_str(),
+						fprintf(assignment.g_pFileDebugLog, "SP: updating node: %d current cost: %.2f, new cost %.2f\n",
+							m_node_vector[to_node].node_id,
 							m_node_label_cost[to_node], new_to_node_cost);
 					}
 
@@ -2927,11 +2927,11 @@ void g_output_simulation_result(Assignment& assignment)
 			for (int tau = 0; tau < assignment.g_number_of_demand_periods; tau++)
 			{
 				float speed = g_link_vector[l].length / (max(0.001,g_link_vector[l].VDF_period[tau].avg_travel_time )/ 60.0);
-				fprintf(g_pFileLinkMOE, "%s,%s,%s,%s,%.3f,%.3f,%.3f,%.3f,",
-					g_link_vector[l].link_id.c_str(),
+				fprintf(g_pFileLinkMOE, "%d,%d,%d,%s,%.3f,%.3f,%.3f,%.3f,",
+					g_link_vector[l].link_id,
 
-					g_node_vector[g_link_vector[l].from_node_seq_no].node_id.c_str(),
-					g_node_vector[g_link_vector[l].to_node_seq_no].node_id.c_str(),
+					g_node_vector[g_link_vector[l].from_node_seq_no].node_id,
+					g_node_vector[g_link_vector[l].to_node_seq_no].node_id,
 
 					g_link_vector[l].VDF_period[tau].period.c_str(),
 					g_link_vector[l].flow_volume_per_period[tau],
@@ -3037,12 +3037,12 @@ void g_output_simulation_result(Assignment& assignment)
 								}
 
 
-								fprintf(g_pFileODMOE, "%d,%d,%d,%s,%s,%s,%s,%.1f,%.1f,%.1f,%.4f,",
+								fprintf(g_pFileODMOE, "%d,%d,%d,%d,%d,%s,%s,%.1f,%.1f,%.1f,%.4f,",
 									count,
 									g_zone_vector[i].zone_id,
 									g_zone_vector[j].zone_id,
-									g_node_vector[g_zone_vector[i].node_seq_no].node_id.c_str(),
-									g_node_vector[g_zone_vector[j].node_seq_no].node_id.c_str(),
+									g_node_vector[g_zone_vector[i].node_seq_no].node_id,
+									g_node_vector[g_zone_vector[j].node_seq_no].node_id,
 									assignment.g_AgentTypeVector[at].agent_type.c_str(),
 									assignment.g_DemandPeriodVector[tau].demand_period.c_str(),
 									it->second.path_volume ,
@@ -3053,7 +3053,7 @@ void g_output_simulation_result(Assignment& assignment)
 
 								for (int ni = it->second.path_node_vector.size() - 1; ni >= 0; ni--)
 								{
-									fprintf(g_pFileODMOE, "%s;", g_node_vector[it->second.path_node_vector[ni]].node_id.c_str());
+									fprintf(g_pFileODMOE, "%d;", g_node_vector[it->second.path_node_vector[ni]].node_id);
 
 								}
 
@@ -3063,7 +3063,7 @@ void g_output_simulation_result(Assignment& assignment)
 								for (int nl = it->second.path_link_vector.size() - 1; nl >= 0; nl--)
 								{
 									int link_seq_no = it->second.path_link_vector[nl];
-									fprintf(g_pFileODMOE, "%s;", g_link_vector[link_seq_no].link_id.c_str());
+									fprintf(g_pFileODMOE, "%d;", g_link_vector[link_seq_no].link_id);
 
 								}
 								fprintf(g_pFileODMOE, ",");

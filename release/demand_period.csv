@@ -1,3 +1,2 @@
 demand_period_id,demand_period,time_period
-1,AM,0600_1100
-2,PM,1600_2000
+1,AM,0700_0800
