@@ -1,3 +1,4 @@
-section,field,value,
-assignment,number_of_iterations,40,
-assignment,assignment_mode,2,0:UE;1:SO; 2: UE+resource constraint
+section,field,value
+assignment,number_of_iterations,40
+assignment,assignment_mode,0
+assignment,column_updating_iterations,300

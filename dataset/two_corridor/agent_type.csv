@@ -1,0 +1,2 @@
+agent_type,name,VOT,fixed_flag,PCE_link_type1,PCE_link_type2,PCE_link_type3,PCE_link_type4,PCE_link_type5,CRU_link_type1,CRU_link_type2,CRU_link_type3,CRU_link_type4,CRU_link_type5
+p,passenger,10,0,1,1,1,1,1,1,1,1,1,1

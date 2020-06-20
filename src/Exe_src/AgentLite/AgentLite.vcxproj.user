@@ -5,11 +5,11 @@
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LocalDebuggerWorkingDirectory>C:\Users\xzhou\Dropbox\Public\STA_datasharing\Braess's_Paradox</LocalDebuggerWorkingDirectory>
+    <LocalDebuggerWorkingDirectory>C:\SourceCode\STALite_sourcecode\STALite_sourcecode\dataset\SIOUX_FALLS_NET</LocalDebuggerWorkingDirectory>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LocalDebuggerWorkingDirectory>D:\SourceCode\STALite_sourcecode\dataset\STNetwork</LocalDebuggerWorkingDirectory>
+    <LocalDebuggerWorkingDirectory>C:\SourceCode\STALite_sourcecode\STALite_sourcecode\dataset\SIOUX_FALLS_NET</LocalDebuggerWorkingDirectory>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

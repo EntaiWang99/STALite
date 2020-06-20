@@ -15,6 +15,7 @@
 int main(int argc, TCHAR* argv[], TCHAR* envp[])
 {
 	int iteration_number = 2;
+	int column_updating_iterations = 0;
 
 	int assignment_mode = 0;
 
@@ -37,9 +38,12 @@ int main(int argc, TCHAR* argv[], TCHAR* envp[])
 			if (field == "assignment_mode")
 				assignment_mode = value_int;
 
+			if (field == "column_updating_iterations")
+				column_updating_iterations = value_int;
+
 		}
 	}
 
-	network_assignment(iteration_number, assignment_mode);
+	network_assignment(iteration_number, assignment_mode, column_updating_iterations);
 
 }

@@ -7,7 +7,7 @@
 // More about "How to use GNU licenses for your own software"
 // http://www.gnu.org/licenses/gpl-howto.html
 
-
+#pragma warning( disable : 4305 4267) 
 #include <iostream>
 #include <fstream>
 #include <list> 
@@ -661,23 +661,29 @@ vector<int> path_node_vector;
 vector<int> path_link_vector;
 vector<float> path_time_vector;
 
+int path_seq_no;
+
 float path_volume;  // path volume
-float path_travel_time; 
+float path_switch_volume;  // path volume
+float path_travel_time;
 float path_distance;
 float path_cost;
 float path_gradient_cost;  // first order graident cost.
 float path_gradient_cost_difference;  // first order graident cost - least gradient cost
+float path_gradient_cost_relative_difference;  // first order graident cost - least gradient cost
 
 
 CColumnPath()
 {
+	path_switch_volume = 0;
+	path_seq_no = 0;
 	path_cost = 0;
 	path_volume = 0;
 	path_travel_time = 0;
 	path_distance = 0;
 	path_gradient_cost = 0;
 	path_gradient_cost_difference = 0;
-
+	path_gradient_cost_relative_difference = 0;
 }
 
 };
@@ -685,7 +691,6 @@ CColumnPath()
 
 class CColumnVector {
 public:
-
 	float cost;
 	float time;
 	float distance;
@@ -849,10 +854,10 @@ public:
 	{
 		m = 0.5;
 		VOC = 0;
-		gamma = 3.47;
+		gamma = 3.47f;
 		mu = 1000;
 		theta = 1;
-		alpha = 0.15;
+		alpha = 0.15f;
 		beta = 4;
 		rho = 1;
 		marginal_base = 1;
@@ -1441,7 +1446,7 @@ public:
 
 	//major function: update the cost for each node at each SP tree, using a stack from the origin structure 
 
-	int calculate_TD_link_flow(Assignment& assignment, int iteration_number);
+	void calculate_TD_link_flow(Assignment& assignment, int iteration_number);
 
 	//major function 2: // time-dependent label correcting algorithm with double queue implementation
 	int optimal_label_correcting(Assignment& assignment, int iteration_k)
@@ -1951,6 +1956,7 @@ void g_ReadDemandFileBasedOnDemandFileList(Assignment& assignment)
 			else
 			{
 				cout << "Error: agent_type in agent_type " << agent_type << "cannot be found." << endl;
+				g_ProgramStop();
 			}
 
 
@@ -1965,8 +1971,7 @@ void g_ReadDemandFileBasedOnDemandFileList(Assignment& assignment)
 
 
 				bool bFileReady = false;
-				int i;
-
+				
 				FILE* st;
 				// read the file formaly after the test. 
 
@@ -2013,7 +2018,6 @@ void g_ReadDemandFileBasedOnDemandFileList(Assignment& assignment)
 						int to_zone_seq_no = 0;
 						from_zone_seq_no = assignment.g_zoneid_to_zone_seq_no_mapping[origin_zone];
 						to_zone_seq_no = assignment.g_zoneid_to_zone_seq_no_mapping[destination_zone];
-
 
 						float demand_value = g_read_float(st);
 
@@ -2067,7 +2071,7 @@ void g_ReadDemandFileBasedOnDemandFileList(Assignment& assignment)
 
 					int agent_id, o_zone_id, d_zone_id;
 					string agent_type, demand_period;
-					float volume;
+					
 					std::vector <int> node_sequence;
 
 					while (parser.ReadRecord())
@@ -2422,7 +2426,6 @@ void g_ReadInputData(Assignment& assignment)
 	}
 
 	int internal_node_seq_no = 0;
-	double x, y;
 	// step 3: read node file 
 	CCSVParser parser;
 	if (parser.OpenCSVFile("node.csv", true))
@@ -2620,38 +2623,6 @@ float total_experienced_cost[_MAX_K_PATH];
 float _gap_[_MAX_K_PATH];
 float _gap_relative_[_MAX_K_PATH];
 
-void g_generate_initial_flow_volume_in_column_pool(Assignment& assignment)
-{
-
-	for (int i = 0; i < g_zone_vector.size(); i++)  // o
-		for (int j = 0; j < g_zone_vector.size(); j++) //d
-			for (int at = 0; at < assignment.g_AgentTypeVector.size(); at++)  //m
-			{
-				if (assignment.g_AgentTypeVector[at].bFixed == 1)  // be fixed agent type
-					continue;
-
-				for (int tau = 0; tau < assignment.g_DemandPeriodVector.size(); tau++)  //tau
-				{
-					if (assignment.g_column_pool[i][j][at][tau].od_volume > 0)
-					{
-						std::map<int, CColumnPath>::iterator it;
-
-						// scan through the map with different node sum for different paths
-
-						// column vector size 
-						int column_vector_size = assignment.g_column_pool[i][j][at][tau].path_node_sequence_map.size();
-
-						for (it = assignment.g_column_pool[i][j][at][tau].path_node_sequence_map.begin(); //k
-							it != assignment.g_column_pool[i][j][at][tau].path_node_sequence_map.end(); it++)
-						{
-
-							it->second.path_volume = 1.0 / column_vector_size * assignment.g_column_pool[i][j][at][tau].od_volume;
-						}
-					}
-
-				}
-			}
-}
 void g_reset_link_volume(int number_of_links)
 {
 	for (int l = 0; l < number_of_links; l++)
@@ -2676,20 +2647,21 @@ void g_reset_link_volume(int number_of_links)
 			{
 				if(assignment.g_AgentTypeVector[at].bFixed == 1)  // we take into account the prespecified agent volume into the link volume and link resource in this initialization stage.
 				{ 
-					for (int i = 0; i < g_zone_vector.size(); i++)  // o
-					for (int j = 0; j < g_zone_vector.size(); j++) //d
+					for (int o = 0; o < g_zone_vector.size(); o++)  // o
+					for (int d = 0; d < g_zone_vector.size(); d++) //d
 
 				for (int tau = 0; tau < assignment.g_DemandPeriodVector.size(); tau++)  //tau
 				{
-					if (assignment.g_column_pool[i][j][at][tau].od_volume > 0)
+					if (assignment.g_column_pool[o][d][at][tau].od_volume > 0)
 					{
 						std::map<int, CColumnPath>::iterator it;
 
-						float column_vector_size = assignment.g_column_pool[i][j][at][tau].path_node_sequence_map.size();
+						float column_vector_size = assignment.g_column_pool[o][d][at][tau].path_node_sequence_map.size();
+
 
 						// scan through the map with different node sum for different paths
-						for (it = assignment.g_column_pool[i][j][at][tau].path_node_sequence_map.begin(); //k
-							it != assignment.g_column_pool[i][j][at][tau].path_node_sequence_map.end(); it++)
+						for (it = assignment.g_column_pool[o][d][at][tau].path_node_sequence_map.begin(); //k
+							it != assignment.g_column_pool[o][d][at][tau].path_node_sequence_map.end(); it++)
 						{
 
 							for (int nl = it->second.path_link_vector.size() - 1; nl >= 0; nl--)  // arc a
@@ -2741,27 +2713,40 @@ void update_link_volume_and_cost()
 			}
 	}
 }
-void g_update_gradient_cost_and_assigned_flow_in_column_pool(Assignment& assignment)
+void g_update_gradient_cost_and_assigned_flow_in_column_pool(Assignment& assignment, int inner_iteration_number)
 {
+	float total_gap = 0;
+	float total_relative_gap = 0;
+	float total_gap_count = 0;
 
-	for (int i = 0; i < g_zone_vector.size(); i++)  // o
-		for (int j = 0; j < g_zone_vector.size(); j++) //d
+	for (int o = 0; o < g_zone_vector.size(); o++)  // o
+		for (int d = 0; d < g_zone_vector.size(); d++) //d
 			for (int at = 0; at < assignment.g_AgentTypeVector.size(); at++)  //m
 				for (int tau = 0; tau < assignment.g_DemandPeriodVector.size(); tau++)  //tau
 				{
-					if (assignment.g_column_pool[i][j][at][tau].od_volume > 0)
+					if (assignment.g_column_pool[o][d][at][tau].od_volume > 0)
 					{
 						std::map<int, CColumnPath>::iterator it;
 
-						float column_vector_size = assignment.g_column_pool[i][j][at][tau].path_node_sequence_map.size();
+						int column_vector_size = assignment.g_column_pool[o][d][at][tau].path_node_sequence_map.size();
+
 
 						// scan through the map with different node sum for different paths
 						/// step 1: update gradient cost for each column path
+						//if (o = 7 && d == 15)
+						//{
+
+						//	if (assignment.g_pFileDebugLog != NULL)
+						//		fprintf(assignment.g_pFileDebugLog, "CU: iteration %d: total_gap=, %f,total_relative_gap,%f,\n", inner_iteration_number, total_gap, total_gap / max(0.00001, total_gap_count));
+						//}
 						float least_gradient_cost = 999999;
-						float least_gradient_cost_path_node_sum_index = -1;
-						for (it = assignment.g_column_pool[i][j][at][tau].path_node_sequence_map.begin(); //k
-							it != assignment.g_column_pool[i][j][at][tau].path_node_sequence_map.end(); it++)
+						int least_gradient_cost_path_seq_no = -1;
+						int least_gradient_cost_path_node_sum_index = -1;
+						int path_seq_count = 0;
+						for (it = assignment.g_column_pool[o][d][at][tau].path_node_sequence_map.begin(); //k
+							it != assignment.g_column_pool[o][d][at][tau].path_node_sequence_map.end(); it++)
 						{
+
 
 							float path_cost = 0;
 							float path_gradient_cost = 0;
@@ -2784,35 +2769,51 @@ void g_update_gradient_cost_and_assigned_flow_in_column_pool(Assignment& assignm
 							it->second.path_travel_time = path_travel_time;
 							it->second.path_gradient_cost = path_gradient_cost;
 
+							if (column_vector_size == 1)  // only one path
+							{
+								total_gap_count += (it->second.path_gradient_cost * it->second.path_volume);
+								break;
+							}
+
 
 							if (path_gradient_cost < least_gradient_cost)
 							{
-								least_gradient_cost_path_node_sum_index = it->first;
 								least_gradient_cost = path_gradient_cost;
+								least_gradient_cost_path_seq_no = it->second.path_seq_no;
+								least_gradient_cost_path_node_sum_index = it->first;
 							}
 
 
 						}
-					
+
+
+						if (column_vector_size >= 2)  
+						{
+
+
 						// step 2: calculate gradient cost difference for each column path
 						float total_switched_out_path_volume = 0;
-						for (it = assignment.g_column_pool[i][j][at][tau].path_node_sequence_map.begin(); //m
-							it != assignment.g_column_pool[i][j][at][tau].path_node_sequence_map.end(); it++)
+						for (it = assignment.g_column_pool[o][d][at][tau].path_node_sequence_map.begin(); //m
+							it != assignment.g_column_pool[o][d][at][tau].path_node_sequence_map.end(); it++)
 						{
-							if (it->first != least_gradient_cost_path_node_sum_index)  //for non-least cost path
+							if (it->second.path_seq_no != least_gradient_cost_path_seq_no)  //for non-least cost path
 							{
 							
 							it->second.path_gradient_cost_difference = it->second.path_gradient_cost - least_gradient_cost;
+							it->second.path_gradient_cost_relative_difference = it->second.path_gradient_cost_difference / max(0.0001, least_gradient_cost);
 
-							int step_size = 1.0/ column_vector_size * assignment.g_column_pool[i][j][at][tau].od_volume;
+							total_gap += (it->second.path_gradient_cost_difference * it->second.path_volume);
+							total_gap_count+= (it->second.path_gradient_cost * it->second.path_volume);
+
+							float step_size = 1.0/(inner_iteration_number+2) * assignment.g_column_pool[o][d][at][tau].od_volume;
 								
 							float previous_path_volume = it->second.path_volume;
 							
-							// recall that it->second.path_gradient_cost_difference >=0 
-							it->second.path_volume = max(0, it->second.path_volume - step_size * (it->second.path_gradient_cost_difference)) ;
+							 //recall that it->second.path_gradient_cost_difference >=0 
+							it->second.path_volume = max(0, it->second.path_volume - step_size * it->second.path_gradient_cost_relative_difference);
 
-							// we use min(step_size to ensure a path is not switching more than 1/n proportion of flow 
-
+							 //we use min(step_size to ensure a path is not switching more than 1/n proportion of flow 
+							it->second.path_switch_volume = (previous_path_volume - it->second.path_volume);
 							total_switched_out_path_volume +=  (previous_path_volume - it->second.path_volume);
 							
 							}
@@ -2820,16 +2821,22 @@ void g_update_gradient_cost_and_assigned_flow_in_column_pool(Assignment& assignm
 						}
 
 						//consider least cost path
-						if (least_gradient_cost_path_node_sum_index != -1)
+						if (least_gradient_cost_path_seq_no != -1)
 						{
-							assignment.g_column_pool[i][j][at][tau].path_node_sequence_map[least_gradient_cost_path_node_sum_index].path_volume += total_switched_out_path_volume;
+							assignment.g_column_pool[o][d][at][tau].path_node_sequence_map[least_gradient_cost_path_node_sum_index].path_volume += total_switched_out_path_volume;
+							total_gap_count += (assignment.g_column_pool[o][d][at][tau].path_node_sequence_map[least_gradient_cost_path_node_sum_index].path_gradient_cost * 
+								assignment.g_column_pool[o][d][at][tau].path_node_sequence_map[least_gradient_cost_path_node_sum_index].path_volume);
 						}
 						
+						}
 
 					
 					}
 
 				}
+
+	if(assignment.g_pFileDebugLog != NULL)
+	fprintf(assignment.g_pFileDebugLog, "CU: iteration %d: total_gap=, %f,total_relative_gap=, %f,\n", inner_iteration_number, total_gap, total_gap / max(0.0001, total_gap_count));
 		
 	// update volume based travel time, and update volume based resource balance, update gradie
 	g_reset_link_volume(g_link_vector.size());  // we can have a recursive formulat to reupdate the current link volume by a factor of k/(k+1), and use the newly generated path flow to add the additional 1/(k+1)
@@ -2839,20 +2846,20 @@ void g_update_gradient_cost_and_assigned_flow_in_column_pool(Assignment& assignm
 			for (int at = 0; at < assignment.g_AgentTypeVector.size(); at++)  //m
 				if (assignment.g_AgentTypeVector[at].bFixed == 0)  // we only take into account the MAS generated agent volume into the link volume and link resource in this second optimization stage.
 				{
-					for (int i = 0; i < g_zone_vector.size(); i++)  // o
-						for (int j = 0; j < g_zone_vector.size(); j++) //d
+					for (int o = 0; o < g_zone_vector.size(); o++)  // o
+						for (int d = 0; d < g_zone_vector.size(); d++) //d
 
 							for (int tau = 0; tau < assignment.g_DemandPeriodVector.size(); tau++)  //tau
 							{
-								if (assignment.g_column_pool[i][j][at][tau].od_volume > 0)
+								if (assignment.g_column_pool[o][d][at][tau].od_volume > 0)
 								{
 									std::map<int, CColumnPath>::iterator it;
 
-									float column_vector_size = assignment.g_column_pool[i][j][at][tau].path_node_sequence_map.size();
+									float column_vector_size = assignment.g_column_pool[o][d][at][tau].path_node_sequence_map.size();
 
 									// scan through the map with different node sum for different paths
-									for (it = assignment.g_column_pool[i][j][at][tau].path_node_sequence_map.begin(); //k
-										it != assignment.g_column_pool[i][j][at][tau].path_node_sequence_map.end(); it++)
+									for (it = assignment.g_column_pool[o][d][at][tau].path_node_sequence_map.begin(); //k
+										it != assignment.g_column_pool[o][d][at][tau].path_node_sequence_map.end(); it++)
 									{
 
 										for (int nl = it->second.path_link_vector.size() - 1; nl >= 0; nl--)  // arc a
@@ -2871,6 +2878,7 @@ void g_update_gradient_cost_and_assigned_flow_in_column_pool(Assignment& assignm
 											g_link_vector[link_seq_no].resource_per_period_per_at[tau][at] += volume * CRU;
 
 
+
 										}
 									}
 								}
@@ -2885,19 +2893,16 @@ void g_update_gradient_cost_and_assigned_flow_in_column_pool(Assignment& assignm
 
 void g_column_pool_optimization(Assignment& assignment, int column_updating_iterations)
 {
-	g_generate_initial_flow_volume_in_column_pool(assignment);
 
 	for (int n = 0; n < column_updating_iterations; n++)
 	{ 
-		g_update_gradient_cost_and_assigned_flow_in_column_pool(assignment);
+		g_update_gradient_cost_and_assigned_flow_in_column_pool(assignment, n);
 	}
 }
 
 void g_output_simulation_result(Assignment& assignment)
 {
 
-	int column_updating_iterations = 1;
-	g_column_pool_optimization(assignment, column_updating_iterations);
 
 	int b_debug_detail_flag = 0;
 	FILE* g_pFileLinkMOE = NULL;
@@ -2997,22 +3002,22 @@ void g_output_simulation_result(Assignment& assignment)
 	}
 	else
 	{
-		fprintf(g_pFileODMOE, "agent_id,o_zone_id,d_zone_id,o_node_id,d_node_id,agent_type,demand_period,volume,cost,travel_time,distance,node_sequence,link_sequence,time_sequence,time_decimal_sequence\n");
+		fprintf(g_pFileODMOE, "agent_id,o_zone_id,d_zone_id,path_id,o_node_id,d_node_id,agent_type,demand_period,volume,cost,travel_time,distance,diff,relative_diff,switched_volume,node_sequence,link_sequence,time_sequence,time_decimal_sequence,\n");
 
 		int count = 1;
-		for (int i = 0; i < g_zone_vector.size(); i++)
-			for (int j = 0; j < g_zone_vector.size(); j++)
+		for (int o = 0; o < g_zone_vector.size(); o++)
+			for (int d = 0; d < g_zone_vector.size(); d++)
 				for (int at = 0; at < assignment.g_AgentTypeVector.size(); at++)
 					for (int tau = 0; tau < assignment.g_DemandPeriodVector.size(); tau++)
 					{
 
-						if (assignment.g_column_pool[i][j][at][tau].od_volume > 0)
+						if (assignment.g_column_pool[o][d][at][tau].od_volume > 0)
 						{
 							std::map<int, CColumnPath>::iterator it;
 
 							// scan through the map with different node sum for different paths
-							for (it = assignment.g_column_pool[i][j][at][tau].path_node_sequence_map.begin();
-								it != assignment.g_column_pool[i][j][at][tau].path_node_sequence_map.end(); it++)
+							for (it = assignment.g_column_pool[o][d][at][tau].path_node_sequence_map.begin();
+								it != assignment.g_column_pool[o][d][at][tau].path_node_sequence_map.end(); it++)
 							{
 
 								float path_cost = 0;
@@ -3037,18 +3042,22 @@ void g_output_simulation_result(Assignment& assignment)
 								}
 
 
-								fprintf(g_pFileODMOE, "%d,%d,%d,%d,%d,%s,%s,%.1f,%.1f,%.1f,%.4f,",
+								fprintf(g_pFileODMOE, "%d,%d,%d,%d,%d,%d,%s,%s,%.1f,%.1f,%.1f,%.4f,%.4f,%.4f,%.4f,",
 									count,
-									g_zone_vector[i].zone_id,
-									g_zone_vector[j].zone_id,
-									g_node_vector[g_zone_vector[i].node_seq_no].node_id,
-									g_node_vector[g_zone_vector[j].node_seq_no].node_id,
+									g_zone_vector[o].zone_id,
+									g_zone_vector[d].zone_id,
+									it->second.path_seq_no,
+									g_node_vector[g_zone_vector[o].node_seq_no].node_id,
+									g_node_vector[g_zone_vector[d].node_seq_no].node_id,
 									assignment.g_AgentTypeVector[at].agent_type.c_str(),
 									assignment.g_DemandPeriodVector[tau].demand_period.c_str(),
 									it->second.path_volume ,
 									path_cost,
 									path_travel_time,
-									it->second.path_distance);
+									it->second.path_distance,
+									it->second.path_gradient_cost_difference,
+									it->second.path_gradient_cost_relative_difference * it->second.path_volume,
+									it->second.path_switch_volume);
 
 
 								for (int ni = it->second.path_node_vector.size() - 1; ni >= 0; ni--)
@@ -3170,7 +3179,7 @@ void g_assign_computing_tasks_to_memory_blocks(Assignment& assignment)
 
 //major function: update the cost for each node at each SP tree, using a stack from the origin structure 
 
-int NetworkForSP::calculate_TD_link_flow(Assignment& assignment, int iteration_number_outterloop)
+void NetworkForSP::calculate_TD_link_flow(Assignment& assignment, int iteration_number_outterloop)
 {
 	
 
@@ -3181,11 +3190,11 @@ int NetworkForSP::calculate_TD_link_flow(Assignment& assignment, int iteration_n
 
 
 	if (m_iteration_k > iteration_number_outterloop)  // we only update available path tree;
-		return 0;
+		return;
 
 	if (g_node_vector[origin_node].m_outgoing_link_seq_no_vector.size() == 0)
 	{
-		return 0;
+		return;
 	}
 
 	// given,  m_node_label_cost[i]; is the gradient cost , for this tree's, from its origin to the destination node i'. 
@@ -3273,7 +3282,7 @@ int NetworkForSP::calculate_TD_link_flow(Assignment& assignment, int iteration_n
 
 				// we obtain the cost, time, distance from the last tree-k 
 
-				if (m_iteration_k == iteration_number_outterloop)  // we only use the last newly generated path from the path tree;
+				if (iteration_number_outterloop == assignment.g_number_of_K_paths-1)  // we only use the last newly generated path from the path tree;
 				{
 
 					// get node sum
@@ -3288,6 +3297,9 @@ int NetworkForSP::calculate_TD_link_flow(Assignment& assignment, int iteration_n
 							// we cannot find a path with the same node sum, so we need to add this path into the map, 
 						{ 
 							// add this unique path
+							int path_count = assignment.g_column_pool[m_origin_zone_seq_no][destination_zone_seq_no][agent_type][m_demand_time_period_no].path_node_sequence_map.size();
+							assignment.g_column_pool[m_origin_zone_seq_no][destination_zone_seq_no][agent_type][m_demand_time_period_no].path_node_sequence_map[node_sum].path_seq_no = path_count;
+							assignment.g_column_pool[m_origin_zone_seq_no][destination_zone_seq_no][agent_type][m_demand_time_period_no].path_node_sequence_map[node_sum].path_volume = 0;
 							assignment.g_column_pool[m_origin_zone_seq_no][destination_zone_seq_no][agent_type][m_demand_time_period_no].time = m_label_time_array[i];
 							assignment.g_column_pool[m_origin_zone_seq_no][destination_zone_seq_no][agent_type][m_demand_time_period_no].path_node_sequence_map[node_sum].path_distance = m_label_distance_array[i];
 							assignment.g_column_pool[m_origin_zone_seq_no][destination_zone_seq_no][agent_type][m_demand_time_period_no].path_node_sequence_map[node_sum].path_cost = m_node_label_cost[i];
@@ -3297,7 +3309,7 @@ int NetworkForSP::calculate_TD_link_flow(Assignment& assignment, int iteration_n
 
 						}
 
-						assignment.g_column_pool[m_origin_zone_seq_no][destination_zone_seq_no][agent_type][m_demand_time_period_no].path_node_sequence_map[node_sum].path_volume += 1;
+						assignment.g_column_pool[m_origin_zone_seq_no][destination_zone_seq_no][agent_type][m_demand_time_period_no].path_node_sequence_map[node_sum].path_volume += volume;
 
 
 				}
@@ -3327,7 +3339,7 @@ void  CLink::CalculateTD_VDFunction()
 }
 
 
-double network_assignment(int iteration_number, int assignment_mode)
+double network_assignment(int iteration_number, int assignment_mode, int column_updating_iterations)
 {
 
 
@@ -3356,17 +3368,17 @@ double network_assignment(int iteration_number, int assignment_mode)
 	g_ReadDemandFileBasedOnDemandFileList(assignment);
 
 	// definte timestamps
-	clock_t start_t, end_t, total_t, start_t_1, end_t_1, total_t_1;
+	clock_t start_t, end_t, total_t;
 
 	//step 2: allocate memory and assign computing tasks
 	g_assign_computing_tasks_to_memory_blocks(assignment);
+	start_t = clock();
 
 	//step 3: find shortest path and update path cost of tree using TD travel time
 	for (int iteration_number = 0; iteration_number < assignment.g_number_of_K_paths; iteration_number++)
 	{
 		//TRACE("Loop 1: assignment iteration %d", iteration_number);
 		//step 3: compute K SP tree
-		start_t = clock();
 
 		g_reset_link_volume(g_link_vector.size());  // we can have a recursive formulat to reupdate the current link volume by a factor of k/(k+1), and use the newly generated path flow to add the additional 1/(k+1)
 
@@ -3387,8 +3399,6 @@ double network_assignment(int iteration_number, int assignment_mode)
 		}
 
 
-		end_t = clock();
-		total_t = (end_t - start_t);
 
 		//					cout << "CPU Running Time for SP = " << total_t << " milliseconds" << " " << "k=" << iteration_number << endl;
 		//					fprintf(g_pFileDebugLog, "CPU Running Time for SP  = %ld milliseconds\n", total_t);
@@ -3399,9 +3409,16 @@ double network_assignment(int iteration_number, int assignment_mode)
 //#pragma omp parallel for  // step collect all partial link volume to compute link volume across all zones
 		update_link_volume_and_cost();  // at the end of shortest path
 	}
-	cout << "Output for assignment with " << assignment.g_number_of_K_paths << " iterations. Done!" << endl;
 
+
+	g_column_pool_optimization(assignment, column_updating_iterations);
+
+	end_t = clock();
+	total_t = (end_t - start_t);
+
+	cout << "Output for assignment with " << assignment.g_number_of_K_paths << " iterations. Done!" << endl;
 	cout << "CPU Running Time for assignment= " << total_t/1000.0 << " s" << endl;
+
 	//step 4: output simulation results of the new demand 
 	g_output_simulation_result(assignment);
 
@@ -3418,7 +3435,8 @@ double network_assignment(int iteration_number, int assignment_mode)
 	}
 	g_link_vector.clear();
 
-
+	if (assignment.g_pFileDebugLog != NULL)
+		fclose(assignment.g_pFileDebugLog);
 	getchar();
 	return 1;
 
