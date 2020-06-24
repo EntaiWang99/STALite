@@ -1,0 +1,476 @@
+SP: SE node: 1
+SP: updating node: 3 current cost: 99999.00, new cost 0.00
+SP: add node 3 into SE List
+SP: updating node: 4 current cost: 99999.00, new cost 45.00
+SP: add node 4 into SE List
+SP: SE node: 3
+SP: updating node: 2 current cost: 99999.00, new cost 45.00
+SP: add node 2 into SE List
+SP: updating node: 4 current cost: 45.00, new cost 0.00
+SP: add node 4 into SE List
+SP: SE node: 4
+SP: updating node: 2 current cost: 45.00, new cost 0.00
+SP: add node 2 into SE List
+SP: SE node: 2
+SP: SE node: 1
+SP: updating node: 3 current cost: 99999.00, new cost 80.00
+SP: add node 3 into SE List
+SP: updating node: 4 current cost: 99999.00, new cost 45.00
+SP: add node 4 into SE List
+SP: SE node: 3
+SP: updating node: 2 current cost: 99999.00, new cost 125.00
+SP: add node 2 into SE List
+SP: SE node: 4
+SP: SE node: 2
+SP: SE node: 1
+SP: updating node: 3 current cost: 99999.00, new cost 80.00
+SP: add node 3 into SE List
+SP: updating node: 4 current cost: 99999.00, new cost 45.00
+SP: add node 4 into SE List
+SP: SE node: 3
+SP: updating node: 2 current cost: 99999.00, new cost 125.00
+SP: add node 2 into SE List
+SP: SE node: 4
+SP: updating node: 2 current cost: 125.00, new cost 85.00
+SP: add node 2 into SE List
+SP: SE node: 2
+SP: SE node: 1
+SP: updating node: 3 current cost: 99999.00, new cost 53.33
+SP: add node 3 into SE List
+SP: updating node: 4 current cost: 99999.00, new cost 45.00
+SP: add node 4 into SE List
+SP: SE node: 3
+SP: updating node: 2 current cost: 99999.00, new cost 98.33
+SP: add node 2 into SE List
+SP: SE node: 4
+SP: SE node: 2
+SP: SE node: 1
+SP: updating node: 3 current cost: 99999.00, new cost 60.00
+SP: add node 3 into SE List
+SP: updating node: 4 current cost: 99999.00, new cost 45.00
+SP: add node 4 into SE List
+SP: SE node: 3
+SP: updating node: 2 current cost: 99999.00, new cost 105.00
+SP: add node 2 into SE List
+SP: SE node: 4
+SP: updating node: 2 current cost: 105.00, new cost 85.00
+SP: add node 2 into SE List
+SP: SE node: 2
+SP: SE node: 1
+SP: updating node: 3 current cost: 99999.00, new cost 48.00
+SP: add node 3 into SE List
+SP: updating node: 4 current cost: 99999.00, new cost 45.00
+SP: add node 4 into SE List
+SP: SE node: 3
+SP: updating node: 2 current cost: 99999.00, new cost 93.00
+SP: add node 2 into SE List
+SP: SE node: 4
+SP: SE node: 2
+SP: SE node: 1
+SP: updating node: 3 current cost: 99999.00, new cost 53.33
+SP: add node 3 into SE List
+SP: updating node: 4 current cost: 99999.00, new cost 45.00
+SP: add node 4 into SE List
+SP: SE node: 3
+SP: updating node: 2 current cost: 99999.00, new cost 98.33
+SP: add node 2 into SE List
+SP: SE node: 4
+SP: updating node: 2 current cost: 98.33, new cost 85.00
+SP: add node 2 into SE List
+SP: SE node: 2
+SP: SE node: 1
+SP: updating node: 3 current cost: 99999.00, new cost 45.71
+SP: add node 3 into SE List
+SP: updating node: 4 current cost: 99999.00, new cost 45.00
+SP: add node 4 into SE List
+SP: SE node: 3
+SP: updating node: 2 current cost: 99999.00, new cost 90.71
+SP: add node 2 into SE List
+SP: SE node: 4
+SP: SE node: 2
+SP: SE node: 1
+SP: updating node: 3 current cost: 99999.00, new cost 50.00
+SP: add node 3 into SE List
+SP: updating node: 4 current cost: 99999.00, new cost 45.00
+SP: add node 4 into SE List
+SP: SE node: 3
+SP: updating node: 2 current cost: 99999.00, new cost 95.00
+SP: add node 2 into SE List
+SP: SE node: 4
+SP: updating node: 2 current cost: 95.00, new cost 85.00
+SP: add node 2 into SE List
+SP: SE node: 2
+SP: SE node: 1
+SP: updating node: 3 current cost: 99999.00, new cost 44.44
+SP: add node 3 into SE List
+SP: updating node: 4 current cost: 99999.00, new cost 45.00
+SP: add node 4 into SE List
+SP: SE node: 3
+SP: updating node: 2 current cost: 99999.00, new cost 89.44
+SP: add node 2 into SE List
+SP: SE node: 4
+SP: SE node: 2
+SP: SE node: 1
+SP: updating node: 3 current cost: 99999.00, new cost 48.00
+SP: add node 3 into SE List
+SP: updating node: 4 current cost: 99999.00, new cost 45.00
+SP: add node 4 into SE List
+SP: SE node: 3
+SP: updating node: 2 current cost: 99999.00, new cost 93.00
+SP: add node 2 into SE List
+SP: SE node: 4
+SP: updating node: 2 current cost: 93.00, new cost 85.00
+SP: add node 2 into SE List
+SP: SE node: 2
+SP: SE node: 1
+SP: updating node: 3 current cost: 99999.00, new cost 43.64
+SP: add node 3 into SE List
+SP: updating node: 4 current cost: 99999.00, new cost 45.00
+SP: add node 4 into SE List
+SP: SE node: 3
+SP: updating node: 2 current cost: 99999.00, new cost 88.64
+SP: add node 2 into SE List
+SP: SE node: 4
+SP: SE node: 2
+SP: SE node: 1
+SP: updating node: 3 current cost: 99999.00, new cost 46.67
+SP: add node 3 into SE List
+SP: updating node: 4 current cost: 99999.00, new cost 45.00
+SP: add node 4 into SE List
+SP: SE node: 3
+SP: updating node: 2 current cost: 99999.00, new cost 91.67
+SP: add node 2 into SE List
+SP: SE node: 4
+SP: updating node: 2 current cost: 91.67, new cost 85.00
+SP: add node 2 into SE List
+SP: SE node: 2
+SP: SE node: 1
+SP: updating node: 3 current cost: 99999.00, new cost 43.08
+SP: add node 3 into SE List
+SP: updating node: 4 current cost: 99999.00, new cost 45.00
+SP: add node 4 into SE List
+SP: SE node: 3
+SP: updating node: 2 current cost: 99999.00, new cost 88.08
+SP: add node 2 into SE List
+SP: SE node: 4
+SP: SE node: 2
+SP: SE node: 1
+SP: updating node: 3 current cost: 99999.00, new cost 45.71
+SP: add node 3 into SE List
+SP: updating node: 4 current cost: 99999.00, new cost 45.00
+SP: add node 4 into SE List
+SP: SE node: 3
+SP: updating node: 2 current cost: 99999.00, new cost 90.71
+SP: add node 2 into SE List
+SP: SE node: 4
+SP: updating node: 2 current cost: 90.71, new cost 85.00
+SP: add node 2 into SE List
+SP: SE node: 2
+SP: SE node: 1
+SP: updating node: 3 current cost: 99999.00, new cost 42.67
+SP: add node 3 into SE List
+SP: updating node: 4 current cost: 99999.00, new cost 45.00
+SP: add node 4 into SE List
+SP: SE node: 3
+SP: updating node: 2 current cost: 99999.00, new cost 87.67
+SP: add node 2 into SE List
+SP: SE node: 4
+SP: SE node: 2
+SP: SE node: 1
+SP: updating node: 3 current cost: 99999.00, new cost 45.00
+SP: add node 3 into SE List
+SP: updating node: 4 current cost: 99999.00, new cost 45.00
+SP: add node 4 into SE List
+SP: SE node: 3
+SP: updating node: 2 current cost: 99999.00, new cost 90.00
+SP: add node 2 into SE List
+SP: SE node: 4
+SP: updating node: 2 current cost: 90.00, new cost 85.00
+SP: add node 2 into SE List
+SP: SE node: 2
+SP: SE node: 1
+SP: updating node: 3 current cost: 99999.00, new cost 42.35
+SP: add node 3 into SE List
+SP: updating node: 4 current cost: 99999.00, new cost 45.00
+SP: add node 4 into SE List
+SP: SE node: 3
+SP: updating node: 2 current cost: 99999.00, new cost 87.35
+SP: add node 2 into SE List
+SP: SE node: 4
+SP: SE node: 2
+SP: SE node: 1
+SP: updating node: 3 current cost: 99999.00, new cost 44.44
+SP: add node 3 into SE List
+SP: updating node: 4 current cost: 99999.00, new cost 45.00
+SP: add node 4 into SE List
+SP: SE node: 3
+SP: updating node: 2 current cost: 99999.00, new cost 89.44
+SP: add node 2 into SE List
+SP: SE node: 4
+SP: updating node: 2 current cost: 89.44, new cost 85.00
+SP: add node 2 into SE List
+SP: SE node: 2
+SP: SE node: 1
+SP: updating node: 3 current cost: 99999.00, new cost 42.11
+SP: add node 3 into SE List
+SP: updating node: 4 current cost: 99999.00, new cost 45.00
+SP: add node 4 into SE List
+SP: SE node: 3
+SP: updating node: 2 current cost: 99999.00, new cost 87.11
+SP: add node 2 into SE List
+SP: SE node: 4
+SP: SE node: 2
+SP: SE node: 1
+SP: updating node: 3 current cost: 99999.00, new cost 44.00
+SP: add node 3 into SE List
+SP: updating node: 4 current cost: 99999.00, new cost 45.00
+SP: add node 4 into SE List
+SP: SE node: 3
+SP: updating node: 2 current cost: 99999.00, new cost 89.00
+SP: add node 2 into SE List
+SP: SE node: 4
+SP: updating node: 2 current cost: 89.00, new cost 85.00
+SP: add node 2 into SE List
+SP: SE node: 2
+SP: SE node: 1
+SP: updating node: 3 current cost: 99999.00, new cost 41.90
+SP: add node 3 into SE List
+SP: updating node: 4 current cost: 99999.00, new cost 45.00
+SP: add node 4 into SE List
+SP: SE node: 3
+SP: updating node: 2 current cost: 99999.00, new cost 86.90
+SP: add node 2 into SE List
+SP: SE node: 4
+SP: SE node: 2
+SP: SE node: 1
+SP: updating node: 3 current cost: 99999.00, new cost 43.64
+SP: add node 3 into SE List
+SP: updating node: 4 current cost: 99999.00, new cost 45.00
+SP: add node 4 into SE List
+SP: SE node: 3
+SP: updating node: 2 current cost: 99999.00, new cost 88.64
+SP: add node 2 into SE List
+SP: SE node: 4
+SP: updating node: 2 current cost: 88.64, new cost 85.00
+SP: add node 2 into SE List
+SP: SE node: 2
+SP: SE node: 1
+SP: updating node: 3 current cost: 99999.00, new cost 41.74
+SP: add node 3 into SE List
+SP: updating node: 4 current cost: 99999.00, new cost 45.00
+SP: add node 4 into SE List
+SP: SE node: 3
+SP: updating node: 2 current cost: 99999.00, new cost 86.74
+SP: add node 2 into SE List
+SP: SE node: 4
+SP: SE node: 2
+SP: SE node: 1
+SP: updating node: 3 current cost: 99999.00, new cost 43.33
+SP: add node 3 into SE List
+SP: updating node: 4 current cost: 99999.00, new cost 45.00
+SP: add node 4 into SE List
+SP: SE node: 3
+SP: updating node: 2 current cost: 99999.00, new cost 88.33
+SP: add node 2 into SE List
+SP: SE node: 4
+SP: updating node: 2 current cost: 88.33, new cost 85.00
+SP: add node 2 into SE List
+SP: SE node: 2
+SP: SE node: 1
+SP: updating node: 3 current cost: 99999.00, new cost 41.60
+SP: add node 3 into SE List
+SP: updating node: 4 current cost: 99999.00, new cost 45.00
+SP: add node 4 into SE List
+SP: SE node: 3
+SP: updating node: 2 current cost: 99999.00, new cost 86.60
+SP: add node 2 into SE List
+SP: updating node: 4 current cost: 45.00, new cost 44.80
+SP: add node 4 into SE List
+SP: SE node: 4
+SP: updating node: 2 current cost: 86.60, new cost 86.40
+SP: add node 2 into SE List
+SP: SE node: 2
+SP: SE node: 1
+SP: updating node: 3 current cost: 99999.00, new cost 43.08
+SP: add node 3 into SE List
+SP: updating node: 4 current cost: 99999.00, new cost 45.00
+SP: add node 4 into SE List
+SP: SE node: 3
+SP: updating node: 2 current cost: 99999.00, new cost 88.08
+SP: add node 2 into SE List
+SP: SE node: 4
+SP: SE node: 2
+SP: SE node: 1
+SP: updating node: 3 current cost: 99999.00, new cost 44.44
+SP: add node 3 into SE List
+SP: updating node: 4 current cost: 99999.00, new cost 45.00
+SP: add node 4 into SE List
+SP: SE node: 3
+SP: updating node: 2 current cost: 99999.00, new cost 89.44
+SP: add node 2 into SE List
+SP: SE node: 4
+SP: updating node: 2 current cost: 89.44, new cost 86.48
+SP: add node 2 into SE List
+SP: SE node: 2
+SP: SE node: 1
+SP: updating node: 3 current cost: 99999.00, new cost 42.86
+SP: add node 3 into SE List
+SP: updating node: 4 current cost: 99999.00, new cost 45.00
+SP: add node 4 into SE List
+SP: SE node: 3
+SP: updating node: 2 current cost: 99999.00, new cost 87.86
+SP: add node 2 into SE List
+SP: SE node: 4
+SP: SE node: 2
+SP: SE node: 1
+SP: updating node: 3 current cost: 99999.00, new cost 44.14
+SP: add node 3 into SE List
+SP: updating node: 4 current cost: 99999.00, new cost 45.00
+SP: add node 4 into SE List
+SP: SE node: 3
+SP: updating node: 2 current cost: 99999.00, new cost 89.14
+SP: add node 2 into SE List
+SP: SE node: 4
+SP: updating node: 2 current cost: 89.14, new cost 86.38
+SP: add node 2 into SE List
+SP: SE node: 2
+SP: SE node: 1
+SP: updating node: 3 current cost: 99999.00, new cost 42.67
+SP: add node 3 into SE List
+SP: updating node: 4 current cost: 99999.00, new cost 45.00
+SP: add node 4 into SE List
+SP: SE node: 3
+SP: updating node: 2 current cost: 99999.00, new cost 87.67
+SP: add node 2 into SE List
+SP: SE node: 4
+SP: SE node: 2
+SP: SE node: 1
+SP: updating node: 3 current cost: 99999.00, new cost 43.87
+SP: add node 3 into SE List
+SP: updating node: 4 current cost: 99999.00, new cost 45.00
+SP: add node 4 into SE List
+SP: SE node: 3
+SP: updating node: 2 current cost: 99999.00, new cost 88.87
+SP: add node 2 into SE List
+SP: SE node: 4
+SP: updating node: 2 current cost: 88.87, new cost 86.29
+SP: add node 2 into SE List
+SP: SE node: 2
+SP: SE node: 1
+SP: updating node: 3 current cost: 99999.00, new cost 42.50
+SP: add node 3 into SE List
+SP: updating node: 4 current cost: 99999.00, new cost 45.00
+SP: add node 4 into SE List
+SP: SE node: 3
+SP: updating node: 2 current cost: 99999.00, new cost 87.50
+SP: add node 2 into SE List
+SP: SE node: 4
+SP: SE node: 2
+SP: SE node: 1
+SP: updating node: 3 current cost: 99999.00, new cost 43.64
+SP: add node 3 into SE List
+SP: updating node: 4 current cost: 99999.00, new cost 45.00
+SP: add node 4 into SE List
+SP: SE node: 3
+SP: updating node: 2 current cost: 99999.00, new cost 88.64
+SP: add node 2 into SE List
+SP: SE node: 4
+SP: updating node: 2 current cost: 88.64, new cost 86.21
+SP: add node 2 into SE List
+SP: SE node: 2
+SP: SE node: 1
+SP: updating node: 3 current cost: 99999.00, new cost 42.35
+SP: add node 3 into SE List
+SP: updating node: 4 current cost: 99999.00, new cost 45.00
+SP: add node 4 into SE List
+SP: SE node: 3
+SP: updating node: 2 current cost: 99999.00, new cost 87.35
+SP: add node 2 into SE List
+SP: SE node: 4
+SP: SE node: 2
+SP: SE node: 1
+SP: updating node: 3 current cost: 99999.00, new cost 43.43
+SP: add node 3 into SE List
+SP: updating node: 4 current cost: 99999.00, new cost 45.00
+SP: add node 4 into SE List
+SP: SE node: 3
+SP: updating node: 2 current cost: 99999.00, new cost 88.43
+SP: add node 2 into SE List
+SP: SE node: 4
+SP: updating node: 2 current cost: 88.43, new cost 86.14
+SP: add node 2 into SE List
+SP: SE node: 2
+SP: SE node: 1
+SP: updating node: 3 current cost: 99999.00, new cost 42.22
+SP: add node 3 into SE List
+SP: updating node: 4 current cost: 99999.00, new cost 45.00
+SP: add node 4 into SE List
+SP: SE node: 3
+SP: updating node: 2 current cost: 99999.00, new cost 87.22
+SP: add node 2 into SE List
+SP: SE node: 4
+SP: SE node: 2
+SP: SE node: 1
+SP: updating node: 3 current cost: 99999.00, new cost 43.24
+SP: add node 3 into SE List
+SP: updating node: 4 current cost: 99999.00, new cost 45.00
+SP: add node 4 into SE List
+SP: SE node: 3
+SP: updating node: 2 current cost: 99999.00, new cost 88.24
+SP: add node 2 into SE List
+SP: SE node: 4
+SP: updating node: 2 current cost: 88.24, new cost 86.08
+SP: add node 2 into SE List
+SP: SE node: 2
+SP: SE node: 1
+SP: updating node: 3 current cost: 99999.00, new cost 42.11
+SP: add node 3 into SE List
+SP: updating node: 4 current cost: 99999.00, new cost 45.00
+SP: add node 4 into SE List
+SP: SE node: 3
+SP: updating node: 2 current cost: 99999.00, new cost 87.11
+SP: add node 2 into SE List
+SP: SE node: 4
+SP: SE node: 2
+SP: SE node: 1
+SP: updating node: 3 current cost: 99999.00, new cost 43.08
+SP: add node 3 into SE List
+SP: updating node: 4 current cost: 99999.00, new cost 45.00
+SP: add node 4 into SE List
+SP: SE node: 3
+SP: updating node: 2 current cost: 99999.00, new cost 88.08
+SP: add node 2 into SE List
+SP: SE node: 4
+SP: updating node: 2 current cost: 88.08, new cost 86.03
+SP: add node 2 into SE List
+SP: SE node: 2
+CU: iteration 0: total_gap=, 1200.000000,total_relative_gap=, 0.001673,
+CU: iteration 1: total_gap=, 5799.156250,total_relative_gap=, 0.008204,
+CU: iteration 2: total_gap=, 124.500458,total_relative_gap=, 0.000179,
+CU: iteration 3: total_gap=, 174.535522,total_relative_gap=, 0.000251,
+CU: iteration 4: total_gap=, 31.293711,total_relative_gap=, 0.000045,
+CU: iteration 5: total_gap=, 58.549065,total_relative_gap=, 0.000084,
+CU: iteration 6: total_gap=, 15.396754,total_relative_gap=, 0.000022,
+CU: iteration 7: total_gap=, 29.387291,total_relative_gap=, 0.000042,
+CU: iteration 8: total_gap=, 9.576591,total_relative_gap=, 0.000014,
+CU: iteration 9: total_gap=, 17.826237,total_relative_gap=, 0.000026,
+CU: iteration 10: total_gap=, 6.739741,total_relative_gap=, 0.000010,
+CU: iteration 11: total_gap=, 12.083572,total_relative_gap=, 0.000017,
+CU: iteration 12: total_gap=, 5.141896,total_relative_gap=, 0.000007,
+CU: iteration 13: total_gap=, 8.773214,total_relative_gap=, 0.000013,
+CU: iteration 14: total_gap=, 3.978203,total_relative_gap=, 0.000006,
+CU: iteration 15: total_gap=, 6.696325,total_relative_gap=, 0.000010,
+CU: iteration 16: total_gap=, 3.316842,total_relative_gap=, 0.000005,
+CU: iteration 17: total_gap=, 5.380059,total_relative_gap=, 0.000008,
+CU: iteration 18: total_gap=, 2.738553,total_relative_gap=, 0.000004,
+CU: iteration 19: total_gap=, 4.334785,total_relative_gap=, 0.000006,
+CU: iteration 20: total_gap=, 2.346921,total_relative_gap=, 0.000003,
+CU: iteration 21: total_gap=, 3.676557,total_relative_gap=, 0.000005,
+CU: iteration 22: total_gap=, 2.085770,total_relative_gap=, 0.000003,
+CU: iteration 23: total_gap=, 3.073872,total_relative_gap=, 0.000004,
+CU: iteration 24: total_gap=, 1.814439,total_relative_gap=, 0.000003,
+CU: iteration 25: total_gap=, 2.639451,total_relative_gap=, 0.000004,
+CU: iteration 26: total_gap=, 1.641094,total_relative_gap=, 0.000002,
+CU: iteration 27: total_gap=, 2.328135,total_relative_gap=, 0.000003,
+CU: iteration 28: total_gap=, 1.465687,total_relative_gap=, 0.000002,
+CU: iteration 29: total_gap=, 2.041422,total_relative_gap=, 0.000003,

@@ -5,7 +5,7 @@
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LocalDebuggerWorkingDirectory>C:\SourceCode\STALite_sourcecode\STALite_sourcecode\dataset\SIOUX_FALLS_NET</LocalDebuggerWorkingDirectory>
+    <LocalDebuggerWorkingDirectory>C:\SourceCode\STALite_sourcecode\STALite_sourcecode\dataset\Braess's_Paradox_PV</LocalDebuggerWorkingDirectory>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

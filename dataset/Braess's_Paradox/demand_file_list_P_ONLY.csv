@@ -1,4 +1,2 @@
 scenario_no,file_sequence_no,file_name,format_type,demand_period,agent_type
-0,1,agent_v.csv,agent_csv,AM,v
 1,2,demand_p.csv,column,AM,p
-0,3,agent_vo.csv,agent_csv,AM,vo

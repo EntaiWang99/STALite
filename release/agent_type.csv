@@ -1,3 +1,4 @@
-agent_type,name,VOT,PCE_link_type1,PCE_link_type2,PCE_link_type3,PCE_link_type4,PCE_link_type5,CRU_link_type1,CRU_link_type2,CRU_link_type3,CRU_link_type4,CRU_link_type5
-p,passenger,10,1,1,1,1,1,1,1,1,1,1
-v,vehicle,10,0,0,0,0,0,-300,-300,-300,-300,-300
+agent_type,name,VOT,flow_type,PCE_link_type1,CRU_link_type1
+vo,vehicle_optimization,10,2,0,300
+v,vehicle,10,1,0,300
+p,package,10,0,1,-1
