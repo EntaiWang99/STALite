@@ -3090,7 +3090,7 @@ void g_ReadInputData(Assignment& assignment)
 };
 
 
-void g_reset_link_volume(int number_of_links, int iteration_index)
+void g_reset_and_update_link_volume(int number_of_links, int iteration_index, bool b_self_reducing_path_volume)
 {
 			for (int l = 0; l < number_of_links; l++)
 			{
@@ -3151,8 +3151,11 @@ void g_reset_link_volume(int number_of_links, int iteration_index)
 								g_link_vector[link_seq_no].resource_per_period_per_at[tau][at] += link_volume_contributed_by_path_volume * CRU;
 
 							}
-							//after link volumn "tally", self-deducting the path volume by 1/(k+1) (i.e. keep k/(k+1) ratio of previous flow) so that the following shortes path will be receiving 1/(k+1) flow
+
+							if(b_self_reducing_path_volume == true)
+							{							//after link volumn "tally", self-deducting the path volume by 1/(k+1) (i.e. keep k/(k+1) ratio of previous flow) so that the following shortes path will be receiving 1/(k+1) flow
 							it->second.path_volume = it->second.path_volume * (float(iteration_index) / float(iteration_index + 1));
+							}
 
 						}
 
@@ -3189,10 +3192,8 @@ void g_reset_link_volume(int number_of_links, int iteration_index)
 
 }
 
-void update_link_volume_and_cost()
+void update_link_travel_time_and_cost()
 {
-
-
 	int shortest_path_debugging_flag = 1;
 	for (int l = 0; l < g_link_vector.size(); l++)
 	{
@@ -3244,6 +3245,10 @@ void g_update_gradient_cost_and_assigned_flow_in_column_pool(Assignment& assignm
 	float total_gap = 0;
 	float total_relative_gap = 0;
 	float total_gap_count = 0;
+	g_reset_and_update_link_volume(g_link_vector.size(), inner_iteration_number, false);  // we can have a recursive formulat to reupdate the current link volume by a factor of k/(k+1), and use the newly generated path flow to add the additional 1/(k+1)
+	//step 4: based on newly calculated path volumn, update volume based travel time, and update volume based resource balance, update gradie
+	update_link_travel_time_and_cost();
+	// step 0
 	//step 1: calculate shortest path at inner iteration of column flow updating
 	for (int o = 0; o < g_zone_vector.size(); o++)  // o
 		for (int d = 0; d < g_zone_vector.size(); d++) //d
@@ -3370,10 +3375,6 @@ void g_update_gradient_cost_and_assigned_flow_in_column_pool(Assignment& assignm
 
 	if(assignment.g_pFileDebugLog != NULL)
 	fprintf(assignment.g_pFileDebugLog, "CU: iteration %d: total_gap=, %f,total_relative_gap=, %f,\n", inner_iteration_number, total_gap, total_gap / max(0.0001, total_gap_count));
-		
-	// step 4: based on newly calculated path volumn, update volume based travel time, and update volume based resource balance, update gradie
-	g_reset_link_volume(g_link_vector.size(), -1);  // we can have a recursive formulat to reupdate the current link volume by a factor of k/(k+1), and use the newly generated path flow to add the additional 1/(k+1)
-	update_link_volume_and_cost();  
 
 }
 
@@ -3424,7 +3425,7 @@ void g_output_simulation_result(Assignment& assignment)
 					g_node_vector[g_link_vector[l].from_node_seq_no].node_id,
 					g_node_vector[g_link_vector[l].to_node_seq_no].node_id,
 
-					g_link_vector[l].VDF_period[tau].period.c_str(),
+					assignment.g_DemandPeriodVector[tau].time_period.c_str(),
 					g_link_vector[l].flow_volume_per_period[tau],
 					g_link_vector[l].VDF_period[tau].avg_travel_time,
 					speed,  /* 60.0 is used to convert min to hour */
@@ -3937,15 +3938,15 @@ double network_assignment(int iteration_number, int assignment_mode, int column_
 	clock_t start_t, end_t, total_t;
 	start_t = clock();
 
-	//step 3: find shortest path and update path cost of tree using TD travel time
+	//step 3: column generation stage: find shortest path and update path cost of tree using TD travel time
 	for (int iteration_number = 0; iteration_number < assignment.g_number_of_K_paths; iteration_number++)
 	{
 		cout << "assignment iteration = " << iteration_number << endl;
 
 		//TRACE("Loop 1: assignment iteration %d", iteration_number);
 	   // step 3.1 update travel time and resource consumption		
-		g_reset_link_volume(g_link_vector.size(), iteration_number);  // we can have a recursive formulat to reupdate the current link volume by a factor of k/(k+1), and use the newly generated path flow to add the additional 1/(k+1)
-		update_link_volume_and_cost();  // initialization at the first iteration of shortest path
+		g_reset_and_update_link_volume(g_link_vector.size(), iteration_number, true);  // we can have a recursive formulat to reupdate the current link volume by a factor of k/(k+1), and use the newly generated path flow to add the additional 1/(k+1)
+		update_link_travel_time_and_cost();  // initialization at the first iteration of shortest path
 
 
 										//****************************************//
@@ -4017,7 +4018,8 @@ double network_assignment(int iteration_number, int assignment_mode, int column_
 
 	}
 
-	// step 4: for given column pool, update volume assigned for each column
+	// step 4: column updating stage: for given column pool, update volume assigned for each column
+	cout << "column pool updating with " << column_updating_iterations << " iterations. Done!" << endl;
 	g_column_pool_optimization(assignment, column_updating_iterations);
 
 	end_t = clock();

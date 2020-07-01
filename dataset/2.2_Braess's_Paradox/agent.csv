@@ -1,0 +1,2 @@
+agent_id,o_zone_id,d_zone_id,path_id,o_node_id,d_node_id,agent_type,demand_period,volume,cost,travel_time,distance,opti_cost,oc_diff,relative_diff,node_sequence,link_sequence,time_sequence,time_decimal_sequence,
+1,1,2,0,1,2,p,AM,4000.0,0.0,80.0,0.0300,80.0000,0.0000,0.0000,1;3;4;2;,1003;3004;4002;,0730;0810;0810;0850;,450.00;490.00;490.00;530.00;
