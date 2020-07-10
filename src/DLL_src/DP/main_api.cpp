@@ -1137,10 +1137,6 @@ public:
 
 
 
-
-	std::vector<int> m_total_volume_vector;
-	std::vector<float> m_avg_travel_time;
-
 	// 1. based on BPR. 
 
 	int zone_seq_no_for_outgoing_connector ;
@@ -1200,7 +1196,6 @@ public:
 	//toll related link
 	//int m_TollSize;
 	//Toll *pTollVector;  // not using SLT here to avoid issues with OpenMP
-	std::map<int, float> TollMAP;
 
 	void CalculateTD_VDFunction();
 
@@ -1374,6 +1369,7 @@ class NetworkForSP  // mainly for shortest path calculation
 {
 public:
 	bool m_bSingleSP_Flag;
+	
 	NetworkForSP()
 	{
 		m_value_of_time = 10;
@@ -1549,13 +1545,13 @@ public:
 
 
 	// SEList: scan eligible List implementation: the reason for not using STL-like template is to avoid overhead associated pointer allocation/deallocation
-	void SEList_clear()
+	inline void SEList_clear()
 	{
 		m_ListFront = -1;
 		m_ListTail = -1;
 	}
 
-	void SEList_push_front(int node)
+	inline void SEList_push_front(int node)
 	{
 		if (m_ListFront == -1)  // start from empty
 		{
@@ -1569,7 +1565,7 @@ public:
 			m_ListFront = node;
 		}
 	}
-	void SEList_push_back(int node)
+	inline void SEList_push_back(int node)
 	{
 		if (m_ListFront == -1)  // start from empty
 		{
@@ -1585,17 +1581,17 @@ public:
 		}
 	}
 
-	bool SEList_empty()
+	inline bool SEList_empty()
 	{
 		return(m_ListFront == -1);
 	}
 
-	int SEList_front()
+	inline int SEList_front()
 	{
 		return m_ListFront;
 	}
 
-	void SEList_pop_front()
+	inline void SEList_pop_front()
 	{
 		int tempFront = m_ListFront;
 		m_ListFront = m_SENodeList[m_ListFront];
@@ -1611,9 +1607,6 @@ public:
 	//major function 2: // time-dependent label correcting algorithm with double queue implementation
 	float optimal_label_correcting(Assignment& assignment, int iteration_k, int o_node_index, int d_node_no  = -1, bool pure_travel_time_cost = false)
 	{	
-
-
-
 		int SE_loop_count = 0;
 		if (iteration_k == 0)
 		{
@@ -1656,12 +1649,16 @@ public:
 		SEList_clear();
 		SEList_push_back(origin_node);
 
-		clock_t start_t = clock();
+		int i, from_node, to_node;
+		int link_sqe_no;
+		bool  b_node_updated;
+		CLink* pLink;
+		float new_time, new_distance, new_to_node_cost;
 		while (!SEList_empty())
 		{
 			SE_loop_count++;
 
-			int from_node = SEList_front();//pop a node FromID for scanning
+			from_node = SEList_front();//pop a node FromID for scanning
 
 			SEList_pop_front();  // remove current node FromID from the SE list
 			m_node_status_array[from_node] = 2;
@@ -1671,25 +1668,24 @@ public:
 
 	
 			//scan all outbound nodes of the current node
-			for (int i = 0; i < NodeForwardStarArray[from_node].OutgoingLinkSize; i++)  // for each link (i,j) belong A(i)
+			for (i = 0; i < NodeForwardStarArray[from_node].OutgoingLinkSize; i++)  // for each link (i,j) belong A(i)
 			{
 
-				int to_node = NodeForwardStarArray[from_node].OutgoingNodeNoArray[i];
+				to_node = NodeForwardStarArray[from_node].OutgoingNodeNoArray[i];
 
 				if (to_node == origin_node)
 					continue;
 
 
-				bool  b_node_updated = false;
+				b_node_updated = false;
 
-				int link_sqe_no = NodeForwardStarArray[from_node].OutgoingLinkNoArray[i];
-				//CLink pLink = g_link_vector[link_sqe_no];
+				link_sqe_no = NodeForwardStarArray[from_node].OutgoingLinkNoArray[i];
 				//if (g_node_vector [ g_link_vector[link_sqe_no].from_node_seq_no].node_id == 1537 && g_node_vector[g_link_vector[link_sqe_no].to_node_seq_no].node_id == 16133)
 				//{
 				//	cout << "a" << endl;
 				//}
 
-				CLink* pLink = &(g_link_vector[link_sqe_no]);
+				pLink = &(g_link_vector[link_sqe_no]);
 				if (pLink->zone_seq_no_for_outgoing_connector >= 0 )
 				{
 					if(pLink->zone_seq_no_for_outgoing_connector != origin_zone)
@@ -1698,11 +1694,11 @@ public:
 					}
 				}
 
-				float new_time = m_label_time_array[from_node] + pLink->travel_time_per_period[tau];
+				new_time = m_label_time_array[from_node] + pLink->travel_time_per_period[tau];
 
-				float new_distance = m_label_distance_array[from_node] + pLink->length;
+				new_distance = m_label_distance_array[from_node] + pLink->length;
 
-				float new_to_node_cost = m_node_label_cost[from_node] + pLink->travel_time_per_period[tau] + pLink->cost /m_value_of_time * 60;  // *60 as 60 min per hour
+				new_to_node_cost = m_node_label_cost[from_node] + pLink->travel_time_per_period[tau] + pLink->cost /m_value_of_time * 60;  // *60 as 60 min per hour
 
 				if (new_to_node_cost < - 1000)
 				{
@@ -1747,11 +1743,8 @@ public:
 					// update cost label and node/time predecessor
 					m_label_time_array[to_node] = new_time;
 					m_label_distance_array[to_node] = new_distance;
-
 					m_node_label_cost[to_node] = new_to_node_cost;
 					//m_node_label_cost_withouttoll[to_node] = new_to_node_cost_withouttoll;
-
-
 					m_node_predecessor[to_node] = from_node;  // pointer to previous physical NODE INDEX from the current label at current node and time
 					m_link_predecessor[to_node] = link_sqe_no;  // pointer to previous physical NODE INDEX from the current label at current node and time
 
@@ -3261,8 +3254,6 @@ void g_ReadInputData(Assignment& assignment)
 
 //	fprintf(g_pFileOutputLog, "number of links =,%d\n", assignment.g_number_of_links);
 
-	parser_link.CloseCSVFile();
-
 
 };
 
@@ -4117,6 +4108,7 @@ void g_fetch_link_volume_for_all_processors()
 
 void NetworkForSP::backtrace_shortest_path_tree(Assignment& assignment, int iteration_number_outterloop, int o_node_index)
 {
+
 		int origin_node = m_origin_node_vector[o_node_index]; // assigned no
 		int m_origin_zone_seq_no = m_origin_zone_seq_no_vector[o_node_index]; // assigned no
 
@@ -4149,7 +4141,23 @@ void NetworkForSP::backtrace_shortest_path_tree(Assignment& assignment, int iter
 	   // check demand flow balance constraints 
 
 		int num = 0;
-		for (int i = 0; i < assignment.g_number_of_nodes; i++)
+		int number_of_nodes = assignment.g_number_of_nodes;
+		int number_of_links = assignment.g_number_of_nodes;
+		int l_node_size = 0;  // initialize local node size index
+		int l_link_size = 0;
+		int node_sum = 0;
+
+		float path_travel_time = 0;
+		float path_distance = 0;
+
+
+		int current_node_seq_no = -1;  // destination node
+		int current_link_seq_no = -1;
+		int destination_zone_seq_no;
+		float ODvolume, volume;
+		CColumnVector* pColumnVector;
+
+		for (int i = 0; i < number_of_nodes; i++)
 		{
 
 			if (g_node_vector[i].zone_id >= 1)
@@ -4159,28 +4167,31 @@ void NetworkForSP::backtrace_shortest_path_tree(Assignment& assignment, int iter
 					continue;
 				//			fprintf(g_pFileDebugLog, "--------origin  %d ; destination node: %d ; (zone: %d) -------\n", origin_node + 1, i+1, g_node_vector[i].zone_id);
 				//fprintf(g_pFileDebugLog, "--------iteration number outterloop  %d ;  -------\n", iteration_number_outterloop);
-				int destination_zone_seq_no = assignment.g_zoneid_to_zone_seq_no_mapping[g_node_vector[i].zone_id];
+				destination_zone_seq_no = assignment.g_zoneid_to_zone_seq_no_mapping[g_node_vector[i].zone_id];
 
-				float ODvolume = assignment.g_column_pool[m_origin_zone_seq_no][destination_zone_seq_no][agent_type][tau].od_volume;
-				float volume = ODvolume * k_path_prob;
+
+				 pColumnVector = &(assignment.g_column_pool[m_origin_zone_seq_no][destination_zone_seq_no][agent_type][tau]);
+				 ODvolume = pColumnVector->od_volume;
+
+				 volume = ODvolume * k_path_prob;
 				// this is contributed path volume from OD flow (O, D, k, per time period
 
 
 				if (ODvolume > 0.000001)
 				{
-					int l_node_size = 0;  // initialize local node size index
-					int l_link_size = 0;
-					int node_sum = 0;
+					l_node_size = 0;  // initialize local node size index
+					l_link_size = 0;
+					node_sum = 0;
 
-					float path_travel_time = 0;
-					float path_distance = 0;
+					path_travel_time = 0;
+					path_distance = 0;
 
 
-					int current_node_seq_no = i;  // destination node
-					int current_link_seq_no = -1;
+					current_node_seq_no = i;  // destination node
+					current_link_seq_no = -1;
 
 					// backtrace the sp tree from the destination to the root (at origin) 
-					while (current_node_seq_no >= 0 && current_node_seq_no < assignment.g_number_of_nodes)
+					while (current_node_seq_no >= 0 && current_node_seq_no < number_of_nodes)
 					{
 
 						temp_path_node_vector[l_node_size++] = current_node_seq_no;
@@ -4192,13 +4203,13 @@ void NetworkForSP::backtrace_shortest_path_tree(Assignment& assignment, int iter
 						}
 						node_sum+= current_node_seq_no;
 
-						if (current_node_seq_no >= 0 && current_node_seq_no < assignment.g_number_of_nodes)  // this is valid node 
+						if (current_node_seq_no >= 0 && current_node_seq_no < number_of_nodes)  // this is valid node 
 						{
 							current_link_seq_no = m_link_predecessor[current_node_seq_no];
 
 							// fetch m_link_predecessor to mark the link volume
 
-							if (current_link_seq_no >= 0 && current_link_seq_no < assignment.g_number_of_links)
+							if (current_link_seq_no >= 0 && current_link_seq_no < number_of_links)
 							{
 								temp_path_link_vector[l_link_size++] = current_link_seq_no;
 
@@ -4207,8 +4218,8 @@ void NetworkForSP::backtrace_shortest_path_tree(Assignment& assignment, int iter
 									m_link_flow_volume_array[current_link_seq_no]+= volume;  // this is critical for parallel computing as we can write the volume to data
 								}
 
-								path_travel_time += g_link_vector[current_link_seq_no].travel_time_per_period[tau];
-								path_distance += g_link_vector[current_link_seq_no].length;
+								//path_travel_time += g_link_vector[current_link_seq_no].travel_time_per_period[tau];
+								//path_distance += g_link_vector[current_link_seq_no].length;
 
 							}
 						}
@@ -4219,18 +4230,18 @@ void NetworkForSP::backtrace_shortest_path_tree(Assignment& assignment, int iter
 					// we obtain the cost, time, distance from the last tree-k 
 					if(assignment.assignment_mode >=1) // column based mode
 					{
-						if (assignment.g_column_pool[m_origin_zone_seq_no][destination_zone_seq_no][agent_type][tau].path_node_sequence_map.find(node_sum) == assignment.g_column_pool[m_origin_zone_seq_no][destination_zone_seq_no][agent_type][tau].path_node_sequence_map.end())
+						if (pColumnVector->path_node_sequence_map.find(node_sum) == assignment.g_column_pool[m_origin_zone_seq_no][destination_zone_seq_no][agent_type][tau].path_node_sequence_map.end())
 							// we cannot find a path with the same node sum, so we need to add this path into the map, 
 						{
 							// add this unique path
-							int path_count = assignment.g_column_pool[m_origin_zone_seq_no][destination_zone_seq_no][agent_type][tau].path_node_sequence_map.size();
-							assignment.g_column_pool[m_origin_zone_seq_no][destination_zone_seq_no][agent_type][tau].path_node_sequence_map[node_sum].path_seq_no = path_count;
-							assignment.g_column_pool[m_origin_zone_seq_no][destination_zone_seq_no][agent_type][tau].path_node_sequence_map[node_sum].path_volume = 0;
-							assignment.g_column_pool[m_origin_zone_seq_no][destination_zone_seq_no][agent_type][tau].time = m_label_time_array[i];
-							assignment.g_column_pool[m_origin_zone_seq_no][destination_zone_seq_no][agent_type][tau].path_node_sequence_map[node_sum].path_distance = m_label_distance_array[i];
-							assignment.g_column_pool[m_origin_zone_seq_no][destination_zone_seq_no][agent_type][tau].path_node_sequence_map[node_sum].path_cost = m_node_label_cost[i];
+							int path_count = pColumnVector->path_node_sequence_map.size();
+							pColumnVector->path_node_sequence_map[node_sum].path_seq_no = path_count;
+							pColumnVector->path_node_sequence_map[node_sum].path_volume = 0;
+							//assignment.g_column_pool[m_origin_zone_seq_no][destination_zone_seq_no][agent_type][tau].time = m_label_time_array[i];
+							//assignment.g_column_pool[m_origin_zone_seq_no][destination_zone_seq_no][agent_type][tau].path_node_sequence_map[node_sum].path_distance = m_label_distance_array[i];
+							pColumnVector->path_node_sequence_map[node_sum].path_cost = m_node_label_cost[i];
 
-							assignment.g_column_pool[m_origin_zone_seq_no][destination_zone_seq_no][agent_type][tau].path_node_sequence_map[node_sum].AllocateVector(
+							pColumnVector->path_node_sequence_map[node_sum].AllocateVector(
 								l_node_size,
 								temp_path_node_vector,
 								l_link_size,
@@ -4239,7 +4250,7 @@ void NetworkForSP::backtrace_shortest_path_tree(Assignment& assignment, int iter
 
 						}
 
-						assignment.g_column_pool[m_origin_zone_seq_no][destination_zone_seq_no][agent_type][tau].path_node_sequence_map[node_sum].path_volume += volume;
+						pColumnVector->path_node_sequence_map[node_sum].path_volume += volume;
 
 					}
 
@@ -4254,8 +4265,6 @@ void NetworkForSP::backtrace_shortest_path_tree(Assignment& assignment, int iter
 
 void  CLink::CalculateTD_VDFunction()
 {
-
-
 	for (int tau = 0; tau < assignment.g_number_of_demand_periods; tau++)
 	{
 		float starting_time_slot_no = assignment.g_DemandPeriodVector[tau].starting_time_slot_no;
