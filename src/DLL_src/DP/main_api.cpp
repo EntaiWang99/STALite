@@ -3940,6 +3940,9 @@ void g_output_simulation_result(Assignment& assignment)
 								path_distance = 0;
 								path_travel_time = 0;
 
+								path_time_vector[0] = time_stamp;
+
+
 								for (int nl = 0; nl < it->second.m_link_size; nl++)  // arc a
 								{
 									int link_seq_no = it->second.path_link_vector[nl];
@@ -3948,7 +3951,7 @@ void g_output_simulation_result(Assignment& assignment)
 									float link_travel_time = g_link_vector[link_seq_no].travel_time_per_period[tau];
 									path_travel_time += link_travel_time;
 									time_stamp += link_travel_time;
-									path_time_vector[nl] = time_stamp;
+									path_time_vector[nl+1] = time_stamp;
 								}
 
 								buffer_len = 0;
@@ -3987,14 +3990,14 @@ void g_output_simulation_result(Assignment& assignment)
 								}
 								buffer_len += sprintf(str_buffer + buffer_len, ",");
 
-								for (int nt = 0; nt < it->second.m_link_size; nt++)
+								for (int nt = 0; nt < it->second.m_link_size+1; nt++)
 								{
 									buffer_len += sprintf(str_buffer + buffer_len, "%s;", g_time_coding(path_time_vector[nt]).c_str());
 
 								}
 								buffer_len += sprintf(str_buffer + buffer_len, ",");
 
-								for (int nt = 0; nt < it->second.m_link_size; nt++)
+								for (int nt = 0; nt < it->second.m_link_size+1; nt++)
 								{
 									buffer_len += sprintf(str_buffer + buffer_len, "%.2f;", path_time_vector[nt]);
 								}
