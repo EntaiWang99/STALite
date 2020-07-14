@@ -48,6 +48,7 @@ template <typename T>
 #define _MAX_TIMESLOT_PerPeriod 100 // max 96 15-min slots per day
 
 #define MIN_PER_TIMESLOT 15
+#define number_of_seconds_per_interval 6
 
 // Linear congruential generator 
 #define LCG_a 17364
@@ -799,6 +800,110 @@ public:
 
 };
 
+// event structure in this "event-based" traffic simulation
+
+class DTAVehListPerTimeInterval
+{
+public:
+	std::vector<int> m_AgentIDVector;
+
+};
+
+std::map<int, DTAVehListPerTimeInterval> g_AgentTDListMap;
+
+class CAgent_Simu
+{
+public:
+	unsigned int m_RandomSeed;
+	bool m_bGenereated;
+	CAgent_Simu()
+	{
+		agent_vector_seq_no = -1;
+		m_bGenereated = false;
+
+		path_cost = 0;
+		m_Veh_LinkArrivalTime_in_simu_interval = NULL;
+		m_Veh_LinkDepartureTime_in_simu_interval = NULL;
+		m_bCompleteTrip = false;
+		departure_time_in_min = 0;
+	}
+	~CAgent_Simu()
+	{
+		DeallocateMemory();
+	}
+
+
+	float GetRandomRatio()
+	{
+		m_RandomSeed = (LCG_a * m_RandomSeed + LCG_c) % LCG_M;  //m_RandomSeed is automatically updated.
+
+		return float(m_RandomSeed) / LCG_M;
+	}
+
+
+
+	int fixed_path_flag;
+	int demand_type;
+	int agent_id;
+	int agent_vector_seq_no;
+	int agent_service_type;
+
+	float departure_time_in_min;
+	int departure_time_in_simu_interval;
+
+	float arrival_time_in_min;
+
+	float path_cost;
+	std::vector<int> path_link_seq_no_vector;
+	std::vector<float> time_seq_no_vector;
+	std::vector<int> path_timestamp_vector;;
+
+	int m_path_link_seq_no_vector_size;
+
+	std::vector<int> path_node_id_vector;
+
+	int m_current_link_seq_no;
+	int* m_Veh_LinkArrivalTime_in_simu_interval;
+	int* m_Veh_LinkDepartureTime_in_simu_interval;
+
+
+	bool m_bCompleteTrip;
+
+	void AllocateMemory()
+	{
+		if (m_Veh_LinkArrivalTime_in_simu_interval == NULL)
+		{
+			m_current_link_seq_no = 0;
+			m_Veh_LinkArrivalTime_in_simu_interval = new int[path_link_seq_no_vector.size()];
+			m_Veh_LinkDepartureTime_in_simu_interval = new int[path_link_seq_no_vector.size()];
+
+			for (int i = 0; i < path_link_seq_no_vector.size(); i++)
+			{
+				m_Veh_LinkArrivalTime_in_simu_interval[i] = -1;
+				m_Veh_LinkDepartureTime_in_simu_interval[i] = -1;
+
+			}
+
+
+			m_path_link_seq_no_vector_size = path_link_seq_no_vector.size();
+			departure_time_in_simu_interval = int(departure_time_in_min * 60.0 / number_of_seconds_per_interval + 0.5);  // round off
+
+			if (path_link_seq_no_vector.size() > 0)
+			{
+				m_Veh_LinkArrivalTime_in_simu_interval[0] = departure_time_in_simu_interval;
+
+			}
+		}
+	}
+
+	void DeallocateMemory()
+	{
+		if (m_Veh_LinkArrivalTime_in_simu_interval != NULL) delete m_Veh_LinkArrivalTime_in_simu_interval;
+		if (m_Veh_LinkDepartureTime_in_simu_interval != NULL) delete m_Veh_LinkDepartureTime_in_simu_interval;
+	}
+
+};
+
 class Assignment {
 public:
 	Assignment()
@@ -893,6 +998,10 @@ public:
 
 
 	std::vector<CDemand_Period> g_DemandPeriodVector;
+	int g_LoadingStartTimeInMin;
+	int g_LoadingEndTimeInMin;
+
+
 	std::vector<CAgent_type> g_AgentTypeVector;
 	std::map<int, CLinkType> g_LinkTypeMap;
 
@@ -911,6 +1020,19 @@ public:
 
 	FILE* g_pFileDebugLog = NULL;
 
+
+	//	-------------------------------
+		// used in ST Simulation
+	float** m_LinkOutFlowCapacity;
+	int* m_LinkTravelTime;
+	float** m_LinkCumulativeArrival;
+	float** m_LinkCumulativeDeparture;
+	int g_start_simu_interval_no;
+
+	int g_number_of_simulation_intervals;
+	void AllocateLinkMemory();
+
+	void STTrafficSimulation();
 };
 
 Assignment assignment;
@@ -1158,8 +1280,8 @@ public:
 
 	float fftt;
 	float free_flow_travel_time_in_min;
-
-
+	float lane_capacity;
+	int number_of_lanes;
 	CVDF_Period VDF_period[_MAX_TIMEPERIODS];
 
 	float TDBaseTT[_MAX_TIMEPERIODS];
@@ -1287,6 +1409,10 @@ public:
 		return generalized_cost;
 	}
 
+	// for discrete event simulation
+
+	std::list<int> EntranceQueue;  //link-in queue  of each link
+	std::list<int> ExitQueue;      // link-out queue of each link
 
 
 };
@@ -1312,6 +1438,8 @@ public:
 	double y;
 
 	std::vector<int> m_outgoing_link_seq_no_vector;
+	std::vector<int> m_incoming_link_seq_no_vector;
+
 	std::vector<int> m_to_node_seq_no_vector;
 	std::map<int, int> m_to_node_seq_no_map;
 
@@ -2770,6 +2898,9 @@ void g_ReadDemandFileBasedOnDemandFileList(Assignment& assignment)
 void g_ReadInputData(Assignment& assignment)
 {
 
+	assignment.g_LoadingStartTimeInMin = 99999;
+	assignment.g_LoadingEndTimeInMin = 0;
+
 	//step 0:read demand period file
 	CCSVParser parser_demand_period;
 	cout << "Step 1: Reading file demand_period.csv..." << endl;
@@ -2823,6 +2954,14 @@ void g_ReadInputData(Assignment& assignment)
 
 				demand_period.starting_time_slot_no = global_minute_vector[0] / MIN_PER_TIMESLOT;
 				demand_period.ending_time_slot_no = global_minute_vector[1] / MIN_PER_TIMESLOT;
+
+				if (global_minute_vector[0] < assignment.g_LoadingStartTimeInMin)
+					assignment.g_LoadingStartTimeInMin = global_minute_vector[0];
+
+				if (global_minute_vector[1] > assignment.g_LoadingEndTimeInMin)
+					assignment.g_LoadingEndTimeInMin = global_minute_vector[1];
+
+
 
 				//cout << global_minute_vector[0] << endl;
 				//cout << global_minute_vector[1] << endl;
@@ -3037,7 +3176,7 @@ void g_ReadInputData(Assignment& assignment)
 			node.node_id = node_id;
 			node.node_seq_no = internal_node_seq_no;
 
-			int zone_id; 
+			int zone_id = -1;
 			parser.GetValueByFieldName("zone_id", zone_id);
 
 
@@ -3166,11 +3305,14 @@ void g_ReadInputData(Assignment& assignment)
 				float length = 1.0; // km or mile
 			float free_speed = 1.0;
 			float k_jam = 200;
+
+			float lane_capacity = 1800;
 			parser_link.GetValueByFieldName("length", length);
 			parser_link.GetValueByFieldName("free_speed", free_speed);
 
 			int number_of_lanes = 1;
 			parser_link.GetValueByFieldName("lanes", number_of_lanes);
+			parser_link.GetValueByFieldName("capacity", lane_capacity);
 
 			char VDF_field_name[20];
 
@@ -3234,6 +3376,8 @@ void g_ReadInputData(Assignment& assignment)
 
 			//link.m_OutflowNumLanes = number_of_lanes;//visum lane_cap is actually link_cap
 
+			link.number_of_lanes = number_of_lanes;
+			link.lane_capacity = lane_capacity;
 			link.link_spatial_capacity = k_jam * number_of_lanes*length;
 
 			link.free_flow_travel_time_in_min = default_BaseTT;
@@ -3250,6 +3394,10 @@ void g_ReadInputData(Assignment& assignment)
 			//parser_link.GetValueByFieldName("sequential_copying", sequential_copying);
 
 			g_node_vector[internal_from_node_seq_no].m_outgoing_link_seq_no_vector.push_back(link.link_seq_no);  // add this link to the corresponding node as part of outgoing node/link
+			g_node_vector[internal_to_node_seq_no].m_incoming_link_seq_no_vector.push_back(link.link_seq_no);  // add this link to the corresponding node as part of outgoing node/link
+
+			
+
 			g_node_vector[internal_from_node_seq_no].m_to_node_seq_no_vector .push_back(link.to_node_seq_no);  // add this link to the corresponding node as part of outgoing node/link
 			g_node_vector[internal_from_node_seq_no].m_to_node_seq_no_map[link.to_node_seq_no] = link.link_seq_no;  // add this link to the corresponding node as part of outgoing node/link
 
@@ -4594,6 +4742,9 @@ double network_assignment(int iteration_number, int assignment_mode, int column_
 
 	start_t = clock();
 	//step 5: output simulation results of the new demand 
+
+	assignment.STTrafficSimulation();
+
 	g_output_simulation_result(assignment);
 	end_t = clock();
 	total_t = (end_t - start_t);
@@ -4619,3 +4770,228 @@ double network_assignment(int iteration_number, int assignment_mode, int column_
 }
 
 
+
+void Assignment::AllocateLinkMemory()
+{
+	g_number_of_simulation_intervals = (g_LoadingEndTimeInMin - g_LoadingStartTimeInMin + 60) * 60 /number_of_seconds_per_interval;
+	// add + 60 as a buffer
+
+	m_LinkOutFlowCapacity = AllocateDynamicArray <float>(g_number_of_links, g_number_of_simulation_intervals);  //1
+	// discharge rate per simulation time interval
+	m_LinkCumulativeArrival = AllocateDynamicArray <float>(g_number_of_links, g_number_of_simulation_intervals);  //1
+	m_LinkCumulativeDeparture = AllocateDynamicArray <float>(g_number_of_links, g_number_of_simulation_intervals);  //1
+
+	m_LinkTravelTime = new int[g_number_of_links];
+
+	for (int l = 0; l < g_number_of_links; l++)
+	{
+		m_LinkTravelTime[l] = max(1, (int)(g_link_vector[l].free_flow_travel_time_in_min * 60 / number_of_seconds_per_interval));
+		for (int t = 0; t < g_number_of_simulation_intervals; t++)
+		{
+			m_LinkOutFlowCapacity[l][t] = g_link_vector[l].lane_capacity * g_link_vector[l].number_of_lanes / 3600.0 * number_of_seconds_per_interval;
+			// convert per hour capacity to per second and then to per simulation interval
+			m_LinkCumulativeArrival[l][t] = 0;
+			m_LinkCumulativeDeparture[l][t] = 0;
+		}
+	}
+
+}
+
+// to do deallocate memeory for m_LinkTravelTime
+
+
+vector<CAgent_Simu *> g_agent_vector;
+
+
+void Assignment::STTrafficSimulation()
+{
+
+	//given p_agent->path_link_seq_no_vector path link sequence no for each agent
+
+	int TotalCumulative_Arrival_Count = 0;
+	int TotalCumulative_Departure_Count = 0;
+
+	clock_t start_t, end_t, total_t;
+	start_t = clock();
+	clock_t iteration_t;
+
+	AllocateLinkMemory();
+
+	int agent_type_size = g_AgentTypeVector.size();
+	int zone_size = g_zone_vector.size();
+	int o, at, d, tau;
+	int demand_period_size = g_DemandPeriodVector.size();
+
+	CColumnVector* p_column;
+	float path_cost = 0;
+	float path_distance = 0;
+	float path_travel_time = 0;
+	float time_stamp = 0;
+
+	std::map<int, CColumnPath>::iterator it, it_begin, it_end;
+
+	for (o = 0; o < zone_size; o++)
+	{
+		if (o % 100 == 0)
+		{
+			cout << "writing " << g_agent_vector.size()/1000 << " K agents for "  << o << "  zones " << endl;
+		}
+
+		for (at = 0; at < agent_type_size; at++)
+			for (d = 0; d < zone_size; d++)
+				for (tau = 0; tau < demand_period_size; tau++)
+				{
+					p_column = &(assignment.g_column_pool[o][d][at][tau]);
+					if (p_column->od_volume > 0)
+					{
+
+						// scan through the map with different node sum for different continuous paths
+						it_begin = p_column->path_node_sequence_map.begin();
+						it_end = p_column->path_node_sequence_map.end();
+
+						for (it = it_begin; it != it_end; it++)
+						{
+							path_cost = 0;
+							path_distance = 0;
+							path_travel_time = 0;
+
+							int VehicleSize = (it->second.path_volume +0.5);
+
+							for(int v = 0; v < VehicleSize; v++)
+							{
+								if (it->second.path_volume < 1)
+									time_stamp = it->second.path_volume * (assignment.g_DemandPeriodVector[tau].ending_time_slot_no - assignment.g_DemandPeriodVector[tau].starting_time_slot_no) *MIN_PER_TIMESLOT ;
+								else
+									time_stamp = v *1.0 / it->second.path_volume * (assignment.g_DemandPeriodVector[tau].ending_time_slot_no - assignment.g_DemandPeriodVector[tau].starting_time_slot_no) * MIN_PER_TIMESLOT;
+
+								CAgent_Simu* pAgent = new CAgent_Simu();
+								pAgent->agent_id = g_agent_vector.size();
+								pAgent->departure_time_in_min = time_stamp;
+
+								int simulation_time_intervalNo = (int)(pAgent->departure_time_in_min * 60/ number_of_seconds_per_interval);
+								g_AgentTDListMap[simulation_time_intervalNo].m_AgentIDVector.push_back(pAgent->agent_id);
+
+
+								for (int nl = 0; nl < it->second.m_link_size; nl++)  // arc a
+								{
+									int link_seq_no = it->second.path_link_vector[nl];
+									pAgent->path_link_seq_no_vector.push_back(link_seq_no);
+								}
+								pAgent->AllocateMemory();
+
+								int FirstLink = pAgent->path_link_seq_no_vector[0];
+
+								pAgent->m_Veh_LinkDepartureTime_in_simu_interval[0] = pAgent->m_Veh_LinkDepartureTime_in_simu_interval[0] + m_LinkTravelTime[FirstLink];
+
+								m_LinkCumulativeArrival[FirstLink][pAgent->m_Veh_LinkDepartureTime_in_simu_interval[0]] += 1;
+
+								g_agent_vector.push_back(pAgent);
+							}
+						}
+
+					}
+				}
+	}
+
+
+
+	int current_active_agent_id = 0;
+
+	//int number_of_threads = omp_get_max_threads();// the number of threads is redifined.
+
+	for (int t = 0; t < g_number_of_simulation_intervals; t++)  // first loop for time t
+	{
+		int number_of_simu_interval_per_min = 60 / number_of_seconds_per_interval;
+		if (t % (number_of_simu_interval_per_min*10) == 0)
+			cout << "simu time= " << t / number_of_simu_interval_per_min << " min, CA = " << TotalCumulative_Arrival_Count << " CD=" << TotalCumulative_Departure_Count << endl;
+
+		if (g_AgentTDListMap.find(t) != g_AgentTDListMap.end())
+		{
+			for (int Agent_v = 0; Agent_v < g_AgentTDListMap[t].m_AgentIDVector.size(); Agent_v++)
+			{
+				int agent_id = g_AgentTDListMap[t].m_AgentIDVector[Agent_v];
+
+				CAgent_Simu* p_agent = g_agent_vector[agent_id];
+				p_agent->m_bGenereated = true;
+				int FirstLink = p_agent->path_link_seq_no_vector[0];
+				g_link_vector[FirstLink].EntranceQueue.push_back(p_agent->agent_id);
+				TotalCumulative_Arrival_Count++;
+
+			}
+		}
+
+
+		int link_size = g_link_vector.size();
+
+#pragma omp parallel for
+		for (int li = 0; li < link_size; li++)
+		{
+			CLink* pLink = &(g_link_vector[li]);
+
+			while (pLink->EntranceQueue.size() > 0)  // if there are Agents in the entrance queue
+			{
+				int agent_id = pLink->EntranceQueue.front();
+				pLink->EntranceQueue.pop_front();
+				pLink->ExitQueue.push_back(agent_id);
+				CAgent_Simu* p_agent = g_agent_vector[agent_id];
+				p_agent->m_Veh_LinkDepartureTime_in_simu_interval[p_agent->m_current_link_seq_no] = t + m_LinkTravelTime[li];
+			}
+		}
+
+		int node_size = g_node_vector.size();
+
+#pragma omp parallel for
+		for (int node = 0; node < node_size; node++)
+		{
+
+			for (int l = 0; l < g_node_vector[node].m_incoming_link_seq_no_vector.size(); l++)
+			{
+				int link = g_node_vector[node].m_incoming_link_seq_no_vector[l];
+				CLink* pLink = &(g_link_vector[link]);
+					/*	check if the current link has sufficient capacity*/
+						while (m_LinkOutFlowCapacity[link][t] >= 1 && pLink->ExitQueue.size() >=1)
+						{
+							int agent_id = pLink->ExitQueue.front();
+							CAgent_Simu* p_agent = g_agent_vector[agent_id];
+							
+							if (p_agent->m_Veh_LinkDepartureTime_in_simu_interval[p_agent->m_current_link_seq_no] > t)
+							{
+								break; // the future departure time on this link is later than the current time
+							}
+
+							// all conditions satified, pop it from the exit queu
+							pLink->ExitQueue.pop_front();
+							if (p_agent->m_current_link_seq_no == p_agent->path_link_seq_no_vector.size() - 1)
+							{// end of path
+								p_agent->m_bCompleteTrip = true;
+								m_LinkCumulativeDeparture[link][t] += 1;
+								TotalCumulative_Departure_Count += 1;
+
+							}
+							else
+							{ // not complete the trip. move to the next link's entrance queue
+
+								int next_link_seq_no = p_agent->path_link_seq_no_vector[p_agent->m_current_link_seq_no + 1];
+
+								CLink* pNextLink = &(g_link_vector[next_link_seq_no]);
+
+								pNextLink->EntranceQueue.push_back(agent_id);
+								p_agent->m_Veh_LinkDepartureTime_in_simu_interval[p_agent->m_current_link_seq_no] = t;
+								p_agent->m_Veh_LinkArrivalTime_in_simu_interval[p_agent->m_current_link_seq_no + 1] = t;
+
+								m_LinkCumulativeDeparture[link][t] += 1;
+								m_LinkCumulativeArrival[next_link_seq_no][t] += 1;
+
+							}
+
+							//move
+							p_agent->m_current_link_seq_no += 1;
+							m_LinkOutFlowCapacity[link][t] -= 1;
+
+						}
+			}
+
+
+			} // conditions
+		}  // departure time events
+}
