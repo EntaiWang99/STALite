@@ -51,7 +51,7 @@ template <typename T>
 #define _MAX_TIMESLOT_PerPeriod 100 // max 96 15-min slots per day
 
 #define MIN_PER_TIMESLOT 15
-#define number_of_seconds_per_interval 6
+#define number_of_seconds_per_interval 1
 
 // Linear congruential generator 
 #define LCG_a 17364
@@ -1023,7 +1023,9 @@ public:
 	//	-------------------------------
 		// used in ST Simulation
 	float** m_LinkOutFlowCapacity;
+	float** m_LinkTDWaitingTime;
 	int** m_LinkTDTravelTime;
+
 
 	float** m_LinkCumulativeArrival;
 	float** m_LinkCumulativeDeparture;
@@ -1243,6 +1245,7 @@ public:
 		}
 		link_spatial_capacity = 100;
 		RUC_type = 0;
+		service_arc_flag = false;
 	}
 
 	~CLink()
@@ -1274,6 +1277,7 @@ public:
 	int from_node_seq_no;
 	int to_node_seq_no;
 	int link_type;
+	bool service_arc_flag;
 	float toll;
 	float route_choice_cost;
 
@@ -1425,6 +1429,7 @@ class CServiceArc
 public:
 	CServiceArc()  // construction 
 	{
+		cycle_length = -1;
 	}
 
 	int link_seq_no;
@@ -1433,6 +1438,7 @@ public:
 	int time_interval_no;
 	float capacity;
 	int travel_time_delta;
+	int cycle_length;
 
 };
 
@@ -2515,8 +2521,8 @@ vector<string> split(const string &s, const string &seperator) {
 	}
 	return result;
 }
-string test_str = "0300:30:120_0600:30:140";
-
+//string test_str = "0300:30:120_0600:30:140";
+//
 //g_global_minute = g_time_parser(test_str);
 //
 //for (int i = 0; i < g_global_minute.size(); i++)
@@ -2524,165 +2530,166 @@ string test_str = "0300:30:120_0600:30:140";
 //	cout << "The number of global minutes is: " << g_global_minute[i] << " minutes" << endl;
 //}
 
-//vector<float> g_time_parser(string str)
-//{
-//	vector<float> output_global_minute;
-//
-//	int string_lenghth = str.length();
-//
-//	ASSERT(string_lenghth < 100);
-//
-//	const char* string_line = str.data(); //string to char*
-//
-//	int char_length = strlen(string_line);
-//
-//	char ch, buf_ddhhmm[32] = { 0 }, buf_SS[32] = { 0 }, buf_sss[32] = { 0 };
-//	char dd1, dd2, hh1, hh2, mm1, mm2, SS1, SS2, sss1, sss2, sss3;
-//	float ddf1, ddf2, hhf1, hhf2, mmf1, mmf2, SSf1, SSf2, sssf1, sssf2, sssf3;
-//	float global_minute = 0;
-//	float dd = 0, hh = 0, mm = 0, SS = 0, sss = 0;
-//	int i = 0;
-//	int buffer_i = 0, buffer_k = 0, buffer_j = 0;
-//	int num_of_colons = 0;
-//
-//	//DDHHMM:SS:sss or HHMM:SS:sss
-//
-//	while (i < char_length)
-//	{
-//		ch = string_line[i++];
-//
-//		if (num_of_colons == 0 && ch != '_' && ch != ':') //input to buf_ddhhmm until we meet the colon
-//		{
-//			buf_ddhhmm[buffer_i++] = ch;
-//		}
-//		else if (num_of_colons == 1 && ch != ':') //start the Second "SS"
-//		{
-//			buf_SS[buffer_k++] = ch;
-//		}
-//		else if (num_of_colons == 2 && ch != ':') //start the Millisecond "sss"
-//		{
-//			buf_sss[buffer_j++] = ch;
-//		}
-//
-//		if (ch == '_' || i == char_length) //start a new time string
-//		{
-//			if (buffer_i == 4) //"HHMM"
-//			{
-//				//HHMM, 0123
-//				hh1 = buf_ddhhmm[0]; //read each first
-//				hh2 = buf_ddhhmm[1];
-//				mm1 = buf_ddhhmm[2];
-//				mm2 = buf_ddhhmm[3];
-//
-//				hhf1 = ((float)hh1 - 48); //convert a char to a float
-//				hhf2 = ((float)hh2 - 48);
-//				mmf1 = ((float)mm1 - 48);
-//				mmf2 = ((float)mm2 - 48);
-//
-//				dd = 0;
-//				hh = hhf1 * 10 * 60 + hhf2 * 60;
-//				mm = mmf1 * 10 + mmf2;
-//			}
-//			else if (buffer_i == 6) //"DDHHMM"
-//			{
-//				//DDHHMM, 012345
-//				dd1 = buf_ddhhmm[0]; //read each first
-//				dd2 = buf_ddhhmm[1];
-//				hh1 = buf_ddhhmm[2];
-//				hh2 = buf_ddhhmm[3];
-//				mm1 = buf_ddhhmm[4];
-//				mm2 = buf_ddhhmm[5];
-//
-//				ddf1 = ((float)dd1 - 48); //convert a char to a float
-//				ddf2 = ((float)dd2 - 48);
-//				hhf1 = ((float)hh1 - 48);
-//				hhf2 = ((float)hh2 - 48);
-//				mmf1 = ((float)mm1 - 48);
-//				mmf2 = ((float)mm2 - 48);
-//
-//				dd = ddf1 * 10 * 24 * 60 + ddf2 * 24 * 60;
-//				hh = hhf1 * 10 * 60 + hhf2 * 60;
-//				mm = mmf1 * 10 + mmf2;
-//			}
-//
-//			if (num_of_colons == 1 || num_of_colons == 2)
-//			{
-//				//SS, 01
-//				SS1 = buf_SS[0]; //read each first
-//				SS2 = buf_SS[1];
-//
-//				SSf1 = ((float)SS1 - 48); //convert a char to a float
-//				SSf2 = ((float)SS2 - 48);
-//
-//				SS = (SSf1 * 10 + SSf2) / 60;
-//			}
-//
-//			if (num_of_colons == 2)
-//			{
-//				//sss, 012
-//				sss1 = buf_sss[0]; //read each first
-//				sss2 = buf_sss[1];
-//				sss3 = buf_sss[2];
-//
-//				sssf1 = ((float)sss1 - 48); //convert a char to a float
-//				sssf2 = ((float)sss2 - 48);
-//				sssf3 = ((float)sss3 - 48);
-//
-//				sss = (sssf1 * 100 + sssf2 * 10 + sssf3) / 1000;
-//			}
-//
-//			global_minute = dd + hh + mm + SS + sss;
-//
-//			output_global_minute.push_back(global_minute);
-//
-//			//initialize the parameters
-//			buffer_i = 0;
-//			buffer_k = 0;
-//			buffer_j = 0;
-//			num_of_colons = 0;
-//		}
-//
-//		if (ch == ':')
-//		{
-//			num_of_colons += 1;
-//		}
-//	}
-//
-//	return output_global_minute;
-//}
-//
-
-vector<float> g_time_parser(vector<string>& inputstring)
+vector<float> g_time_parser(string str)
 {
 	vector<float> output_global_minute;
 
-	for (int k = 0; k < inputstring.size(); k++)
+	int string_lenghth = str.length();
+
+	ASSERT(string_lenghth < 100);
+
+	const char* string_line = str.data(); //string to char*
+
+	int char_length = strlen(string_line);
+
+	char ch, buf_ddhhmm[32] = { 0 }, buf_SS[32] = { 0 }, buf_sss[32] = { 0 };
+	char dd1, dd2, hh1, hh2, mm1, mm2, SS1, SS2, sss1, sss2, sss3;
+	float ddf1, ddf2, hhf1, hhf2, mmf1, mmf2, SSf1, SSf2, sssf1, sssf2, sssf3;
+	float global_minute = 0;
+	float dd = 0, hh = 0, mm = 0, SS = 0, sss = 0;
+	int i = 0;
+	int buffer_i = 0, buffer_k = 0, buffer_j = 0;
+	int num_of_colons = 0;
+
+	//DDHHMM:SS:sss or HHMM:SS:sss
+
+	while (i < char_length)
 	{
-		vector<string> sub_string = split(inputstring[k], "_");
+		ch = string_line[i++];
 
-		for (int i = 0; i < sub_string.size(); i++)
+		if (num_of_colons == 0 && ch != '_' && ch != ':') //input to buf_ddhhmm until we meet the colon
 		{
-			//HHMM
-			//012345
-			char hh1 = sub_string[i].at(0);
-			char hh2 = sub_string[i].at(1);
-			char mm1 = sub_string[i].at(2);
-			char mm2 = sub_string[i].at(3);
+			buf_ddhhmm[buffer_i++] = ch;
+		}
+		else if (num_of_colons == 1 && ch != ':') //start the Second "SS"
+		{
+			buf_SS[buffer_k++] = ch;
+		}
+		else if (num_of_colons == 2 && ch != ':') //start the Millisecond "sss"
+		{
+			buf_sss[buffer_j++] = ch;
+		}
 
-			float hhf1 = ((float)hh1 - 48);
-			float hhf2 = ((float)hh2 - 48);
-			float mmf1 = ((float)mm1 - 48);
-			float mmf2 = ((float)mm2 - 48);
+		if (ch == '_' || i == char_length) //start a new time string
+		{
+			if (buffer_i == 4) //"HHMM"
+			{
+				//HHMM, 0123
+				hh1 = buf_ddhhmm[0]; //read each first
+				hh2 = buf_ddhhmm[1];
+				mm1 = buf_ddhhmm[2];
+				mm2 = buf_ddhhmm[3];
 
-			float hh = hhf1 * 10 * 60 + hhf2 * 60;
-			float mm = mmf1 * 10 + mmf2;
-			float global_mm_temp = hh + mm;
-			output_global_minute.push_back(global_mm_temp);
+				hhf1 = ((float)hh1 - 48); //convert a char to a float
+				hhf2 = ((float)hh2 - 48);
+				mmf1 = ((float)mm1 - 48);
+				mmf2 = ((float)mm2 - 48);
+
+				dd = 0;
+				hh = hhf1 * 10 * 60 + hhf2 * 60;
+				mm = mmf1 * 10 + mmf2;
+			}
+			else if (buffer_i == 6) //"DDHHMM"
+			{
+				//DDHHMM, 012345
+				dd1 = buf_ddhhmm[0]; //read each first
+				dd2 = buf_ddhhmm[1];
+				hh1 = buf_ddhhmm[2];
+				hh2 = buf_ddhhmm[3];
+				mm1 = buf_ddhhmm[4];
+				mm2 = buf_ddhhmm[5];
+
+				ddf1 = ((float)dd1 - 48); //convert a char to a float
+				ddf2 = ((float)dd2 - 48);
+				hhf1 = ((float)hh1 - 48);
+				hhf2 = ((float)hh2 - 48);
+				mmf1 = ((float)mm1 - 48);
+				mmf2 = ((float)mm2 - 48);
+
+				dd = ddf1 * 10 * 24 * 60 + ddf2 * 24 * 60;
+				hh = hhf1 * 10 * 60 + hhf2 * 60;
+				mm = mmf1 * 10 + mmf2;
+			}
+
+			if (num_of_colons == 1 || num_of_colons == 2)
+			{
+				//SS, 01
+				SS1 = buf_SS[0]; //read each first
+				SS2 = buf_SS[1];
+
+				SSf1 = ((float)SS1 - 48); //convert a char to a float
+				SSf2 = ((float)SS2 - 48);
+
+				SS = (SSf1 * 10 + SSf2) / 60;
+			}
+
+			if (num_of_colons == 2)
+			{
+				//sss, 012
+				sss1 = buf_sss[0]; //read each first
+				sss2 = buf_sss[1];
+				sss3 = buf_sss[2];
+
+				sssf1 = ((float)sss1 - 48); //convert a char to a float
+				sssf2 = ((float)sss2 - 48);
+				sssf3 = ((float)sss3 - 48);
+
+				sss = (sssf1 * 100 + sssf2 * 10 + sssf3) / 1000;
+			}
+
+			global_minute = dd + hh + mm + SS + sss;
+
+			output_global_minute.push_back(global_minute);
+
+			//initialize the parameters
+			buffer_i = 0;
+			buffer_k = 0;
+			buffer_j = 0;
+			num_of_colons = 0;
+		}
+
+		if (ch == ':')
+		{
+			num_of_colons += 1;
 		}
 	}
 
 	return output_global_minute;
-} // transform hhmm to minutes 
+
+}
+
+
+//vector<float> g_time_parser(vector<string>& inputstring)
+//{
+//	vector<float> output_global_minute;
+//
+//	for (int k = 0; k < inputstring.size(); k++)
+//	{
+//		vector<string> sub_string = split(inputstring[k], "_");
+//
+//		for (int i = 0; i < sub_string.size(); i++)
+//		{
+//			//HHMM
+//			//012345
+//			char hh1 = sub_string[i].at(0);
+//			char hh2 = sub_string[i].at(1);
+//			char mm1 = sub_string[i].at(2);
+//			char mm2 = sub_string[i].at(3);
+//
+//			float hhf1 = ((float)hh1 - 48);
+//			float hhf2 = ((float)hh2 - 48);
+//			float mmf1 = ((float)mm1 - 48);
+//			float mmf2 = ((float)mm2 - 48);
+//
+//			float hh = hhf1 * 10 * 60 + hhf2 * 60;
+//			float mm = mmf1 * 10 + mmf2;
+//			float global_mm_temp = hh + mm;
+//			output_global_minute.push_back(global_mm_temp);
+//		}
+//	}
+//
+//	return output_global_minute;
+//} // transform hhmm to minutes 
 
 
 inline string g_time_coding(float time_stamp)
@@ -3164,10 +3171,8 @@ void g_ReadInputData(Assignment& assignment)
 				break;
 			}
 
-			vector<string> input_string;
-			input_string.push_back(demand_period.time_period);
 			//input_string includes the start and end time of a time period with hhmm format
-			global_minute_vector = g_time_parser(input_string); //global_minute_vector incldue the starting and ending time
+			global_minute_vector = g_time_parser(demand_period.time_period); //global_minute_vector incldue the starting and ending time
 			if (global_minute_vector.size() == 2)
 			{
 
@@ -3491,6 +3496,7 @@ void g_ReadInputData(Assignment& assignment)
 			int internal_from_node_seq_no = assignment.g_internal_node_to_seq_no_map[from_node_id];  // map external node number to internal node seq no. 
 			int internal_to_node_seq_no = assignment.g_internal_node_to_seq_no_map[to_node_id];
 
+			
 			CLink link;  // create a link object 
 
 			link.from_node_seq_no = internal_from_node_seq_no;
@@ -3541,7 +3547,7 @@ void g_ReadInputData(Assignment& assignment)
 
 			
 
-				float length = 1.0; // km or mile
+			float length = 1.0; // km or mile
 			float free_speed = 1.0;
 			float k_jam = 200;
 
@@ -3626,7 +3632,7 @@ void g_ReadInputData(Assignment& assignment)
 			{
 				link.travel_time_per_period[tau] = length / free_speed * 60;
 			}
-			link.free_flow_travel_time_in_min = length / free_speed * 60;
+
 
 			// min // calculate link cost based length and speed limit // later we should also read link_capacity, calculate delay 
 
@@ -3700,13 +3706,7 @@ void g_ReadInputData(Assignment& assignment)
 			{
 				service_arc.link_seq_no = g_node_vector[internal_from_node_seq_no].m_to_node_2_link_seq_no_map[internal_to_node_seq_no];
 
-				if (assignment.g_LinkTypeMap[g_link_vector[service_arc.link_seq_no].link_type].type_code != "s")
-				{
-					cout << "Error: All service arcs defined in service_arc.csv should have a type_code = s in link_type.csv." << endl;
-					cout << " Please check " << from_node_id << "->" << to_node_id << " in file service_arc.csv." << endl;
-					continue;
-
-				}
+				g_link_vector[service_arc.link_seq_no].service_arc_flag = true;
 			}
 			else
 			{
@@ -3725,10 +3725,8 @@ void g_ReadInputData(Assignment& assignment)
 
 			vector<float> global_minute_vector;
 
-			vector<string> input_string;
-			input_string.push_back(time_period);
 			//input_string includes the start and end time of a time period with hhmm format
-			global_minute_vector = g_time_parser(input_string); //global_minute_vector incldue the starting and ending time
+			global_minute_vector = g_time_parser(time_period); //global_minute_vector incldue the starting and ending time
 			if (global_minute_vector.size() == 2)
 			{
 				if (global_minute_vector[0] < assignment.g_LoadingStartTimeInMin)
@@ -3746,7 +3744,7 @@ void g_ReadInputData(Assignment& assignment)
 				if (global_minute_vector[1] < global_minute_vector[0])
 					global_minute_vector[1] = global_minute_vector[0];
 
-
+				//this could contain sec information.
 				service_arc.starting_time_no =(global_minute_vector[0] - assignment.g_LoadingStartTimeInMin) * 60 / number_of_seconds_per_interval;
 				service_arc.ending_time_no = (global_minute_vector[1] - assignment.g_LoadingStartTimeInMin) * 60 / number_of_seconds_per_interval;
 
@@ -3758,16 +3756,21 @@ void g_ReadInputData(Assignment& assignment)
 
 			float time_interval = 0;
 
-			parser_service_arc.GetValueByFieldName("time_interval", time_interval, true, false);
-			service_arc.time_interval_no = max(1, time_interval*60.0 / number_of_seconds_per_interval);
+			parser_service_arc.GetValueByFieldName("time_interval", time_interval, false, false);
+			service_arc.time_interval_no = max(1, time_interval * 60.0 / number_of_seconds_per_interval);
 
 
 			int travel_time_delta_in_min = 0;
-			parser_service_arc.GetValueByFieldName("travel_time_delta", travel_time_delta_in_min, true, false);
-			service_arc.travel_time_delta = max(1, travel_time_delta_in_min * 60 / number_of_seconds_per_interval);
+			parser_service_arc.GetValueByFieldName("travel_time_delta", travel_time_delta_in_min, false, false);
+			service_arc.travel_time_delta = max(g_link_vector[service_arc.link_seq_no].free_flow_travel_time_in_min*60 / number_of_seconds_per_interval,
+				travel_time_delta_in_min * 60 / number_of_seconds_per_interval);
 
-			float capaciy = 1;
-			parser_service_arc.GetValueByFieldName("capacity", capaciy);  // capacity in the space time arcs
+			service_arc.travel_time_delta = max(1, service_arc.travel_time_delta);
+			float capacity = 1;
+			parser_service_arc.GetValueByFieldName("capacity", capacity);  // capacity in the space time arcs
+			service_arc.capacity = max(0, capacity); 
+
+			parser_service_arc.GetValueByFieldName("cycle_length", service_arc.cycle_length);  // capacity in the space time arcs
 
 			g_service_arc_vector.push_back(service_arc);
 			assignment.g_number_of_service_arcs++;
@@ -4352,12 +4355,16 @@ void g_output_simulation_result(Assignment& assignment)
 		if (assignment.assignment_mode == 2)  // space time based simulation
 		{
 			// Option 2: BPR-X function
-			fprintf(g_pFileLinkMOE, "road_link_id,from_node_id,to_node_id,time_period,volume,CA,CD,queue,travel_time,speed,");
+			fprintf(g_pFileLinkMOE, "road_link_id,from_node_id,to_node_id,time_period,volume,CA,CD,queue,travel_time,waiting_time_in_sec,speed,");
 			fprintf(g_pFileLinkMOE, "notes\n");
 
 
 			for (int l = 0; l < g_link_vector.size(); l++) //Initialization for all nodes
 			{
+				if (g_link_vector[l].link_id == "146")
+				{
+					int idebug = 1;
+				}
 				for (int t = 0; t < assignment.g_number_of_simulation_intervals; t++)  // first loop for time t
 				{
 					if (t % (60 / number_of_seconds_per_interval) == 0)
@@ -4367,7 +4374,10 @@ void g_output_simulation_result(Assignment& assignment)
 
 						float volume = 0;
 						float queue = 0;
-						float waiting_time_in_min = 0;
+						float waiting_time_in_sec = 0;
+						int arrival_rate = 0;
+						float avg_waiting_time_in_sec = 0;
+
 						float travel_time = 0;
 						float speed = g_link_vector[l].length /(g_link_vector[l].free_flow_travel_time_in_min/60.0) ;
 						float virtual_arrival = 0;
@@ -4379,12 +4389,31 @@ void g_output_simulation_result(Assignment& assignment)
 								virtual_arrival = assignment.m_LinkCumulativeArrival[l][t - assignment.m_LinkTDTravelTime[l][t]];
 														
 							queue = virtual_arrival - assignment.m_LinkCumulativeDeparture[l][t];
-							waiting_time_in_min = queue / (max(1, volume));
-							travel_time = assignment.m_LinkTDTravelTime[l][t]* number_of_seconds_per_interval /60.0 + waiting_time_in_min;
+//							waiting_time_in_min = queue / (max(1, volume));
+
+							float waiting_time_count = 0;
+							for (int tt = t; tt < t + 60 / number_of_seconds_per_interval; tt++)
+							{
+								waiting_time_count += assignment.m_LinkTDWaitingTime[l][tt];
+							}
+							
+							if(waiting_time_count >=1)
+							{
+							waiting_time_in_sec = waiting_time_count * number_of_seconds_per_interval ;
+							
+							arrival_rate = assignment.m_LinkCumulativeArrival[l][t + 60 / number_of_seconds_per_interval] - assignment.m_LinkCumulativeArrival[l][t];
+							avg_waiting_time_in_sec = waiting_time_in_sec / max(1, arrival_rate);
+							}
+							else
+							{
+								avg_waiting_time_in_sec = 0;
+							}
+
+							travel_time = assignment.m_LinkTDTravelTime[l][t]* number_of_seconds_per_interval /60.0 + avg_waiting_time_in_sec/60.0;
 							speed = g_link_vector[l].length / (max(0.00001,travel_time) / 60.0);
 						}
 
-						fprintf(g_pFileLinkMOE, "%s,%d,%d,%s_%s,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,",
+						fprintf(g_pFileLinkMOE, "%s,%d,%d,%s_%s,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,",
 							g_link_vector[l].link_id.c_str(),
 
 							g_node_vector[g_link_vector[l].from_node_seq_no].node_id,
@@ -4397,6 +4426,7 @@ void g_output_simulation_result(Assignment& assignment)
 							assignment.m_LinkCumulativeDeparture[l][t],
 							queue, 
 							travel_time,
+							avg_waiting_time_in_sec,
 							speed);
 						fprintf(g_pFileLinkMOE, "simulation-based\n");
 
@@ -5302,6 +5332,7 @@ void Assignment::AllocateLinkMemory4Simulation()
 	m_LinkCumulativeDeparture = AllocateDynamicArray <float>(g_number_of_links, g_number_of_simulation_intervals);  //1
 
 	m_LinkTDTravelTime = AllocateDynamicArray <int>(g_number_of_links, g_number_of_simulation_intervals);
+	m_LinkTDWaitingTime = AllocateDynamicArray <float>(g_number_of_links, g_number_of_simulation_intervals);
 
 	unsigned int RandomSeed = 101;
 	float residual;
@@ -5312,6 +5343,7 @@ void Assignment::AllocateLinkMemory4Simulation()
 		{
 			m_LinkTDTravelTime[l][t] = max(1, (int)(g_link_vector[l].free_flow_travel_time_in_min * 60 / number_of_seconds_per_interval));
 			m_LinkOutFlowCapacity[l][t] = g_link_vector[l].lane_capacity * g_link_vector[l].number_of_lanes / 3600.0 * number_of_seconds_per_interval;
+			m_LinkTDWaitingTime[l][t] = 0;
 
 			residual = m_LinkOutFlowCapacity[l][t] - (int)(m_LinkOutFlowCapacity[l][t]);
 			RandomSeed = (LCG_a * RandomSeed + LCG_c) % LCG_M;  //RandomSeed is automatically updated.
@@ -5342,7 +5374,7 @@ void Assignment::AllocateLinkMemory4Simulation()
 
 	for (unsigned li = 0; li < g_link_vector.size(); li++)
 	{
-		if (assignment.g_LinkTypeMap[g_link_vector[li].link_type ].type_code == "s")
+		if(g_link_vector[li].service_arc_flag == true)
 		{
 			// reset
 			for (int t = 0; t < g_number_of_simulation_intervals; t++)
@@ -5352,26 +5384,50 @@ void Assignment::AllocateLinkMemory4Simulation()
 		}
 	}
 
+
+
 	for (int si = 0; si < g_service_arc_vector.size(); si++)
 	{
+
 
 		CServiceArc* pServiceArc = &(g_service_arc_vector[si]);
 		int l = pServiceArc->link_seq_no;
 
+		int number_of_cycles = (g_LoadingEndTimeInMin - g_LoadingStartTimeInMin) * 60 / max(1, pServiceArc->cycle_length );  // unit: seconds;
+
+		for(int cycle_no = 0; cycle_no < number_of_cycles; cycle_no++)
+		{
 		int count = 0;
-		for (int t = pServiceArc->starting_time_no; t <= pServiceArc->ending_time_no; t += pServiceArc->time_interval_no)   // relative time horizon
+		for (int t = cycle_no* pServiceArc->cycle_length+  pServiceArc->starting_time_no; 
+			t <= cycle_no * pServiceArc->cycle_length + pServiceArc->ending_time_no; t += pServiceArc->time_interval_no)   // relative time horizon
 		{
 			count++;
 		}
-		for (int t = pServiceArc->starting_time_no; t <= pServiceArc->ending_time_no; t+= pServiceArc->time_interval_no)   // relative time horizon
+
+		for (int t = cycle_no * pServiceArc->cycle_length + pServiceArc->starting_time_no; t <= cycle_no * pServiceArc->cycle_length + pServiceArc->ending_time_no; t+= pServiceArc->time_interval_no)   // relative time horizon
 		{
 		m_LinkOutFlowCapacity[l][t] = pServiceArc->capacity/max(1, count);  // active capacity for this space time arc
 
+		residual = m_LinkOutFlowCapacity[l][t] - (int)(m_LinkOutFlowCapacity[l][t]);
+		RandomSeed = (LCG_a * RandomSeed + LCG_c) % LCG_M;  //RandomSeed is automatically updated.
+		random_ratio = float(RandomSeed) / LCG_M;
+
+		if (random_ratio < residual)
+		{
+			m_LinkOutFlowCapacity[l][t] = (int)(m_LinkOutFlowCapacity[l][t]) + 1;
+		}
+		else
+		{
+			m_LinkOutFlowCapacity[l][t] = (int)(m_LinkOutFlowCapacity[l][t]);
+
+		}
+
 		m_LinkTDTravelTime[l][t] = pServiceArc->travel_time_delta;  // enable time-dependent travel time
+		m_LinkTDWaitingTime[l][t] = 0;
 
 
 		}
-		
+		}
 	}
 
 }
@@ -5529,7 +5585,8 @@ void Assignment::STTrafficSimulation()
 				pLink->EntranceQueue.pop_front();
 				pLink->ExitQueue.push_back(agent_id);
 				CAgent_Simu* p_agent = g_agent_simu_vector[agent_id];
-				p_agent->m_Veh_LinkDepartureTime_in_simu_interval[p_agent->m_current_link_seq_no] = t + m_LinkTDTravelTime[li][t];
+				int arrival_time = p_agent->m_Veh_LinkArrivalTime_in_simu_interval[p_agent->m_current_link_seq_no];
+				p_agent->m_Veh_LinkDepartureTime_in_simu_interval[p_agent->m_current_link_seq_no] = arrival_time + m_LinkTDTravelTime[li][arrival_time];
 			}
 		}
 
@@ -5546,43 +5603,54 @@ void Assignment::STTrafficSimulation()
 					/*	check if the current link has sufficient capacity*/
 						while (m_LinkOutFlowCapacity[link][t] >= 1 && pLink->ExitQueue.size() >=1)
 						{
-							int agent_id = pLink->ExitQueue.front();
-							CAgent_Simu* p_agent = g_agent_simu_vector[agent_id];
-							
-							if (p_agent->m_Veh_LinkDepartureTime_in_simu_interval[p_agent->m_current_link_seq_no] > t)
-							{
-								break; // the future departure time on this link is later than the current time
-							}
+								int agent_id = pLink->ExitQueue.front();
+								CAgent_Simu* p_agent = g_agent_simu_vector[agent_id];
 
-							// all conditions satified, pop it from the exit queu
-							pLink->ExitQueue.pop_front();
-							if (p_agent->m_current_link_seq_no == p_agent->path_link_seq_no_vector.size() - 1)
-							{// end of path
-								p_agent->m_bCompleteTrip = true;
-								m_LinkCumulativeDeparture[link][t] += 1;
-								TotalCumulative_Departure_Count += 1;
+								if (p_agent->m_Veh_LinkDepartureTime_in_simu_interval[p_agent->m_current_link_seq_no] > t)
+								{
+									break; // the future departure time on this link is later than the current time
+								}
 
-							}
-							else
-							{ // not complete the trip. move to the next link's entrance queue
+								// all conditions satified, pop it from the exit queu
+								pLink->ExitQueue.pop_front();
+								if (p_agent->m_current_link_seq_no == p_agent->path_link_seq_no_vector.size() - 1)
+								{// end of path
+									p_agent->m_bCompleteTrip = true;
+									m_LinkCumulativeDeparture[link][t] += 1;
+									TotalCumulative_Departure_Count += 1;
 
-								int next_link_seq_no = p_agent->path_link_seq_no_vector[p_agent->m_current_link_seq_no + 1];
+								}
+								else
+								{ // not complete the trip. move to the next link's entrance queue
 
-								CLink* pNextLink = &(g_link_vector[next_link_seq_no]);
+									int next_link_seq_no = p_agent->path_link_seq_no_vector[p_agent->m_current_link_seq_no + 1];
 
-								pNextLink->EntranceQueue.push_back(agent_id); 
-								p_agent->m_Veh_LinkDepartureTime_in_simu_interval[p_agent->m_current_link_seq_no] = t;
-								p_agent->m_Veh_LinkArrivalTime_in_simu_interval[p_agent->m_current_link_seq_no + 1] = t;
+									CLink* pNextLink = &(g_link_vector[next_link_seq_no]);
 
-								m_LinkCumulativeDeparture[link][t] += 1;
-								m_LinkCumulativeArrival[next_link_seq_no][t] += 1;
+									pNextLink->EntranceQueue.push_back(agent_id);
+									p_agent->m_Veh_LinkDepartureTime_in_simu_interval[p_agent->m_current_link_seq_no] = t;
+									p_agent->m_Veh_LinkArrivalTime_in_simu_interval[p_agent->m_current_link_seq_no + 1] = t;
 
-							}
+									float travel_time = p_agent->m_Veh_LinkDepartureTime_in_simu_interval[p_agent->m_current_link_seq_no] - p_agent->m_Veh_LinkArrivalTime_in_simu_interval[p_agent->m_current_link_seq_no];
+									
+									float waiting_time = travel_time - m_LinkTDTravelTime[link][p_agent->m_Veh_LinkArrivalTime_in_simu_interval[p_agent->m_current_link_seq_no]];
 
-							//move
-							p_agent->m_current_link_seq_no += 1;
-							m_LinkOutFlowCapacity[link][t] -= 1;
+									if(waiting_time >=1)
+									{
+									m_LinkTDWaitingTime[link][p_agent->m_Veh_LinkArrivalTime_in_simu_interval[p_agent->m_current_link_seq_no]] += waiting_time;
+									}
 
+
+
+
+									m_LinkCumulativeDeparture[link][t] += 1;
+									m_LinkCumulativeArrival[next_link_seq_no][t] += 1;
+
+								}
+
+								//move
+								p_agent->m_current_link_seq_no += 1;
+								m_LinkOutFlowCapacity[link][t] -= 1;
 						}
 			}
 
