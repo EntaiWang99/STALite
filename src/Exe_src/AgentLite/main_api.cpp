@@ -636,6 +636,7 @@ public:
 	string link_type_name;
 	string agent_type_list;
 	string type_code;
+	int    traffic_flow_code;
 
 	int number_of_links;
 
@@ -643,6 +644,7 @@ public:
 	{
 		number_of_links = 0;
 		link_type = 1;
+		traffic_flow_code = 0;
 	}
 
 	bool AllowAgentType(string agent_type)
@@ -1246,6 +1248,8 @@ public:
 		link_spatial_capacity = 100;
 		RUC_type = 0;
 		service_arc_flag = false;
+		traffic_flow_code = 0;
+		spatial_capacity_in_vehicles = 999999;
 	}
 
 	~CLink()
@@ -1274,6 +1278,8 @@ public:
 	int m_RandomSeed;
 	int link_seq_no;
 	string link_id;
+	int traffic_flow_code;
+	int spatial_capacity_in_vehicles;
 	int from_node_seq_no;
 	int to_node_seq_no;
 	int link_type;
@@ -3251,6 +3257,7 @@ void g_ReadInputData(Assignment& assignment)
 			}
 
 			parser_link_type.GetValueByFieldName("type_code", element.type_code);
+			parser_link_type.GetValueByFieldName("traffic_flow_code", element.traffic_flow_code);
 			parser_link_type.GetValueByFieldName("agent_type_list", element.agent_type_list);
 
 			
@@ -3519,6 +3526,7 @@ void g_ReadInputData(Assignment& assignment)
 
 			}
 
+
 			for (int at = 0; at < assignment.g_AgentTypeVector.size(); at++)
 			{
 				float PCE_ratio = assignment.g_AgentTypeVector[at].PCE_link_type_map[link.link_type];
@@ -3541,7 +3549,6 @@ void g_ReadInputData(Assignment& assignment)
 				link.zone_seq_no_for_outgoing_connector = assignment.g_zoneid_to_zone_seq_no_mapping [g_node_vector[internal_from_node_seq_no].zone_id];
 			}
 
-
 			parser_link.GetValueByFieldName("toll", link.toll,false,false);
 			parser_link.GetValueByFieldName("additional_cost", link.route_choice_cost, false, false);
 
@@ -3559,6 +3566,14 @@ void g_ReadInputData(Assignment& assignment)
 			int number_of_lanes = 1;
 			parser_link.GetValueByFieldName("lanes", number_of_lanes);
 			parser_link.GetValueByFieldName("capacity", lane_capacity);
+
+			link.traffic_flow_code = assignment.g_LinkTypeMap[link.link_type].traffic_flow_code;
+
+			if (link.traffic_flow_code == 2)    //spatial queue
+			{
+				link.spatial_capacity_in_vehicles = max(1,length * number_of_lanes * k_jam);
+			}
+
 
 			char VDF_field_name[20];
 
@@ -5626,6 +5641,16 @@ void Assignment::STTrafficSimulation()
 									int next_link_seq_no = p_agent->path_link_seq_no_vector[p_agent->m_current_link_seq_no + 1];
 
 									CLink* pNextLink = &(g_link_vector[next_link_seq_no]);
+
+									int current_vehicle_count = m_LinkCumulativeArrival[next_link_seq_no][t - 1] - m_LinkCumulativeDeparture[next_link_seq_no][t - 1] ;
+
+									if (pNextLink->traffic_flow_code == 2 /*spatial queue*/ && 
+										current_vehicle_count > pNextLink->spatial_capacity_in_vehicles)
+									{
+										// spatical queue in the next link is blocked, break the while loop from here, as a first in first out queue.
+//										cout << "spatical queue in the next link is blocked on link seq  " <<  g_node_vector[pNextLink->from_node_seq_no].node_id  << " -> " << g_node_vector[pNextLink->to_node_seq_no].node_id  <<endl;
+										break;
+									}
 
 									pNextLink->EntranceQueue.push_back(agent_id);
 									p_agent->m_Veh_LinkDepartureTime_in_simu_interval[p_agent->m_current_link_seq_no] = t;
