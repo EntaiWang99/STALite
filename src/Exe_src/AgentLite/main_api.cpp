@@ -1034,6 +1034,8 @@ public:
 	int g_start_simu_interval_no;
 
 	int g_number_of_simulation_intervals;
+	int g_number_of_loading_simulation_intervals;
+
 	void AllocateLinkMemory4Simulation();
 
 	void STTrafficSimulation();
@@ -4502,7 +4504,7 @@ void g_output_simulation_result(Assignment& assignment)
 	}
 	else
 	{
-		fprintf(g_pFileODMOE, "agent_id,o_zone_id,d_zone_id,path_id,o_node_id,d_node_id,agent_type,demand_period,volume,toll,travel_time,distance,opti_cost,oc_diff,relative_diff,node_sequence,link_sequence,time_sequence,time_decimal_sequence,\n");
+		fprintf(g_pFileODMOE, "agent_id,o_zone_id,d_zone_id,path_id,o_node_id,d_node_id,agent_type,demand_period,volume,toll,travel_time,distance,opti_cost,oc_diff,relative_diff,node_sequence,link_sequence,time_sequence,time_decimal_sequence,link_travel_time_sequence,\n");
 
 
 		int count = 1;
@@ -4705,6 +4707,13 @@ void g_output_simulation_result(Assignment& assignment)
 							for (int nt = 0; nt < it->second.m_link_size + 1; nt++)
 							{
 								buffer_len += sprintf(str_buffer + buffer_len, "%.2f;", path_time_vector[nt]);
+							}
+
+							buffer_len += sprintf(str_buffer + buffer_len, ",");
+
+							for (int nt = 0; nt < it->second.m_link_size; nt++)
+							{
+								buffer_len += sprintf(str_buffer + buffer_len, "%.2f;", path_time_vector[nt+1] - path_time_vector[nt]);
 							}
 
 							buffer_len += sprintf(str_buffer + buffer_len, "\n");
@@ -5338,8 +5347,9 @@ double network_assignment(int iteration_number, int assignment_mode, int column_
 
 void Assignment::AllocateLinkMemory4Simulation()
 {
-	g_number_of_simulation_intervals = (g_LoadingEndTimeInMin - g_LoadingStartTimeInMin + 60) * 60 /number_of_seconds_per_interval;
-	// add + 60 as a buffer
+	g_number_of_simulation_intervals = (g_LoadingEndTimeInMin - g_LoadingStartTimeInMin + 120) * 60 /number_of_seconds_per_interval;
+	g_number_of_loading_simulation_intervals = (g_LoadingEndTimeInMin - g_LoadingStartTimeInMin+30) * 60 / number_of_seconds_per_interval;
+	// add + 120 as a buffer
 
 	m_LinkOutFlowCapacity = AllocateDynamicArray <float>(g_number_of_links, g_number_of_simulation_intervals);  //1
 	// discharge rate per simulation time interval
@@ -5357,7 +5367,13 @@ void Assignment::AllocateLinkMemory4Simulation()
 		for (int t = 0; t < g_number_of_simulation_intervals; t++)
 		{
 			m_LinkTDTravelTime[l][t] = max(1, (int)(g_link_vector[l].free_flow_travel_time_in_min * 60 / number_of_seconds_per_interval));
-			m_LinkOutFlowCapacity[l][t] = g_link_vector[l].lane_capacity * g_link_vector[l].number_of_lanes / 3600.0 * number_of_seconds_per_interval;
+
+			if(t>=g_number_of_loading_simulation_intervals)
+				m_LinkOutFlowCapacity[l][t] = 10*g_link_vector[l].lane_capacity * g_link_vector[l].number_of_lanes / 3600.0 * number_of_seconds_per_interval;
+			/* 10 times of capacity to discharge all flow */
+			else 
+				m_LinkOutFlowCapacity[l][t] = g_link_vector[l].lane_capacity * g_link_vector[l].number_of_lanes / 3600.0 * number_of_seconds_per_interval;
+
 			m_LinkTDWaitingTime[l][t] = 0;
 
 			residual = m_LinkOutFlowCapacity[l][t] - (int)(m_LinkOutFlowCapacity[l][t]);
@@ -5392,7 +5408,7 @@ void Assignment::AllocateLinkMemory4Simulation()
 		if(g_link_vector[li].service_arc_flag == true)
 		{
 			// reset
-			for (int t = 0; t < g_number_of_simulation_intervals; t++)
+			for (int t = 0; t < g_number_of_loading_simulation_intervals; t++)  // only for the loading period
 			{ 
 			m_LinkOutFlowCapacity[li][t] = 0;
 			}
@@ -5553,7 +5569,7 @@ void Assignment::STTrafficSimulation()
 	for (int t = 0; t < g_number_of_simulation_intervals; t++)  // first loop for time t
 	{
 		int link_size = g_link_vector.size(); 
-	#pragma omp parallel for   // count reset
+//	#pragma omp parallel for   // count reset
 		for (int li = 0; li < link_size; li++)
 		{
 			CLink* pLink = &(g_link_vector[li]);
@@ -5589,7 +5605,7 @@ void Assignment::STTrafficSimulation()
 
 
 
-#pragma omp parallel for
+//#pragma omp parallel for
 		for (int li = 0; li < link_size; li++)
 		{
 			CLink* pLink = &(g_link_vector[li]);
@@ -5607,7 +5623,7 @@ void Assignment::STTrafficSimulation()
 
 		int node_size = g_node_vector.size();
 
-#pragma omp parallel for
+//#pragma omp parallel for
 		for (int node = 0; node < node_size; node++)
 		{
 
@@ -5616,7 +5632,13 @@ void Assignment::STTrafficSimulation()
 				int link = g_node_vector[node].m_incoming_link_seq_no_vector[l];
 				CLink* pLink = &(g_link_vector[link]);
 					/*	check if the current link has sufficient capacity*/
-						while (m_LinkOutFlowCapacity[link][t] >= 1 && pLink->ExitQueue.size() >=1)
+
+				if (g_node_vector[node].node_id == 31 && t >= 6000)
+				{
+					TRACE("");
+				}
+
+						while ( m_LinkOutFlowCapacity[link][t] >= 1	&& pLink->ExitQueue.size() >=1)
 						{
 								int agent_id = pLink->ExitQueue.front();
 								CAgent_Simu* p_agent = g_agent_simu_vector[agent_id];
@@ -5626,10 +5648,9 @@ void Assignment::STTrafficSimulation()
 									break; // the future departure time on this link is later than the current time
 								}
 
-								// all conditions satified, pop it from the exit queu
-								pLink->ExitQueue.pop_front();
 								if (p_agent->m_current_link_seq_no == p_agent->path_link_seq_no_vector.size() - 1)
 								{// end of path
+									pLink->ExitQueue.pop_front();
 									p_agent->m_bCompleteTrip = true;
 									m_LinkCumulativeDeparture[link][t] += 1;
 									TotalCumulative_Departure_Count += 1;
@@ -5652,6 +5673,7 @@ void Assignment::STTrafficSimulation()
 										break;
 									}
 
+									pLink->ExitQueue.pop_front();
 									pNextLink->EntranceQueue.push_back(agent_id);
 									p_agent->m_Veh_LinkDepartureTime_in_simu_interval[p_agent->m_current_link_seq_no] = t;
 									p_agent->m_Veh_LinkArrivalTime_in_simu_interval[p_agent->m_current_link_seq_no + 1] = t;
