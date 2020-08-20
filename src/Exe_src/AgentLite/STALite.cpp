@@ -8,19 +8,13 @@
 // http://www.gnu.org/licenses/gpl-howto.html
 
 #include "stdafx.h"
-
-#include "..\AgentLite\main_api.cpp";
-#include "..\AgentLite\signal_api.cpp";
+#include "C:\SourceCode\STALite_sourcecode\STALite_sourcecode\src\Exe_src\AgentLite\main_api.cpp"
 
 
 int main(int argc, TCHAR* argv[], TCHAR* envp[])
 {
 	int iteration_number = 2;
 	int column_updating_iterations = 0;
-
-	int signal_updating_iterations = 0;
-
-	int signal_updating_output = 0;
 
 	int assignment_mode = 0;
 
@@ -46,25 +40,9 @@ int main(int argc, TCHAR* argv[], TCHAR* envp[])
 			if (field == "column_updating_iterations")
 				column_updating_iterations = value_int;
 
-			if (field == "signal_updating_iterations")
-				signal_updating_iterations = value_int;
-
-			if (field == "signal_updating_output")
-				signal_updating_output = value_int;
-
 		}
 	}
 
-	network_assignment(iteration_number, assignment_mode, column_updating_iterations, 1);  // obtain initial flow values
-	SignalAPI(iteration_number, assignment_mode, signal_updating_output);
-
-	//for(int si = 0; si < signal_updating_iterations; si++)
-	//{ 
-	//	cout << "_______Signal timing iteration No." << si << "_______" << endl;
-	//SignalAPI(iteration_number, assignment_mode, signal_updating_output);
-	//network_assignment(iteration_number, assignment_mode, column_updating_iterations, 0);  // do not re-load network and demand
-	//}
-
-
+	network_assignment(iteration_number, assignment_mode, column_updating_iterations);
 
 }
