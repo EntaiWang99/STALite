@@ -49,6 +49,7 @@ template <typename T>
 #define _MAX_LINK_SIZE_FOR_A_NODE 200
 
 #define _MAX_TIMESLOT_PerPeriod 100 // max 96 15-min slots per day
+#define _default_saturation_flow_rate 1530 
 
 #define MIN_PER_TIMESLOT 15
 #define number_of_seconds_per_interval 1
@@ -1027,7 +1028,6 @@ public:
 	int g_number_of_demand_periods;
 
 
-
 	//	-------------------------------
 		// used in ST Simulation
 	float** m_LinkOutFlowCapacity;
@@ -1043,7 +1043,6 @@ public:
 
 	int g_number_of_simulation_intervals;
 	int g_number_of_loading_simulation_intervals;
-
 
 	void STTrafficSimulation();
 };
@@ -1070,6 +1069,10 @@ public:
 
 		starting_time_slot_no = 0;
 		ending_time_slot_no = 0;
+
+		cycle_length = 29;  //default value
+		red_time = 0;
+
 	}
 
 
@@ -1077,6 +1080,8 @@ public:
 	int ending_time_slot_no;
 	string period;
 
+	float cycle_length;
+	float red_time;
 
 	//standard BPR parameter 
 	float alpha;
@@ -1125,15 +1130,26 @@ public:
 
 	}
 
+	float  PerformSignalVDF(float hourly_per_lane_volume, float red, float cycle_length)
+	{
+		float lambda = hourly_per_lane_volume;
+		float mu = _default_saturation_flow_rate; //default saturation flow rates
+		float s_bar = 1.0 / 60.0 * red * red / (2*cycle_length); // 60.0 is used to convert sec to min
+		float uniform_delay = s_bar / max(1 - lambda / mu, 0.1) ;  
+		return uniform_delay;
+
+
+	}
+
 	float  PerformBPR(float volume)
 	{
 		volume = max(0, volume);  // take nonnegative values
+
 
 		VOC = volume / max(0.00001f, capacity);
 		avg_travel_time = FFTT + FFTT * alpha * pow(volume / max(0.00001f, capacity), beta);
 
 		marginal_base = FFTT * alpha * beta*pow(volume / max(0.00001f, capacity), beta - 1);
-
 
 
 	return avg_travel_time;
@@ -1452,8 +1468,14 @@ public:
 	CServiceArc()  // construction 
 	{
 		cycle_length = -1;
+
+		red_time = 0;
+		capacity = 0;
+		travel_time_delta = 0;
+		cycle_length = 0;
 	}
 
+	float red_time;
 	int link_seq_no;
 	int starting_time_no;
 	int ending_time_no;
@@ -3607,7 +3629,7 @@ void g_ReadInputData(Assignment& assignment)
 
 			if (link.traffic_flow_code == 3)    // kinematic wave
 			{
-				link.BWTT_in_simulation_interval == length / bwtt_speed *3600/ number_of_seconds_per_interval;
+				link.BWTT_in_simulation_interval = length / bwtt_speed *3600/ number_of_seconds_per_interval;
 			}
 
 
@@ -3684,7 +3706,6 @@ void g_ReadInputData(Assignment& assignment)
 				link.travel_time_per_period[tau] = length / free_speed * 60;
 			}
 
-
 			// min // calculate link cost based length and speed limit // later we should also read link_capacity, calculate delay 
 
 			//int sequential_copying = 0;
@@ -3714,131 +3735,140 @@ void g_ReadInputData(Assignment& assignment)
 
 //	fprintf(g_pFileOutputLog, "number of links =,%d\n", assignment.g_number_of_links);
 
-	if(assignment.assignment_mode == 2)
-	{
-	CCSVParser parser_service_arc;
+};
 
-	if (parser_service_arc.OpenCSVFile("service_arc.csv", true))
-	{
-		while (parser_service_arc.ReadRecord())  // if this line contains [] mark, then we will also read field headers.
+void g_reload_service_arc_data(Assignment& assignment)
+{
+		CCSVParser parser_service_arc;
+
+		if (parser_service_arc.OpenCSVFile("service_arc.csv", true))
 		{
-			int from_node_id =0;
-			int to_node_id =0;
-			if (parser_service_arc.GetValueByFieldName("from_node_id", from_node_id) == false)
-			{ 
-				cout << "Error: from_node_id in file service_arc.csv is not defined." << endl;
-				continue;
-			}
-			if (parser_service_arc.GetValueByFieldName("to_node_id", to_node_id) == false)
-			{ 
-				continue;
-			}
-
-			if (assignment.g_internal_node_to_seq_no_map.find(from_node_id) == assignment.g_internal_node_to_seq_no_map.end())
+			while (parser_service_arc.ReadRecord())  // if this line contains [] mark, then we will also read field headers.
 			{
-				cout << "Error: from_node_id " << from_node_id << " in file service_arc.csv is not defined in node.csv." << endl;
+				int from_node_id = 0;
+				int to_node_id = 0;
+				if (parser_service_arc.GetValueByFieldName("from_node_id", from_node_id) == false)
+				{
+					cout << "Error: from_node_id in file service_arc.csv is not defined." << endl;
+					continue;
+				}
+				if (parser_service_arc.GetValueByFieldName("to_node_id", to_node_id) == false)
+				{
+					continue;
+				}
 
-				continue; //has not been defined
+				if (assignment.g_internal_node_to_seq_no_map.find(from_node_id) == assignment.g_internal_node_to_seq_no_map.end())
+				{
+					cout << "Error: from_node_id " << from_node_id << " in file service_arc.csv is not defined in node.csv." << endl;
+
+					continue; //has not been defined
+				}
+				if (assignment.g_internal_node_to_seq_no_map.find(to_node_id) == assignment.g_internal_node_to_seq_no_map.end())
+				{
+					cout << "Error: to_node_id " << to_node_id << " in file service_arc.csv is not defined in node.csv." << endl;
+					continue; //has not been defined
+				}
+
+
+				int internal_from_node_seq_no = assignment.g_internal_node_to_seq_no_map[from_node_id];  // map external node number to internal node seq no. 
+				int internal_to_node_seq_no = assignment.g_internal_node_to_seq_no_map[to_node_id];
+
+				CServiceArc service_arc;  // create a link object 
+
+
+				if (g_node_vector[internal_from_node_seq_no].m_to_node_2_link_seq_no_map.find(internal_to_node_seq_no) != g_node_vector[internal_from_node_seq_no].m_to_node_2_link_seq_no_map.end())
+				{
+					service_arc.link_seq_no = g_node_vector[internal_from_node_seq_no].m_to_node_2_link_seq_no_map[internal_to_node_seq_no];
+
+					g_link_vector[service_arc.link_seq_no].service_arc_flag = true;
+				}
+				else
+				{
+					cout << "Error: Link " << from_node_id << "->" << to_node_id << " in file service_arc.csv is not defined in road_link.csv." << endl;
+					continue;
+				}
+
+
+				string time_period;
+				if (parser_service_arc.GetValueByFieldName("time_window", time_period) == false)
+				{
+					cout << "Error: Field time_window in file service_arc.csv cannot be read." << endl;
+					g_ProgramStop();
+					break;
+				}
+
+				vector<float> global_minute_vector;
+
+				//input_string includes the start and end time of a time period with hhmm format
+				global_minute_vector = g_time_parser(time_period); //global_minute_vector incldue the starting and ending time
+				if (global_minute_vector.size() == 2)
+				{
+					if (global_minute_vector[0] < assignment.g_LoadingStartTimeInMin)
+						global_minute_vector[0] = assignment.g_LoadingStartTimeInMin;
+
+					if (global_minute_vector[0] > assignment.g_LoadingEndTimeInMin)
+						global_minute_vector[0] = assignment.g_LoadingEndTimeInMin;
+
+					if (global_minute_vector[1] < assignment.g_LoadingStartTimeInMin)
+						global_minute_vector[1] = assignment.g_LoadingStartTimeInMin;
+
+					if (global_minute_vector[1] > assignment.g_LoadingEndTimeInMin)
+						global_minute_vector[1] = assignment.g_LoadingEndTimeInMin;
+
+					if (global_minute_vector[1] < global_minute_vector[0])
+						global_minute_vector[1] = global_minute_vector[0];
+
+					//this could contain sec information.
+					service_arc.starting_time_no = (global_minute_vector[0] - assignment.g_LoadingStartTimeInMin) * 60 / number_of_seconds_per_interval;
+					service_arc.ending_time_no = (global_minute_vector[1] - assignment.g_LoadingStartTimeInMin) * 60 / number_of_seconds_per_interval;
+
+				}
+				else
+				{
+					continue;
+				}
+
+				float time_interval = 0;
+
+				parser_service_arc.GetValueByFieldName("time_interval", time_interval, false, false);
+				service_arc.time_interval_no = max(1, time_interval * 60.0 / number_of_seconds_per_interval);
+
+
+				int travel_time_delta_in_min = 0;
+				parser_service_arc.GetValueByFieldName("travel_time_delta", travel_time_delta_in_min, false, false);
+				service_arc.travel_time_delta = max(g_link_vector[service_arc.link_seq_no].free_flow_travel_time_in_min * 60 / number_of_seconds_per_interval,
+					travel_time_delta_in_min * 60 / number_of_seconds_per_interval);
+
+				service_arc.travel_time_delta = max(1, service_arc.travel_time_delta);
+				float capacity = 1;
+				parser_service_arc.GetValueByFieldName("capacity", capacity);  // capacity in the space time arcs
+				service_arc.capacity = max(0, capacity);
+
+				parser_service_arc.GetValueByFieldName("cycle_length", service_arc.cycle_length);  // capacity in the space time arcs
+
+
+				parser_service_arc.GetValueByFieldName("red_time", service_arc.red_time);  // capacity in the space time arcs
+
+				for (int tau = 0; tau < assignment.g_number_of_demand_periods; tau++)
+				{ 
+				g_link_vector[service_arc.link_seq_no].VDF_period[tau].red_time = service_arc.red_time;   // to do: we need to consider multiple periods in the future, Xuesong Zhou, August 20, 2020.
+				g_link_vector[service_arc.link_seq_no].VDF_period[tau].cycle_length = service_arc.cycle_length;
+				}
+
+				g_service_arc_vector.push_back(service_arc);
+				assignment.g_number_of_service_arcs++;
+
+				if (assignment.g_number_of_service_arcs % 10000 == 0)
+					cout << "reading " << assignment.g_number_of_service_arcs << " service_arcs.. " << endl;
 			}
-			if (assignment.g_internal_node_to_seq_no_map.find(to_node_id) == assignment.g_internal_node_to_seq_no_map.end())
-			{
-				cout << "Error: to_node_id " << to_node_id << " in file service_arc.csv is not defined in node.csv." << endl;
-				continue; //has not been defined
-			}
 
-
-			int internal_from_node_seq_no = assignment.g_internal_node_to_seq_no_map[from_node_id];  // map external node number to internal node seq no. 
-			int internal_to_node_seq_no = assignment.g_internal_node_to_seq_no_map[to_node_id];
-
-			CServiceArc service_arc;  // create a link object 
-
-
-			if (g_node_vector[internal_from_node_seq_no].m_to_node_2_link_seq_no_map.find(internal_to_node_seq_no) != g_node_vector[internal_from_node_seq_no].m_to_node_2_link_seq_no_map.end())
-			{
-				service_arc.link_seq_no = g_node_vector[internal_from_node_seq_no].m_to_node_2_link_seq_no_map[internal_to_node_seq_no];
-
-				g_link_vector[service_arc.link_seq_no].service_arc_flag = true;
-			}
-			else
-			{
-				cout << "Error: Link " << from_node_id << "->"  <<  to_node_id << " in file service_arc.csv is not defined in road_link.csv." << endl;
-				continue;
-			}
-			
-
-			string time_period;
-			if (parser_service_arc.GetValueByFieldName("time_window", time_period) == false)
-			{
-				cout << "Error: Field time_window in file service_arc.csv cannot be read." << endl;
-				g_ProgramStop();
-				break;
-			}
-
-			vector<float> global_minute_vector;
-
-			//input_string includes the start and end time of a time period with hhmm format
-			global_minute_vector = g_time_parser(time_period); //global_minute_vector incldue the starting and ending time
-			if (global_minute_vector.size() == 2)
-			{
-				if (global_minute_vector[0] < assignment.g_LoadingStartTimeInMin)
-					global_minute_vector[0] = assignment.g_LoadingStartTimeInMin;
-
-				if (global_minute_vector[0] > assignment.g_LoadingEndTimeInMin)
-					global_minute_vector[0] = assignment.g_LoadingEndTimeInMin;
-
-				if (global_minute_vector[1] < assignment.g_LoadingStartTimeInMin)
-					global_minute_vector[1] = assignment.g_LoadingStartTimeInMin;
-
-				if (global_minute_vector[1] > assignment.g_LoadingEndTimeInMin)
-					global_minute_vector[1] = assignment.g_LoadingEndTimeInMin;
-
-				if (global_minute_vector[1] < global_minute_vector[0])
-					global_minute_vector[1] = global_minute_vector[0];
-
-				//this could contain sec information.
-				service_arc.starting_time_no =(global_minute_vector[0] - assignment.g_LoadingStartTimeInMin) * 60 / number_of_seconds_per_interval;
-				service_arc.ending_time_no = (global_minute_vector[1] - assignment.g_LoadingStartTimeInMin) * 60 / number_of_seconds_per_interval;
-
-			}
-			else
-			{
-				continue;
-			}
-
-			float time_interval = 0;
-
-			parser_service_arc.GetValueByFieldName("time_interval", time_interval, false, false);
-			service_arc.time_interval_no = max(1, time_interval * 60.0 / number_of_seconds_per_interval);
-
-
-			int travel_time_delta_in_min = 0;
-			parser_service_arc.GetValueByFieldName("travel_time_delta", travel_time_delta_in_min, false, false);
-			service_arc.travel_time_delta = max(g_link_vector[service_arc.link_seq_no].free_flow_travel_time_in_min*60 / number_of_seconds_per_interval,
-				travel_time_delta_in_min * 60 / number_of_seconds_per_interval);
-
-			service_arc.travel_time_delta = max(1, service_arc.travel_time_delta);
-			float capacity = 1;
-			parser_service_arc.GetValueByFieldName("capacity", capacity);  // capacity in the space time arcs
-			service_arc.capacity = max(0, capacity); 
-
-			parser_service_arc.GetValueByFieldName("cycle_length", service_arc.cycle_length);  // capacity in the space time arcs
-
-			g_service_arc_vector.push_back(service_arc);
-			assignment.g_number_of_service_arcs++;
-
-			if (assignment.g_number_of_service_arcs % 10000 == 0)
-				cout << "reading " << assignment.g_number_of_service_arcs << " service_arcs.. " << endl;
+			parser_service_arc.CloseCSVFile();
 		}
-
-		parser_service_arc.CloseCSVFile();
-	}
-	}
 	// we now know the number of links
 	cout << "number of service_arcs = " << assignment.g_number_of_service_arcs << endl;
 
 
-};
-
+}
 void g_reset_link_volume_in_master_program_without_columns(int number_of_links, int iteration_index, bool b_self_reducing_path_volume)
 {
 	int number_of_demand_periods = assignment.g_number_of_demand_periods;
@@ -4008,6 +4038,26 @@ void g_reset_and_update_link_volume_based_on_columns(int number_of_links, int it
 
 void update_link_travel_time_and_cost()
 {
+	if (assignment.assignment_mode == 2)
+	{   //compute the time-dependent delay from simulation  
+		//for (int l = 0; l < g_link_vector.size(); l++)
+		//{ 
+		//	float volume = assignment.m_LinkCumulativeDeparture[l][assignment.g_number_of_simulation_intervals - 1];  // link flow rates
+		//	float waiting_time_count = 0;
+
+		//for (int tt = 0; tt < assignment.g_number_of_simulation_intervals; tt++)
+		//{
+		//	waiting_time_count += assignment.m_LinkTDWaitingTime[l][tt];   // tally total waiting cou
+		//}
+
+		//for (int tau = 0; tau < assignment.g_DemandPeriodVector.size(); tau++)
+		//{
+		//	float travel_time = g_link_vector[l].free_flow_travel_time_in_min  + waiting_time_count* number_of_seconds_per_interval / max(1, volume) / 60;
+		//	g_link_vector[l].travel_time_per_period[tau] = travel_time;
+
+		//}
+	}
+
 #pragma omp parallel for
 	for (int l = 0; l < g_link_vector.size(); l++)
 	{
@@ -4543,7 +4593,7 @@ void g_output_simulation_result(Assignment& assignment)
 
 		int count = 1;
 
-		clock_t start_t, end_t, total_t;
+		clock_t start_t, end_t;
 		start_t = clock();
 		clock_t iteration_t;
 
@@ -5336,14 +5386,37 @@ void  CLink::CalculateTD_VDFunction()
 	{
 		float starting_time_slot_no = assignment.g_DemandPeriodVector[tau].starting_time_slot_no;
 		float ending_time_slot_no = assignment.g_DemandPeriodVector[tau].ending_time_slot_no;
-		travel_time_per_period[tau] = VDF_period[tau].PerformBPR(flow_volume_per_period[tau]);
-		//travel_time_per_period[tau] = VDF_period[tau].PerformBPR_X(flow_volume_per_period[tau]);
+
+		if (this->movement_str.length() > 1 && /*signalized*/
+			VDF_period[tau].red_time > 1)
+		{  // arterial streets with the data from sigal API
+			float hourly_per_lane_volume = flow_volume_per_period[tau] / (max(1, (ending_time_slot_no - starting_time_slot_no)) * 15 / 60 / number_of_lanes);
+			float red_time = VDF_period[tau].red_time;
+			float cycle_length = VDF_period[tau].cycle_length;
+			//we dynamically update cycle length, and green time/red time, so we have dynamically allocated capacity and average delay
+			travel_time_per_period[tau] = VDF_period[tau].PerformSignalVDF(hourly_per_lane_volume, red_time, cycle_length);
+
+			VDF_period[tau].capacity = (1 - red_time / cycle_length) * _default_saturation_flow_rate * number_of_lanes;  // update capacity using the effective discharge rates, will be passed in to the following BPR function
+
+		}
+
+			if (this->movement_str.length() == 0 /*non signalized*/||  
+				(this->movement_str.length() > 1 && /*signalized*/
+					VDF_period[tau].red_time < 1 &&
+					VDF_period[tau].cycle_length < 30)
+				)
+		
+			{ 
+				travel_time_per_period[tau] += VDF_period[tau].PerformBPR(flow_volume_per_period[tau]);
+			}
+			
+
 
 	}
 }
 
 
-double network_assignment(int iteration_number, int assignment_mode, int column_updating_iterations, int load_network_demand = 1)
+double network_assignment(int iteration_number, int assignment_mode, int column_updating_iterations, int signal_updating_iterations)
 {
 
 	//fopen_ss(&g_pFileOutputLog, "output_solution.csv", "w");
@@ -5369,11 +5442,12 @@ double network_assignment(int iteration_number, int assignment_mode, int column_
 
 
 	// step 1: read input data of network / demand tables / Toll
-	g_ReadInputData(assignment);
-	g_ReadDemandFileBasedOnDemandFileList(assignment);
-	//step 2: allocate memory and assign computing tasks
-	g_assign_computing_tasks_to_memory_blocks(assignment); // static cost based label correcting 
 
+	g_ReadInputData(assignment);
+	g_reload_service_arc_data(assignment);
+	g_ReadDemandFileBasedOnDemandFileList(assignment);
+	//step 2: allocate memory and assign computing taskszzzzzzzz
+	g_assign_computing_tasks_to_memory_blocks(assignment); // static cost based label correcting 
 
 	// definte timestamps
 	clock_t start_t, end_t, total_t;
@@ -5383,9 +5457,17 @@ double network_assignment(int iteration_number, int assignment_mode, int column_
 	//step 3: column generation stage: find shortest path and update path cost of tree using TD travel time
 	for (int iteration_number = 0; iteration_number < assignment.g_number_of_K_paths; iteration_number++)
 	{
+
 		end_t = clock();
 		iteration_t = end_t - start_t;
 		cout << "assignment iteration = " << iteration_number << " with CPU time " << iteration_t / 1000.0 << " s" << endl;
+
+		if (signal_updating_iterations >=1 && iteration_number >= signal_updating_iterations)
+		{
+		SignalAPI(iteration_number, assignment_mode, 0);
+		g_reload_service_arc_data(assignment);
+		}
+
 
 		//TRACE("Loop 1: assignment iteration %d", iteration_number);
 	   // step 3.1 update travel time and resource consumption		
@@ -5512,6 +5594,10 @@ double network_assignment(int iteration_number, int assignment_mode, int column_
 							//					start_t_1 = clock();
 
 
+		if (signal_updating_iterations >= 1 && iteration_number >= signal_updating_iterations-1)  // last iteraion before performing signal timing updating
+		{
+			g_output_simulation_result_for_signal_api(assignment);
+		}
 	}
 
 
@@ -5532,6 +5618,11 @@ double network_assignment(int iteration_number, int assignment_mode, int column_
 
 	update_link_travel_time_and_cost();  // initialization at the first iteration of shortest path
 
+	if (assignment.assignment_mode == 2)
+	{
+		assignment.STTrafficSimulation();
+	}
+
 	end_t = clock();
 	total_t = (end_t - start_t);
 	cout << "Done!" << endl;
@@ -5541,15 +5632,11 @@ double network_assignment(int iteration_number, int assignment_mode, int column_
 	start_t = clock();
 	//step 5: output simulation results of the new demand 
 
-	if (assignment.assignment_mode == 2)
-	{ 
-		assignment.STTrafficSimulation();
-	}
 
 	g_output_simulation_result(assignment);
 
 
-	g_output_simulation_result_for_signal_api(assignment);
+
 
 	end_t = clock();
 	total_t = (end_t - start_t);
@@ -5573,13 +5660,6 @@ double network_assignment(int iteration_number, int assignment_mode, int column_
 	return 1;
 
 }
-
-void network_assignment_deallocate_memory()
-{
-
-
-}
-
 
 
 void Assignment::AllocateLinkMemory4Simulation()
@@ -5722,9 +5802,8 @@ void Assignment::STTrafficSimulation()
 	int TotalCumulative_Arrival_Count = 0;
 	int TotalCumulative_Departure_Count = 0;
 
-	clock_t start_t, end_t, total_t;
+	clock_t start_t;
 	start_t = clock();
-	clock_t iteration_t;
 
 	AllocateLinkMemory4Simulation();
 

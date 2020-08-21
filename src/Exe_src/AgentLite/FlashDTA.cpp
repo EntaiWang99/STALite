@@ -9,6 +9,7 @@
 
 #include "stdafx.h"
 
+extern double SignalAPI(int iteration_number, int MainSigModual_mode, int signal_updating_output);
 #include "..\AgentLite\main_api.cpp";
 #include "..\AgentLite\signal_api.cpp";
 
@@ -18,7 +19,7 @@ int main(int argc, TCHAR* argv[], TCHAR* envp[])
 	int iteration_number = 2;
 	int column_updating_iterations = 0;
 
-	int signal_updating_iterations = 0;
+	int signal_updating_iterations = -1;
 
 	int signal_updating_output = 0;
 
@@ -55,16 +56,5 @@ int main(int argc, TCHAR* argv[], TCHAR* envp[])
 		}
 	}
 
-	network_assignment(iteration_number, assignment_mode, column_updating_iterations, 1);  // obtain initial flow values
-	SignalAPI(iteration_number, assignment_mode, signal_updating_output);
-
-	//for(int si = 0; si < signal_updating_iterations; si++)
-	//{ 
-	//	cout << "_______Signal timing iteration No." << si << "_______" << endl;
-	//SignalAPI(iteration_number, assignment_mode, signal_updating_output);
-	//network_assignment(iteration_number, assignment_mode, column_updating_iterations, 0);  // do not re-load network and demand
-	//}
-
-
-
+	network_assignment(iteration_number, assignment_mode, column_updating_iterations, signal_updating_iterations);  // obtain initial flow values
 }

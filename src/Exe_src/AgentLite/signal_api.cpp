@@ -40,7 +40,7 @@ class CMainSigModual {
 public:
 	CMainSigModual()
 	{
-
+		b_with_loaded_data = false;
 		g_number_of_links = 0;
 		g_number_of_service_arcs = 0;
 		g_number_of_nodes = 0;
@@ -80,6 +80,7 @@ public:
 	int g_LoadingEndTimeInMin;
 	int g_informationCount;
 
+	bool b_with_loaded_data;
 
 	FILE* g_pFileDebugLog;
 	std::map<int, char*> messageType_int_to_string;
@@ -1269,6 +1270,8 @@ vector<float> g_time_parser(vector<string>& inputstring)
 
 void g_sig_ReadInputData(CMainSigModual& MainSigModual)
 {
+	if (MainSigModual.b_with_loaded_data == true)
+		return;
 
 	MainSigModual.g_LoadingStartTimeInMin = 99999;
 	MainSigModual.g_LoadingEndTimeInMin = 0;
@@ -1519,7 +1522,7 @@ void g_sig_ReadInputData(CMainSigModual& MainSigModual)
 
 //	fprintf(g_pFileOutputLog, "number of links =,%d\n", MainSigModual.g_number_of_links);
 
-
+		MainSigModual.b_with_loaded_data = true;
 };
 
 
@@ -1533,14 +1536,14 @@ double SignalAPI(int iteration_number, int MainSigModual_mode, int signal_updati
 
 	for (std::map<int, CSignalNode>::iterator it = g_signal_node_map.begin(); it != g_signal_node_map.end(); ++it)
 	{
-		g_info_String = "Start Signal Node ID ";
+		g_info_String = "Start Signal Main Node ID ";
 		g_info_String.append(to_string(it->first));
 		g_info_String.append(":");
 		MainSigModual.WriteLog(0, g_info_String, -1);
 
 		it->second.PerformQEM(it->first);
 
-		g_info_String = "End Signal Node ID ";
+		g_info_String = "End Signal Main Node ID ";
 		g_info_String.append(to_string(it->first));
 		MainSigModual.WriteLog(0, g_info_String, -2);
 
@@ -1565,7 +1568,7 @@ double SignalAPI(int iteration_number, int MainSigModual_mode, int signal_updati
 		{
 			CSignalNode sn = it->second;
 
-			cout << "Signal timing updating for node " << it->first << ":" << endl;
+			cout << "Signal timing updating for main node id " << it->first << ":" << endl;
 
 			int cycle_time_in_sec = max(10, sn.c_Final+0.5);
 			int number_of_cycles = (MainSigModual.g_LoadingEndTimeInMin - MainSigModual.g_LoadingStartTimeInMin) * 60 / cycle_time_in_sec;  // unit: seconds;
