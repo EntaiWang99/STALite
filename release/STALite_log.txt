@@ -1,1850 +1,230 @@
-Update link resource: link 1->4: tau = 0, volume = 0.00, travel time = 45.00, resource = 0.000
-Update link resource: link 1->3: tau = 0, volume = 0.00, travel time = 1.00, resource = 0.000
-Update link resource: link 3->2: tau = 0, volume = 0.00, travel time = 45.00, resource = 0.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 3->4: tau = 0, volume = 0.00, travel time = 1.00, resource = 0.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 4->2: tau = 0, volume = 0.00, travel time = 1.00, resource = 0.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
 SP iteration k = 0: origin node: 1, agent type 2 
-SP iteration k = 0: origin node: 4, agent type 2 
-SP iteration k = 0: origin node: 3, agent type 2 
 SP iteration k = 0: origin node: 2, agent type 2 
+SP iteration k = 0: origin node: 3, agent type 2 
+SP iteration k = 0: origin node: 4, agent type 2 
 SP iteration k = 0: origin node: 1, agent type 0 
-DP iteration 0: link 1->3:  profit 1.000
-DP iteration 0: link 1->4:  profit 45.000
-DP iteration 0: link 3->2:  profit 45.000
-DP iteration 0: link 3->4:  profit 1.000
-DP iteration 0: link 4->2:  profit 1.000
-Update link resource: link 1->3: tau = 0, volume = 0.00, travel time = 1.00, resource = 3000.000
-Update link resource: link 4->2: tau = 0, volume = 0.00, travel time = 1.00, resource = 3000.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 3->4: tau = 0, volume = 0.00, travel time = 1.00, resource = 0.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 3->2: tau = 0, volume = 0.00, travel time = 45.00, resource = 0.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 1->4: tau = 0, volume = 0.00, travel time = 45.00, resource = 3000.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-SP iteration k = 1: origin node: 2, agent type 2 
 SP iteration k = 1: origin node: 1, agent type 2 
-SP iteration k = 1: origin node: 4, agent type 2 
+SP iteration k = 1: origin node: 2, agent type 2 
 SP iteration k = 1: origin node: 3, agent type 2 
+SP iteration k = 1: origin node: 4, agent type 2 
 SP iteration k = 0: origin node: 1, agent type 0 
-DP iteration 1: link 1->3:  profit 1.000
-DP iteration 1: link 1->4:  profit 45.000
-DP iteration 1: link 3->2:  profit 45.000
-DP iteration 1: link 3->4:  profit 1.000
-DP iteration 1: link 4->2:  profit 1.000
-Update link resource: link 1->3: tau = 0, volume = 8000.00, travel time = 81.00, resource = 6000.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 4->2: tau = 0, volume = 8000.00, travel time = 81.00, resource = 3000.000
-Update link resource: link 3->2: tau = 0, volume = 0.00, travel time = 45.00, resource = 0.000
-Update link resource: link 3->4: tau = 0, volume = 8000.00, travel time = 81.00, resource = 0.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 1->4: tau = 0, volume = 0.00, travel time = 45.00, resource = 3000.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
 SP iteration k = 2: origin node: 1, agent type 2 
+SP iteration k = 2: origin node: 2, agent type 2 
 SP iteration k = 2: origin node: 3, agent type 2 
 SP iteration k = 2: origin node: 4, agent type 2 
-SP iteration k = 2: origin node: 2, agent type 2 
 SP iteration k = 0: origin node: 1, agent type 0 
-DP iteration 2: link 1->3:  profit 81.000
-DP iteration 2: link 1->4:  profit 45.000
-DP iteration 2: link 3->2:  profit 45.000
-DP iteration 2: link 3->4:  profit 81.000
-DP iteration 2: link 4->2:  profit 81.000
-Update link resource: link 4->2: tau = 0, volume = 8000.00, travel time = 81.00, resource = 3000.000
-Update link resource: link 3->2: tau = 0, volume = 0.00, travel time = 45.00, resource = 0.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 1->4: tau = 0, volume = 0.00, travel time = 45.00, resource = 3000.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 1->3: tau = 0, volume = 8000.00, travel time = 81.00, resource = 6000.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 3->4: tau = 0, volume = 8000.00, travel time = 81.00, resource = 0.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-SP iteration k = 3: origin node: 4, agent type 2 
 SP iteration k = 3: origin node: 1, agent type 2 
-SP iteration k = 3: origin node: 3, agent type 2 
 SP iteration k = 3: origin node: 2, agent type 2 
+SP iteration k = 3: origin node: 3, agent type 2 
+SP iteration k = 3: origin node: 4, agent type 2 
 SP iteration k = 0: origin node: 1, agent type 0 
-DP iteration 3: link 1->3:  profit 81.000
-DP iteration 3: link 1->4:  profit 45.000
-DP iteration 3: link 3->2:  profit 45.000
-DP iteration 3: link 3->4:  profit 81.000
-DP iteration 3: link 4->2:  profit 81.000
-Update link resource: link 1->3: tau = 0, volume = 8000.00, travel time = 81.00, resource = 6000.000
-Update link resource: link 4->2: tau = 0, volume = 5333.33, travel time = 54.33, resource = 3000.000
-Update link resource: link 1->4: tau = 0, volume = 0.00, travel time = 45.00, resource = 3000.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 3->4: tau = 0, volume = 5333.33, travel time = 54.33, resource = 0.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 3->2: tau = 0, volume = 2666.67, travel time = 45.00, resource = 0.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-SP iteration k = 4: origin node: 4, agent type 2 
-SP iteration k = 4: origin node: 2, agent type 2 
 SP iteration k = 4: origin node: 1, agent type 2 
+SP iteration k = 4: origin node: 2, agent type 2 
 SP iteration k = 4: origin node: 3, agent type 2 
+SP iteration k = 4: origin node: 4, agent type 2 
 SP iteration k = 0: origin node: 1, agent type 0 
-DP iteration 4: link 1->3:  profit 81.000
-DP iteration 4: link 1->4:  profit 45.000
-DP iteration 4: link 3->2:  profit 45.000
-DP iteration 4: link 3->4:  profit 54.333
-DP iteration 4: link 4->2:  profit 54.333
-Update link resource: link 1->3: tau = 0, volume = 8000.00, travel time = 81.00, resource = 6000.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 4->2: tau = 0, volume = 4000.00, travel time = 41.00, resource = 3000.000
-Update link resource: link 1->4: tau = 0, volume = 0.00, travel time = 45.00, resource = 3000.000
-Update link resource: link 3->4: tau = 0, volume = 4000.00, travel time = 41.00, resource = 0.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 3->2: tau = 0, volume = 4000.00, travel time = 45.00, resource = 0.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
 SP iteration k = 5: origin node: 1, agent type 2 
-SP iteration k = 5: origin node: 4, agent type 2 
-SP iteration k = 5: origin node: 3, agent type 2 
 SP iteration k = 5: origin node: 2, agent type 2 
+SP iteration k = 5: origin node: 3, agent type 2 
+SP iteration k = 5: origin node: 4, agent type 2 
 SP iteration k = 0: origin node: 1, agent type 0 
-DP iteration 5: link 1->3:  profit 81.000
-DP iteration 5: link 1->4:  profit 45.000
-DP iteration 5: link 3->2:  profit 45.000
-DP iteration 5: link 3->4:  profit 41.000
-DP iteration 5: link 4->2:  profit 41.000
-Update link resource: link 1->3: tau = 0, volume = 6400.00, travel time = 65.00, resource = 6000.000
-Update link resource: link 4->2: tau = 0, volume = 4800.00, travel time = 49.00, resource = 3000.000
-Update link resource: link 3->2: tau = 0, volume = 3200.00, travel time = 45.00, resource = 0.000
-Update link resource: link 3->4: tau = 0, volume = 3200.00, travel time = 33.00, resource = 0.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 1->4: tau = 0, volume = 1600.00, travel time = 45.00, resource = 3000.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-SP iteration k = 6: origin node: 3, agent type 2 
-SP iteration k = 6: origin node: 2, agent type 2 
-SP iteration k = 6: origin node: 4, agent type 2 
 SP iteration k = 6: origin node: 1, agent type 2 
+SP iteration k = 6: origin node: 2, agent type 2 
+SP iteration k = 6: origin node: 3, agent type 2 
+SP iteration k = 6: origin node: 4, agent type 2 
 SP iteration k = 0: origin node: 1, agent type 0 
-DP iteration 6: link 1->3:  profit 65.000
-DP iteration 6: link 1->4:  profit 45.000
-DP iteration 6: link 3->2:  profit 45.000
-DP iteration 6: link 3->4:  profit 33.000
-DP iteration 6: link 4->2:  profit 49.000
-Update link resource: link 1->3: tau = 0, volume = 5333.33, travel time = 54.33, resource = 6000.000
-Update link resource: link 3->2: tau = 0, volume = 2666.67, travel time = 45.00, resource = 0.000
-Update link resource: link 4->2: tau = 0, volume = 5333.33, travel time = 54.33, resource = 3000.000
-Update link resource: link 1->4: tau = 0, volume = 2666.67, travel time = 45.00, resource = 3000.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 3->4: tau = 0, volume = 2666.67, travel time = 27.67, resource = 0.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-SP iteration k = 7: origin node: 2, agent type 2 
 SP iteration k = 7: origin node: 1, agent type 2 
-SP iteration k = 7: origin node: 4, agent type 2 
+SP iteration k = 7: origin node: 2, agent type 2 
 SP iteration k = 7: origin node: 3, agent type 2 
+SP iteration k = 7: origin node: 4, agent type 2 
 SP iteration k = 0: origin node: 1, agent type 0 
-DP iteration 7: link 1->3:  profit 54.333
-DP iteration 7: link 1->4:  profit 45.000
-DP iteration 7: link 3->2:  profit 45.000
-DP iteration 7: link 3->4:  profit 27.667
-DP iteration 7: link 4->2:  profit 54.333
-Update link resource: link 1->3: tau = 0, volume = 4571.43, travel time = 46.71, resource = 6000.000
-Update link resource: link 1->4: tau = 0, volume = 3428.57, travel time = 45.00, resource = 3000.000
-Update link resource: link 4->2: tau = 0, volume = 5714.29, travel time = 58.14, resource = 3000.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 3->4: tau = 0, volume = 2285.71, travel time = 23.86, resource = 0.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 3->2: tau = 0, volume = 2285.71, travel time = 45.00, resource = 0.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
+SP iteration k = 8: origin node: 1, agent type 2 
 SP iteration k = 8: origin node: 2, agent type 2 
 SP iteration k = 8: origin node: 3, agent type 2 
-SP iteration k = 8: origin node: 1, agent type 2 
 SP iteration k = 8: origin node: 4, agent type 2 
 SP iteration k = 0: origin node: 1, agent type 0 
-DP iteration 8: link 1->3:  profit 46.714
-DP iteration 8: link 1->4:  profit 45.000
-DP iteration 8: link 3->2:  profit 45.000
-DP iteration 8: link 3->4:  profit 23.857
-DP iteration 8: link 4->2:  profit 58.143
-Update link resource: link 1->3: tau = 0, volume = 5000.00, travel time = 51.00, resource = 6000.000
-Update link resource: link 3->4: tau = 0, volume = 2000.00, travel time = 21.00, resource = 0.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 4->2: tau = 0, volume = 5000.00, travel time = 51.00, resource = 3000.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 1->4: tau = 0, volume = 3000.00, travel time = 45.00, resource = 3000.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 3->2: tau = 0, volume = 3000.00, travel time = 45.00, resource = 0.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-SP iteration k = 9: origin node: 4, agent type 2 
 SP iteration k = 9: origin node: 1, agent type 2 
-SP iteration k = 9: origin node: 3, agent type 2 
 SP iteration k = 9: origin node: 2, agent type 2 
+SP iteration k = 9: origin node: 3, agent type 2 
+SP iteration k = 9: origin node: 4, agent type 2 
 SP iteration k = 0: origin node: 1, agent type 0 
-DP iteration 9: link 1->3:  profit 51.000
-DP iteration 9: link 1->4:  profit 45.000
-DP iteration 9: link 3->2:  profit 45.000
-DP iteration 9: link 3->4:  profit 21.000
-DP iteration 9: link 4->2:  profit 51.000
-Update link resource: link 1->3: tau = 0, volume = 5333.33, travel time = 54.33, resource = 6000.000
-Update link resource: link 1->4: tau = 0, volume = 2666.67, travel time = 45.00, resource = 3000.000
-Update link resource: link 3->2: tau = 0, volume = 3555.56, travel time = 45.00, resource = 0.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 4->2: tau = 0, volume = 4444.44, travel time = 45.44, resource = 3000.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 3->4: tau = 0, volume = 1777.78, travel time = 18.78, resource = 0.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-SP iteration k = 10: origin node: 4, agent type 2 
 SP iteration k = 10: origin node: 1, agent type 2 
-SP iteration k = 10: origin node: 3, agent type 2 
 SP iteration k = 10: origin node: 2, agent type 2 
+SP iteration k = 10: origin node: 3, agent type 2 
+SP iteration k = 10: origin node: 4, agent type 2 
 SP iteration k = 0: origin node: 1, agent type 0 
-DP iteration 10: link 1->3:  profit 54.333
-DP iteration 10: link 1->4:  profit 45.000
-DP iteration 10: link 3->2:  profit 45.000
-DP iteration 10: link 3->4:  profit 18.778
-DP iteration 10: link 4->2:  profit 45.444
-Update link resource: link 1->3: tau = 0, volume = 5600.00, travel time = 57.00, resource = 6000.000
-Update link resource: link 3->2: tau = 0, volume = 4000.00, travel time = 45.00, resource = 0.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 4->2: tau = 0, volume = 4000.00, travel time = 41.00, resource = 3000.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 1->4: tau = 0, volume = 2400.00, travel time = 45.00, resource = 3000.000
-Update link resource: link 3->4: tau = 0, volume = 1600.00, travel time = 17.00, resource = 0.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-SP iteration k = 11: origin node: 4, agent type 2 
+SP iteration k = 11: origin node: 1, agent type 2 
 SP iteration k = 11: origin node: 2, agent type 2 
 SP iteration k = 11: origin node: 3, agent type 2 
-SP iteration k = 11: origin node: 1, agent type 2 
+SP iteration k = 11: origin node: 4, agent type 2 
 SP iteration k = 0: origin node: 1, agent type 0 
-DP iteration 11: link 1->3:  profit 57.000
-DP iteration 11: link 1->4:  profit 45.000
-DP iteration 11: link 3->2:  profit 45.000
-DP iteration 11: link 3->4:  profit 17.000
-DP iteration 11: link 4->2:  profit 41.000
-Update link resource: link 1->3: tau = 0, volume = 5090.91, travel time = 51.91, resource = 6000.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 4->2: tau = 0, volume = 4363.64, travel time = 44.64, resource = 3000.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 3->2: tau = 0, volume = 3636.36, travel time = 45.00, resource = 0.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 3->4: tau = 0, volume = 1454.55, travel time = 15.55, resource = 0.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 1->4: tau = 0, volume = 2909.09, travel time = 45.00, resource = 3000.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-SP iteration k = 12: origin node: 4, agent type 2 
 SP iteration k = 12: origin node: 1, agent type 2 
-SP iteration k = 12: origin node: 3, agent type 2 
 SP iteration k = 12: origin node: 2, agent type 2 
+SP iteration k = 12: origin node: 3, agent type 2 
+SP iteration k = 12: origin node: 4, agent type 2 
 SP iteration k = 0: origin node: 1, agent type 0 
-DP iteration 12: link 1->3:  profit 51.909
-DP iteration 12: link 1->4:  profit 45.000
-DP iteration 12: link 3->2:  profit 45.000
-DP iteration 12: link 3->4:  profit 15.545
-DP iteration 12: link 4->2:  profit 44.636
-Update link resource: link 1->3: tau = 0, volume = 4666.67, travel time = 47.67, resource = 6000.000
-Update link resource: link 1->4: tau = 0, volume = 3333.33, travel time = 45.00, resource = 3000.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 4->2: tau = 0, volume = 4666.67, travel time = 47.67, resource = 3000.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 3->4: tau = 0, volume = 1333.33, travel time = 14.33, resource = 0.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 3->2: tau = 0, volume = 3333.33, travel time = 45.00, resource = 0.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
 SP iteration k = 13: origin node: 1, agent type 2 
 SP iteration k = 13: origin node: 2, agent type 2 
 SP iteration k = 13: origin node: 3, agent type 2 
 SP iteration k = 13: origin node: 4, agent type 2 
 SP iteration k = 0: origin node: 1, agent type 0 
-DP iteration 13: link 1->3:  profit 47.667
-DP iteration 13: link 1->4:  profit 45.000
-DP iteration 13: link 3->2:  profit 45.000
-DP iteration 13: link 3->4:  profit 14.333
-DP iteration 13: link 4->2:  profit 47.667
-Update link resource: link 1->3: tau = 0, volume = 4307.69, travel time = 44.08, resource = 6000.000
-Update link resource: link 1->4: tau = 0, volume = 3692.31, travel time = 45.00, resource = 3000.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 4->2: tau = 0, volume = 4923.08, travel time = 50.23, resource = 3000.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 3->4: tau = 0, volume = 1230.77, travel time = 13.31, resource = 0.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 3->2: tau = 0, volume = 3076.92, travel time = 45.00, resource = 0.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
 SP iteration k = 14: origin node: 1, agent type 2 
-SP iteration k = 14: origin node: 4, agent type 2 
-SP iteration k = 14: origin node: 3, agent type 2 
 SP iteration k = 14: origin node: 2, agent type 2 
+SP iteration k = 14: origin node: 3, agent type 2 
+SP iteration k = 14: origin node: 4, agent type 2 
 SP iteration k = 0: origin node: 1, agent type 0 
-DP iteration 14: link 1->3:  profit 44.077
-DP iteration 14: link 1->4:  profit 45.000
-DP iteration 14: link 3->2:  profit 45.000
-DP iteration 14: link 3->4:  profit 13.308
-DP iteration 14: link 4->2:  profit 50.231
-Update link resource: link 1->3: tau = 0, volume = 4571.43, travel time = 46.71, resource = 6000.000
-Update link resource: link 4->2: tau = 0, volume = 4571.43, travel time = 46.71, resource = 3000.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 3->2: tau = 0, volume = 3428.57, travel time = 45.00, resource = 0.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 3->4: tau = 0, volume = 1142.86, travel time = 12.43, resource = 0.000
-Update link resource: link 1->4: tau = 0, volume = 3428.57, travel time = 45.00, resource = 3000.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-SP iteration k = 15: origin node: 4, agent type 2 
-SP iteration k = 15: origin node: 2, agent type 2 
 SP iteration k = 15: origin node: 1, agent type 2 
+SP iteration k = 15: origin node: 2, agent type 2 
 SP iteration k = 15: origin node: 3, agent type 2 
+SP iteration k = 15: origin node: 4, agent type 2 
 SP iteration k = 0: origin node: 1, agent type 0 
-DP iteration 15: link 1->3:  profit 46.714
-DP iteration 15: link 1->4:  profit 45.000
-DP iteration 15: link 3->2:  profit 45.000
-DP iteration 15: link 3->4:  profit 12.429
-DP iteration 15: link 4->2:  profit 46.714
-Update link resource: link 1->3: tau = 0, volume = 4800.00, travel time = 49.00, resource = 6000.000
-Update link resource: link 3->4: tau = 0, volume = 1066.67, travel time = 11.67, resource = 0.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 4->2: tau = 0, volume = 4266.67, travel time = 43.67, resource = 3000.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 3->2: tau = 0, volume = 3733.33, travel time = 45.00, resource = 0.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 1->4: tau = 0, volume = 3200.00, travel time = 45.00, resource = 3000.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-SP iteration k = 16: origin node: 2, agent type 2 
 SP iteration k = 16: origin node: 1, agent type 2 
+SP iteration k = 16: origin node: 2, agent type 2 
 SP iteration k = 16: origin node: 3, agent type 2 
 SP iteration k = 16: origin node: 4, agent type 2 
 SP iteration k = 0: origin node: 1, agent type 0 
-DP iteration 16: link 1->3:  profit 49.000
-DP iteration 16: link 1->4:  profit 45.000
-DP iteration 16: link 3->2:  profit 45.000
-DP iteration 16: link 3->4:  profit 11.667
-DP iteration 16: link 4->2:  profit 43.667
-Update link resource: link 1->3: tau = 0, volume = 5000.00, travel time = 51.00, resource = 6000.000
-Update link resource: link 3->4: tau = 0, volume = 1000.00, travel time = 11.00, resource = 0.000
-Update link resource: link 1->4: tau = 0, volume = 3000.00, travel time = 45.00, resource = 3000.000
-Update link resource: link 3->2: tau = 0, volume = 4000.00, travel time = 45.00, resource = 0.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 4->2: tau = 0, volume = 4000.00, travel time = 41.00, resource = 3000.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
 SP iteration k = 17: origin node: 1, agent type 2 
-SP iteration k = 17: origin node: 3, agent type 2 
 SP iteration k = 17: origin node: 2, agent type 2 
+SP iteration k = 17: origin node: 3, agent type 2 
 SP iteration k = 17: origin node: 4, agent type 2 
 SP iteration k = 0: origin node: 1, agent type 0 
-DP iteration 17: link 1->3:  profit 51.000
-DP iteration 17: link 1->4:  profit 45.000
-DP iteration 17: link 3->2:  profit 45.000
-DP iteration 17: link 3->4:  profit 11.000
-DP iteration 17: link 4->2:  profit 41.000
-Update link resource: link 1->3: tau = 0, volume = 4705.88, travel time = 48.06, resource = 6000.000
-Update link resource: link 4->2: tau = 0, volume = 4235.29, travel time = 43.35, resource = 3000.000
-Update link resource: link 3->4: tau = 0, volume = 941.18, travel time = 10.41, resource = 0.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 3->2: tau = 0, volume = 3764.71, travel time = 45.00, resource = 0.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 1->4: tau = 0, volume = 3294.12, travel time = 45.00, resource = 3000.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-SP iteration k = 18: origin node: 3, agent type 2 
-SP iteration k = 18: origin node: 4, agent type 2 
 SP iteration k = 18: origin node: 1, agent type 2 
 SP iteration k = 18: origin node: 2, agent type 2 
+SP iteration k = 18: origin node: 3, agent type 2 
+SP iteration k = 18: origin node: 4, agent type 2 
 SP iteration k = 0: origin node: 1, agent type 0 
-DP iteration 18: link 1->3:  profit 48.059
-DP iteration 18: link 1->4:  profit 45.000
-DP iteration 18: link 3->2:  profit 45.000
-DP iteration 18: link 3->4:  profit 10.412
-DP iteration 18: link 4->2:  profit 43.353
-Update link resource: link 1->3: tau = 0, volume = 4444.44, travel time = 45.44, resource = 6000.000
-Update link resource: link 4->2: tau = 0, volume = 4444.44, travel time = 45.44, resource = 3000.000
-Update link resource: link 1->4: tau = 0, volume = 3555.56, travel time = 45.00, resource = 3000.000
-Update link resource: link 3->2: tau = 0, volume = 3555.56, travel time = 45.00, resource = 0.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 3->4: tau = 0, volume = 888.89, travel time = 9.89, resource = 0.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
+SP iteration k = 19: origin node: 1, agent type 2 
+SP iteration k = 19: origin node: 2, agent type 2 
 SP iteration k = 19: origin node: 3, agent type 2 
 SP iteration k = 19: origin node: 4, agent type 2 
-SP iteration k = 19: origin node: 2, agent type 2 
-SP iteration k = 19: origin node: 1, agent type 2 
 SP iteration k = 0: origin node: 1, agent type 0 
-DP iteration 19: link 1->3:  profit 45.444
-DP iteration 19: link 1->4:  profit 45.000
-DP iteration 19: link 3->2:  profit 45.000
-DP iteration 19: link 3->4:  profit 9.889
-DP iteration 19: link 4->2:  profit 45.444
-Update link resource: link 1->3: tau = 0, volume = 4210.53, travel time = 43.11, resource = 6000.000
-Update link resource: link 1->4: tau = 0, volume = 3789.47, travel time = 45.00, resource = 3000.000
-Update link resource: link 4->2: tau = 0, volume = 4631.58, travel time = 47.32, resource = 3000.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 3->2: tau = 0, volume = 3368.42, travel time = 45.00, resource = 0.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 3->4: tau = 0, volume = 842.11, travel time = 9.42, resource = 0.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-SP iteration k = 20: origin node: 2, agent type 2 
-SP iteration k = 20: origin node: 4, agent type 2 
 SP iteration k = 20: origin node: 1, agent type 2 
+SP iteration k = 20: origin node: 2, agent type 2 
 SP iteration k = 20: origin node: 3, agent type 2 
+SP iteration k = 20: origin node: 4, agent type 2 
 SP iteration k = 0: origin node: 1, agent type 0 
-DP iteration 20: link 1->3:  profit 43.105
-DP iteration 20: link 1->4:  profit 45.000
-DP iteration 20: link 3->2:  profit 45.000
-DP iteration 20: link 3->4:  profit 9.421
-DP iteration 20: link 4->2:  profit 47.316
-Update link resource: link 1->3: tau = 0, volume = 4400.00, travel time = 45.00, resource = 6000.000
-Update link resource: link 1->4: tau = 0, volume = 3600.00, travel time = 45.00, resource = 3000.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 3->2: tau = 0, volume = 3600.00, travel time = 45.00, resource = 0.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 4->2: tau = 0, volume = 4400.00, travel time = 45.00, resource = 3000.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 3->4: tau = 0, volume = 800.00, travel time = 9.00, resource = 0.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-SP iteration k = 21: origin node: 4, agent type 2 
 SP iteration k = 21: origin node: 1, agent type 2 
-SP iteration k = 21: origin node: 3, agent type 2 
 SP iteration k = 21: origin node: 2, agent type 2 
+SP iteration k = 21: origin node: 3, agent type 2 
+SP iteration k = 21: origin node: 4, agent type 2 
 SP iteration k = 0: origin node: 1, agent type 0 
-DP iteration 21: link 1->3:  profit 45.000
-DP iteration 21: link 1->4:  profit 45.000
-DP iteration 21: link 3->2:  profit 45.000
-DP iteration 21: link 3->4:  profit 9.000
-DP iteration 21: link 4->2:  profit 45.000
-Update link resource: link 1->3: tau = 0, volume = 4571.43, travel time = 46.71, resource = 6000.000
-Update link resource: link 1->4: tau = 0, volume = 3428.57, travel time = 45.00, resource = 3000.000
-Update link resource: link 3->4: tau = 0, volume = 761.90, travel time = 8.62, resource = 0.000
-Update link resource: link 4->2: tau = 0, volume = 4190.48, travel time = 42.90, resource = 3000.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 3->2: tau = 0, volume = 3809.52, travel time = 45.00, resource = 0.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
 SP iteration k = 22: origin node: 1, agent type 2 
-SP iteration k = 22: origin node: 3, agent type 2 
 SP iteration k = 22: origin node: 2, agent type 2 
+SP iteration k = 22: origin node: 3, agent type 2 
 SP iteration k = 22: origin node: 4, agent type 2 
 SP iteration k = 0: origin node: 1, agent type 0 
-DP iteration 22: link 1->3:  profit 46.714
-DP iteration 22: link 1->4:  profit 45.000
-DP iteration 22: link 3->2:  profit 45.000
-DP iteration 22: link 3->4:  profit 8.619
-DP iteration 22: link 4->2:  profit 42.905
-Update link resource: link 1->3: tau = 0, volume = 4727.27, travel time = 48.27, resource = 6000.000
-Update link resource: link 1->4: tau = 0, volume = 3272.73, travel time = 45.00, resource = 3000.000
-Update link resource: link 4->2: tau = 0, volume = 4000.00, travel time = 41.00, resource = 3000.000
-Update link resource: link 3->2: tau = 0, volume = 4000.00, travel time = 45.00, resource = 0.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 3->4: tau = 0, volume = 727.27, travel time = 8.27, resource = 0.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
 SP iteration k = 23: origin node: 1, agent type 2 
-SP iteration k = 23: origin node: 4, agent type 2 
-SP iteration k = 23: origin node: 3, agent type 2 
 SP iteration k = 23: origin node: 2, agent type 2 
+SP iteration k = 23: origin node: 3, agent type 2 
+SP iteration k = 23: origin node: 4, agent type 2 
 SP iteration k = 0: origin node: 1, agent type 0 
-DP iteration 23: link 1->3:  profit 48.273
-DP iteration 23: link 1->4:  profit 45.000
-DP iteration 23: link 3->2:  profit 45.000
-DP iteration 23: link 3->4:  profit 8.273
-DP iteration 23: link 4->2:  profit 41.000
-Update link resource: link 1->3: tau = 0, volume = 4521.74, travel time = 46.22, resource = 6000.000
-Update link resource: link 3->2: tau = 0, volume = 3826.09, travel time = 45.00, resource = 0.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 3->4: tau = 0, volume = 695.65, travel time = 7.96, resource = 0.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 4->2: tau = 0, volume = 4173.91, travel time = 42.74, resource = 3000.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 1->4: tau = 0, volume = 3478.26, travel time = 45.00, resource = 3000.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
+SP iteration k = 24: origin node: 1, agent type 2 
 SP iteration k = 24: origin node: 2, agent type 2 
 SP iteration k = 24: origin node: 3, agent type 2 
 SP iteration k = 24: origin node: 4, agent type 2 
-SP iteration k = 24: origin node: 1, agent type 2 
 SP iteration k = 0: origin node: 1, agent type 0 
-DP iteration 24: link 1->3:  profit 46.217
-DP iteration 24: link 1->4:  profit 45.000
-DP iteration 24: link 3->2:  profit 45.000
-DP iteration 24: link 3->4:  profit 7.957
-DP iteration 24: link 4->2:  profit 42.739
-Update link resource: link 1->3: tau = 0, volume = 4333.33, travel time = 44.33, resource = 6000.000
-Update link resource: link 4->2: tau = 0, volume = 4333.33, travel time = 44.33, resource = 3000.000
-Update link resource: link 1->4: tau = 0, volume = 3666.67, travel time = 45.00, resource = 3000.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 3->4: tau = 0, volume = 666.67, travel time = 7.67, resource = 0.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 3->2: tau = 0, volume = 3666.67, travel time = 45.00, resource = 0.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
 SP iteration k = 25: origin node: 1, agent type 2 
-SP iteration k = 25: origin node: 3, agent type 2 
 SP iteration k = 25: origin node: 2, agent type 2 
+SP iteration k = 25: origin node: 3, agent type 2 
 SP iteration k = 25: origin node: 4, agent type 2 
 SP iteration k = 0: origin node: 1, agent type 0 
-DP iteration 25: link 1->3:  profit 44.333
-DP iteration 25: link 1->4:  profit 45.000
-DP iteration 25: link 3->2:  profit 45.000
-DP iteration 25: link 3->4:  profit 7.667
-DP iteration 25: link 4->2:  profit 44.333
-Update link resource: link 1->3: tau = 0, volume = 4160.00, travel time = 42.60, resource = 6000.000
-Update link resource: link 3->4: tau = 0, volume = 640.00, travel time = 7.40, resource = 0.000
-Update link resource: link 4->2: tau = 0, volume = 4480.00, travel time = 45.80, resource = 3000.000
-Update link resource: link 3->2: tau = 0, volume = 3520.00, travel time = 45.00, resource = 0.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 1->4: tau = 0, volume = 3840.00, travel time = 45.00, resource = 3000.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
 SP iteration k = 26: origin node: 1, agent type 2 
-SP iteration k = 26: origin node: 3, agent type 2 
 SP iteration k = 26: origin node: 2, agent type 2 
+SP iteration k = 26: origin node: 3, agent type 2 
 SP iteration k = 26: origin node: 4, agent type 2 
 SP iteration k = 0: origin node: 1, agent type 0 
-DP iteration 26: link 1->3:  profit 42.600
-DP iteration 26: link 1->4:  profit 45.000
-DP iteration 26: link 3->2:  profit 45.000
-DP iteration 26: link 3->4:  profit 7.400
-DP iteration 26: link 4->2:  profit 45.800
-Update link resource: link 1->3: tau = 0, volume = 4307.69, travel time = 44.08, resource = 6000.000
-Update link resource: link 3->2: tau = 0, volume = 3692.31, travel time = 45.00, resource = 0.000
-Update link resource: link 1->4: tau = 0, volume = 3692.31, travel time = 45.00, resource = 3000.000
-Update link resource: link 4->2: tau = 0, volume = 4307.69, travel time = 44.08, resource = 3000.000
-Update link resource: link 3->4: tau = 0, volume = 615.38, travel time = 7.15, resource = 0.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
 SP iteration k = 27: origin node: 1, agent type 2 
 SP iteration k = 27: origin node: 2, agent type 2 
-SP iteration k = 27: origin node: 4, agent type 2 
 SP iteration k = 27: origin node: 3, agent type 2 
+SP iteration k = 27: origin node: 4, agent type 2 
 SP iteration k = 0: origin node: 1, agent type 0 
-DP iteration 27: link 1->3:  profit 44.077
-DP iteration 27: link 1->4:  profit 45.000
-DP iteration 27: link 3->2:  profit 45.000
-DP iteration 27: link 3->4:  profit 7.154
-DP iteration 27: link 4->2:  profit 44.077
-Update link resource: link 1->3: tau = 0, volume = 4444.44, travel time = 45.44, resource = 6000.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 3->2: tau = 0, volume = 3851.85, travel time = 45.00, resource = 0.000
-Update link resource: link 3->4: tau = 0, volume = 592.59, travel time = 6.93, resource = 0.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 4->2: tau = 0, volume = 4148.15, travel time = 42.48, resource = 3000.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 1->4: tau = 0, volume = 3555.56, travel time = 45.00, resource = 3000.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-SP iteration k = 28: origin node: 2, agent type 2 
-SP iteration k = 28: origin node: 4, agent type 2 
-SP iteration k = 28: origin node: 3, agent type 2 
 SP iteration k = 28: origin node: 1, agent type 2 
+SP iteration k = 28: origin node: 2, agent type 2 
+SP iteration k = 28: origin node: 3, agent type 2 
+SP iteration k = 28: origin node: 4, agent type 2 
 SP iteration k = 0: origin node: 1, agent type 0 
-DP iteration 28: link 1->3:  profit 45.444
-DP iteration 28: link 1->4:  profit 45.000
-DP iteration 28: link 3->2:  profit 45.000
-DP iteration 28: link 3->4:  profit 6.926
-DP iteration 28: link 4->2:  profit 42.481
-Update link resource: link 1->3: tau = 0, volume = 4571.43, travel time = 46.71, resource = 6000.000
-Update link resource: link 4->2: tau = 0, volume = 4000.00, travel time = 41.00, resource = 3000.000
-Update link resource: link 3->2: tau = 0, volume = 4000.00, travel time = 45.00, resource = 0.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 3->4: tau = 0, volume = 571.43, travel time = 6.71, resource = 0.000
-Update link resource: link 1->4: tau = 0, volume = 3428.57, travel time = 45.00, resource = 3000.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-SP iteration k = 29: origin node: 4, agent type 2 
-SP iteration k = 29: origin node: 3, agent type 2 
 SP iteration k = 29: origin node: 1, agent type 2 
 SP iteration k = 29: origin node: 2, agent type 2 
+SP iteration k = 29: origin node: 3, agent type 2 
+SP iteration k = 29: origin node: 4, agent type 2 
 SP iteration k = 0: origin node: 1, agent type 0 
-DP iteration 29: link 1->3:  profit 46.714
-DP iteration 29: link 1->4:  profit 45.000
-DP iteration 29: link 3->2:  profit 45.000
-DP iteration 29: link 3->4:  profit 6.714
-DP iteration 29: link 4->2:  profit 41.000
-Update link resource: link 3->4: tau = 0, volume = 551.72, travel time = 6.52, resource = 0.000
-Update link resource: link 4->2: tau = 0, volume = 4137.93, travel time = 42.38, resource = 3000.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 1->3: tau = 0, volume = 4413.79, travel time = 45.14, resource = 6000.000
-Update link resource: link 3->2: tau = 0, volume = 3862.07, travel time = 45.00, resource = 0.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 1->4: tau = 0, volume = 3586.21, travel time = 45.00, resource = 3000.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-SP iteration k = 30: origin node: 3, agent type 2 
 SP iteration k = 30: origin node: 1, agent type 2 
-SP iteration k = 30: origin node: 4, agent type 2 
 SP iteration k = 30: origin node: 2, agent type 2 
+SP iteration k = 30: origin node: 3, agent type 2 
+SP iteration k = 30: origin node: 4, agent type 2 
 SP iteration k = 0: origin node: 1, agent type 0 
-DP iteration 30: link 1->3:  profit 45.138
-DP iteration 30: link 1->4:  profit 45.000
-DP iteration 30: link 3->2:  profit 45.000
-DP iteration 30: link 3->4:  profit 6.517
-DP iteration 30: link 4->2:  profit 42.379
-Update link resource: link 1->3: tau = 0, volume = 4266.67, travel time = 43.67, resource = 6000.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 3->2: tau = 0, volume = 3733.33, travel time = 45.00, resource = 0.000
-Update link resource: link 4->2: tau = 0, volume = 4266.67, travel time = 43.67, resource = 3000.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 1->4: tau = 0, volume = 3733.33, travel time = 45.00, resource = 3000.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 3->4: tau = 0, volume = 533.33, travel time = 6.33, resource = 0.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-SP iteration k = 31: origin node: 4, agent type 2 
+SP iteration k = 31: origin node: 1, agent type 2 
 SP iteration k = 31: origin node: 2, agent type 2 
 SP iteration k = 31: origin node: 3, agent type 2 
-SP iteration k = 31: origin node: 1, agent type 2 
+SP iteration k = 31: origin node: 4, agent type 2 
 SP iteration k = 0: origin node: 1, agent type 0 
-DP iteration 31: link 1->3:  profit 43.667
-DP iteration 31: link 1->4:  profit 45.000
-DP iteration 31: link 3->2:  profit 45.000
-DP iteration 31: link 3->4:  profit 6.333
-DP iteration 31: link 4->2:  profit 43.667
-Update link resource: link 1->3: tau = 0, volume = 4129.03, travel time = 42.29, resource = 6000.000
-Update link resource: link 4->2: tau = 0, volume = 4387.10, travel time = 44.87, resource = 3000.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 1->4: tau = 0, volume = 3870.97, travel time = 45.00, resource = 3000.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 3->4: tau = 0, volume = 516.13, travel time = 6.16, resource = 0.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 3->2: tau = 0, volume = 3612.90, travel time = 45.00, resource = 0.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-SP iteration k = 32: origin node: 2, agent type 2 
 SP iteration k = 32: origin node: 1, agent type 2 
-SP iteration k = 32: origin node: 4, agent type 2 
+SP iteration k = 32: origin node: 2, agent type 2 
 SP iteration k = 32: origin node: 3, agent type 2 
+SP iteration k = 32: origin node: 4, agent type 2 
 SP iteration k = 0: origin node: 1, agent type 0 
-DP iteration 32: link 1->3:  profit 42.290
-DP iteration 32: link 1->4:  profit 45.000
-DP iteration 32: link 3->2:  profit 45.000
-DP iteration 32: link 3->4:  profit 6.161
-DP iteration 32: link 4->2:  profit 44.871
-Update link resource: link 1->3: tau = 0, volume = 4250.00, travel time = 43.50, resource = 6000.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 3->2: tau = 0, volume = 3750.00, travel time = 45.00, resource = 0.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 3->4: tau = 0, volume = 500.00, travel time = 6.00, resource = 0.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 4->2: tau = 0, volume = 4250.00, travel time = 43.50, resource = 3000.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 1->4: tau = 0, volume = 3750.00, travel time = 45.00, resource = 3000.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
 SP iteration k = 33: origin node: 1, agent type 2 
-SP iteration k = 33: origin node: 4, agent type 2 
-SP iteration k = 33: origin node: 3, agent type 2 
 SP iteration k = 33: origin node: 2, agent type 2 
+SP iteration k = 33: origin node: 3, agent type 2 
+SP iteration k = 33: origin node: 4, agent type 2 
 SP iteration k = 0: origin node: 1, agent type 0 
-DP iteration 33: link 1->3:  profit 43.500
-DP iteration 33: link 1->4:  profit 45.000
-DP iteration 33: link 3->2:  profit 45.000
-DP iteration 33: link 3->4:  profit 6.000
-DP iteration 33: link 4->2:  profit 43.500
-Update link resource: link 1->3: tau = 0, volume = 4363.64, travel time = 44.64, resource = 6000.000
-Update link resource: link 3->4: tau = 0, volume = 484.85, travel time = 5.85, resource = 0.000
-Update link resource: link 4->2: tau = 0, volume = 4121.21, travel time = 42.21, resource = 3000.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 1->4: tau = 0, volume = 3636.36, travel time = 45.00, resource = 3000.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 3->2: tau = 0, volume = 3878.79, travel time = 45.00, resource = 0.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-SP iteration k = 34: origin node: 4, agent type 2 
 SP iteration k = 34: origin node: 1, agent type 2 
-SP iteration k = 34: origin node: 3, agent type 2 
 SP iteration k = 34: origin node: 2, agent type 2 
+SP iteration k = 34: origin node: 3, agent type 2 
+SP iteration k = 34: origin node: 4, agent type 2 
 SP iteration k = 0: origin node: 1, agent type 0 
-DP iteration 34: link 1->3:  profit 44.636
-DP iteration 34: link 1->4:  profit 45.000
-DP iteration 34: link 3->2:  profit 45.000
-DP iteration 34: link 3->4:  profit 5.848
-DP iteration 34: link 4->2:  profit 42.212
-Update link resource: link 1->3: tau = 0, volume = 4470.59, travel time = 45.71, resource = 6000.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 3->2: tau = 0, volume = 4000.00, travel time = 45.00, resource = 0.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 1->4: tau = 0, volume = 3529.41, travel time = 45.00, resource = 3000.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 4->2: tau = 0, volume = 4000.00, travel time = 41.00, resource = 3000.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 3->4: tau = 0, volume = 470.59, travel time = 5.71, resource = 0.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-SP iteration k = 35: origin node: 2, agent type 2 
-SP iteration k = 35: origin node: 4, agent type 2 
 SP iteration k = 35: origin node: 1, agent type 2 
+SP iteration k = 35: origin node: 2, agent type 2 
 SP iteration k = 35: origin node: 3, agent type 2 
+SP iteration k = 35: origin node: 4, agent type 2 
 SP iteration k = 0: origin node: 1, agent type 0 
-DP iteration 35: link 1->3:  profit 45.706
-DP iteration 35: link 1->4:  profit 45.000
-DP iteration 35: link 3->2:  profit 45.000
-DP iteration 35: link 3->4:  profit 5.706
-DP iteration 35: link 4->2:  profit 41.000
-Update link resource: link 1->3: tau = 0, volume = 4342.86, travel time = 44.43, resource = 6000.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 4->2: tau = 0, volume = 4114.29, travel time = 42.14, resource = 3000.000
-Update link resource: link 3->2: tau = 0, volume = 3885.71, travel time = 45.00, resource = 0.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 1->4: tau = 0, volume = 3657.14, travel time = 45.00, resource = 3000.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 3->4: tau = 0, volume = 457.14, travel time = 5.57, resource = 0.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-SP iteration k = 36: origin node: 2, agent type 2 
 SP iteration k = 36: origin node: 1, agent type 2 
-SP iteration k = 36: origin node: 4, agent type 2 
+SP iteration k = 36: origin node: 2, agent type 2 
 SP iteration k = 36: origin node: 3, agent type 2 
+SP iteration k = 36: origin node: 4, agent type 2 
 SP iteration k = 0: origin node: 1, agent type 0 
-DP iteration 36: link 1->3:  profit 44.429
-DP iteration 36: link 1->4:  profit 45.000
-DP iteration 36: link 3->2:  profit 45.000
-DP iteration 36: link 3->4:  profit 5.571
-DP iteration 36: link 4->2:  profit 42.143
-Update link resource: link 1->3: tau = 0, volume = 4222.22, travel time = 43.22, resource = 6000.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 3->4: tau = 0, volume = 444.44, travel time = 5.44, resource = 0.000
-Update link resource: link 4->2: tau = 0, volume = 4222.22, travel time = 43.22, resource = 3000.000
-Update link resource: link 3->2: tau = 0, volume = 3777.78, travel time = 45.00, resource = 0.000
-Update link resource: link 1->4: tau = 0, volume = 3777.78, travel time = 45.00, resource = 3000.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
 SP iteration k = 37: origin node: 1, agent type 2 
 SP iteration k = 37: origin node: 2, agent type 2 
-SP iteration k = 37: origin node: 4, agent type 2 
 SP iteration k = 37: origin node: 3, agent type 2 
+SP iteration k = 37: origin node: 4, agent type 2 
 SP iteration k = 0: origin node: 1, agent type 0 
-DP iteration 37: link 1->3:  profit 43.222
-DP iteration 37: link 1->4:  profit 45.000
-DP iteration 37: link 3->2:  profit 45.000
-DP iteration 37: link 3->4:  profit 5.444
-DP iteration 37: link 4->2:  profit 43.222
-Update link resource: link 1->3: tau = 0, volume = 4108.11, travel time = 42.08, resource = 6000.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 3->4: tau = 0, volume = 432.43, travel time = 5.32, resource = 0.000
-Update link resource: link 4->2: tau = 0, volume = 4324.32, travel time = 44.24, resource = 3000.000
-Update link resource: link 3->2: tau = 0, volume = 3675.68, travel time = 45.00, resource = 0.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 1->4: tau = 0, volume = 3891.89, travel time = 45.00, resource = 3000.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-SP iteration k = 38: origin node: 4, agent type 2 
-SP iteration k = 38: origin node: 2, agent type 2 
 SP iteration k = 38: origin node: 1, agent type 2 
+SP iteration k = 38: origin node: 2, agent type 2 
 SP iteration k = 38: origin node: 3, agent type 2 
+SP iteration k = 38: origin node: 4, agent type 2 
 SP iteration k = 0: origin node: 1, agent type 0 
-DP iteration 38: link 1->3:  profit 42.081
-DP iteration 38: link 1->4:  profit 45.000
-DP iteration 38: link 3->2:  profit 45.000
-DP iteration 38: link 3->4:  profit 5.324
-DP iteration 38: link 4->2:  profit 44.243
-Update link resource: link 1->3: tau = 0, volume = 4210.53, travel time = 43.11, resource = 6000.000
-Update link resource: link 4->2: tau = 0, volume = 4210.53, travel time = 43.11, resource = 3000.000
-Update link resource: link 3->4: tau = 0, volume = 421.05, travel time = 5.21, resource = 0.000
-Update link resource: link 3->2: tau = 0, volume = 3789.47, travel time = 45.00, resource = 0.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 1->4: tau = 0, volume = 3789.47, travel time = 45.00, resource = 3000.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-SP iteration k = 39: origin node: 2, agent type 2 
-SP iteration k = 39: origin node: 4, agent type 2 
-SP iteration k = 39: origin node: 3, agent type 2 
 SP iteration k = 39: origin node: 1, agent type 2 
+SP iteration k = 39: origin node: 2, agent type 2 
+SP iteration k = 39: origin node: 3, agent type 2 
+SP iteration k = 39: origin node: 4, agent type 2 
 SP iteration k = 0: origin node: 1, agent type 0 
-DP iteration 39: link 1->3:  profit 43.105
-DP iteration 39: link 1->4:  profit 45.000
-DP iteration 39: link 3->2:  profit 45.000
-DP iteration 39: link 3->4:  profit 5.211
-DP iteration 39: link 4->2:  profit 43.105
-Update link resource: link 1->3: tau = 0, volume = 4400.00, travel time = 45.00, resource = 6000.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 3->4: tau = 0, volume = 400.00, travel time = 5.00, resource = 0.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 4->2: tau = 0, volume = 4000.00, travel time = 41.00, resource = 3000.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 1->4: tau = 0, volume = 3600.00, travel time = 45.00, resource = 3000.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 3->2: tau = 0, volume = 4000.00, travel time = 45.00, resource = 0.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-CU: iteration 0: total_gap=, 18000.000000,total_relative_gap=, 0.024259,
-Update link resource: link 1->3: tau = 0, volume = 3981.40, travel time = 40.81, resource = 6000.000
-Update link resource: link 3->2: tau = 0, volume = 3813.95, travel time = 45.00, resource = 0.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 3->4: tau = 0, volume = 167.44, travel time = 2.67, resource = 0.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 1->4: tau = 0, volume = 4018.60, travel time = 45.00, resource = 3000.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 4->2: tau = 0, volume = 4186.05, travel time = 42.86, resource = 3000.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-CU: iteration 1: total_gap=, 8313.736328,total_relative_gap=, 0.011848,
-Update link resource: link 1->3: tau = 0, volume = 4044.99, travel time = 41.45, resource = 6000.000
-Update link resource: link 3->2: tau = 0, volume = 3894.17, travel time = 45.00, resource = 0.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 3->4: tau = 0, volume = 150.82, travel time = 2.51, resource = 0.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 1->4: tau = 0, volume = 3955.01, travel time = 45.00, resource = 3000.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 4->2: tau = 0, volume = 4105.83, travel time = 42.06, resource = 3000.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-CU: iteration 2: total_gap=, 5808.798340,total_relative_gap=, 0.008335,
-Update link resource: link 1->3: tau = 0, volume = 4069.22, travel time = 41.69, resource = 6000.000
-Update link resource: link 3->4: tau = 0, volume = 185.12, travel time = 2.85, resource = 0.000
-Update link resource: link 4->2: tau = 0, volume = 4115.91, travel time = 42.16, resource = 3000.000
-Update link resource: link 3->2: tau = 0, volume = 3884.09, travel time = 45.00, resource = 0.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 1->4: tau = 0, volume = 3930.78, travel time = 45.00, resource = 3000.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-CU: iteration 3: total_gap=, 1837.301270,total_relative_gap=, 0.002639,
-Update link resource: link 1->3: tau = 0, volume = 4077.83, travel time = 41.78, resource = 6000.000
-Update link resource: link 3->2: tau = 0, volume = 3892.90, travel time = 45.00, resource = 0.000
-Update link resource: link 3->4: tau = 0, volume = 184.93, travel time = 2.85, resource = 0.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 4->2: tau = 0, volume = 4107.10, travel time = 42.07, resource = 3000.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 1->4: tau = 0, volume = 3922.17, travel time = 45.00, resource = 3000.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-CU: iteration 4: total_gap=, 1770.411621,total_relative_gap=, 0.002544,
-Update link resource: link 1->3: tau = 0, volume = 4083.56, travel time = 41.84, resource = 6000.000
-Update link resource: link 1->4: tau = 0, volume = 3916.44, travel time = 45.00, resource = 3000.000
-Update link resource: link 4->2: tau = 0, volume = 4108.33, travel time = 42.08, resource = 3000.000
-Update link resource: link 3->4: tau = 0, volume = 191.88, travel time = 2.92, resource = 0.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 3->2: tau = 0, volume = 3891.67, travel time = 45.00, resource = 0.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-CU: iteration 5: total_gap=, 970.309631,total_relative_gap=, 0.001394,
-Update link resource: link 3->2: tau = 0, volume = 3894.96, travel time = 45.00, resource = 0.000
-Update link resource: link 1->3: tau = 0, volume = 4086.82, travel time = 41.87, resource = 6000.000
-Update link resource: link 4->2: tau = 0, volume = 4105.04, travel time = 42.05, resource = 3000.000
-Update link resource: link 3->4: tau = 0, volume = 191.86, travel time = 2.92, resource = 0.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 1->4: tau = 0, volume = 3913.18, travel time = 45.00, resource = 3000.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-CU: iteration 6: total_gap=, 955.338318,total_relative_gap=, 0.001373,
-Update link resource: link 1->3: tau = 0, volume = 4089.27, travel time = 41.89, resource = 6000.000
-Update link resource: link 3->4: tau = 0, volume = 194.67, travel time = 2.95, resource = 0.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 4->2: tau = 0, volume = 4105.40, travel time = 42.05, resource = 3000.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 1->4: tau = 0, volume = 3910.73, travel time = 45.00, resource = 3000.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 3->2: tau = 0, volume = 3894.60, travel time = 45.00, resource = 0.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-CU: iteration 7: total_gap=, 630.573792,total_relative_gap=, 0.000906,
-Update link resource: link 1->3: tau = 0, volume = 4090.92, travel time = 41.91, resource = 6000.000
-Update link resource: link 4->2: tau = 0, volume = 4103.74, travel time = 42.04, resource = 3000.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 1->4: tau = 0, volume = 3909.08, travel time = 45.00, resource = 3000.000
-Update link resource: link 3->2: tau = 0, volume = 3896.26, travel time = 45.00, resource = 0.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 3->4: tau = 0, volume = 194.66, travel time = 2.95, resource = 0.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-CU: iteration 8: total_gap=, 625.619751,total_relative_gap=, 0.000899,
-Update link resource: link 4->2: tau = 0, volume = 4103.89, travel time = 42.04, resource = 3000.000
-Update link resource: link 1->4: tau = 0, volume = 3907.75, travel time = 45.00, resource = 3000.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 1->3: tau = 0, volume = 4092.25, travel time = 41.92, resource = 6000.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 3->4: tau = 0, volume = 196.14, travel time = 2.96, resource = 0.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 3->2: tau = 0, volume = 3896.11, travel time = 45.00, resource = 0.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-CU: iteration 9: total_gap=, 454.736084,total_relative_gap=, 0.000653,
-Update link resource: link 3->2: tau = 0, volume = 3897.09, travel time = 45.00, resource = 0.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 3->4: tau = 0, volume = 196.14, travel time = 2.96, resource = 0.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 1->3: tau = 0, volume = 4093.22, travel time = 41.93, resource = 6000.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 4->2: tau = 0, volume = 4102.91, travel time = 42.03, resource = 3000.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 1->4: tau = 0, volume = 3906.78, travel time = 45.00, resource = 3000.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-CU: iteration 10: total_gap=, 452.874481,total_relative_gap=, 0.000651,
-Update link resource: link 1->3: tau = 0, volume = 4094.04, travel time = 41.94, resource = 6000.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 1->4: tau = 0, volume = 3905.96, travel time = 45.00, resource = 3000.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 3->4: tau = 0, volume = 197.02, travel time = 2.97, resource = 0.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 4->2: tau = 0, volume = 4102.98, travel time = 42.03, resource = 3000.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 3->2: tau = 0, volume = 3897.02, travel time = 45.00, resource = 0.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-CU: iteration 11: total_gap=, 349.364685,total_relative_gap=, 0.000502,
-Update link resource: link 1->3: tau = 0, volume = 4094.67, travel time = 41.95, resource = 6000.000
-Update link resource: link 3->2: tau = 0, volume = 3897.65, travel time = 45.00, resource = 0.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 1->4: tau = 0, volume = 3905.33, travel time = 45.00, resource = 3000.000
-Update link resource: link 4->2: tau = 0, volume = 4102.35, travel time = 42.02, resource = 3000.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 3->4: tau = 0, volume = 197.02, travel time = 2.97, resource = 0.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-CU: iteration 12: total_gap=, 348.556824,total_relative_gap=, 0.000501,
-Update link resource: link 1->4: tau = 0, volume = 3904.78, travel time = 45.00, resource = 3000.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 3->2: tau = 0, volume = 3897.61, travel time = 45.00, resource = 0.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 1->3: tau = 0, volume = 4095.22, travel time = 41.95, resource = 6000.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 4->2: tau = 0, volume = 4102.39, travel time = 42.02, resource = 3000.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 3->4: tau = 0, volume = 197.61, travel time = 2.98, resource = 0.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-CU: iteration 13: total_gap=, 280.102112,total_relative_gap=, 0.000402,
-Update link resource: link 1->3: tau = 0, volume = 4095.66, travel time = 41.96, resource = 6000.000
-Update link resource: link 3->2: tau = 0, volume = 3898.05, travel time = 45.00, resource = 0.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 3->4: tau = 0, volume = 197.61, travel time = 2.98, resource = 0.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 4->2: tau = 0, volume = 4101.95, travel time = 42.02, resource = 3000.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 1->4: tau = 0, volume = 3904.34, travel time = 45.00, resource = 3000.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-CU: iteration 14: total_gap=, 279.798676,total_relative_gap=, 0.000402,
-Update link resource: link 1->3: tau = 0, volume = 4096.05, travel time = 41.96, resource = 6000.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 3->4: tau = 0, volume = 198.02, travel time = 2.98, resource = 0.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 4->2: tau = 0, volume = 4101.98, travel time = 42.02, resource = 3000.000
-Update link resource: link 3->2: tau = 0, volume = 3898.02, travel time = 45.00, resource = 0.000
-Update link resource: link 1->4: tau = 0, volume = 3903.95, travel time = 45.00, resource = 3000.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-CU: iteration 15: total_gap=, 231.547089,total_relative_gap=, 0.000333,
-Update link resource: link 1->3: tau = 0, volume = 4096.37, travel time = 41.96, resource = 6000.000
-Update link resource: link 4->2: tau = 0, volume = 4101.66, travel time = 42.02, resource = 3000.000
-Update link resource: link 3->2: tau = 0, volume = 3898.34, travel time = 45.00, resource = 0.000
-Update link resource: link 3->4: tau = 0, volume = 198.02, travel time = 2.98, resource = 0.000
-Update link resource: link 1->4: tau = 0, volume = 3903.63, travel time = 45.00, resource = 3000.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-CU: iteration 16: total_gap=, 231.511047,total_relative_gap=, 0.000333,
-Update link resource: link 1->3: tau = 0, volume = 4096.65, travel time = 41.97, resource = 6000.000
-Update link resource: link 3->4: tau = 0, volume = 198.33, travel time = 2.98, resource = 0.000
-Update link resource: link 4->2: tau = 0, volume = 4101.67, travel time = 42.02, resource = 3000.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 3->2: tau = 0, volume = 3898.33, travel time = 45.00, resource = 0.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 1->4: tau = 0, volume = 3903.35, travel time = 45.00, resource = 3000.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-CU: iteration 17: total_gap=, 196.013000,total_relative_gap=, 0.000282,
-Update link resource: link 3->4: tau = 0, volume = 198.57, travel time = 2.99, resource = 0.000
-Update link resource: link 4->2: tau = 0, volume = 4101.67, travel time = 42.02, resource = 3000.000
-Update link resource: link 1->4: tau = 0, volume = 3903.10, travel time = 45.00, resource = 3000.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 3->2: tau = 0, volume = 3898.33, travel time = 45.00, resource = 0.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 1->3: tau = 0, volume = 4096.90, travel time = 41.97, resource = 6000.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-CU: iteration 18: total_gap=, 186.861206,total_relative_gap=, 0.000268,
-Update link resource: link 3->2: tau = 0, volume = 3898.56, travel time = 45.00, resource = 0.000
-Update link resource: link 1->3: tau = 0, volume = 4097.12, travel time = 41.97, resource = 6000.000
-Update link resource: link 4->2: tau = 0, volume = 4101.44, travel time = 42.01, resource = 3000.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 1->4: tau = 0, volume = 3902.88, travel time = 45.00, resource = 3000.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 3->4: tau = 0, volume = 198.56, travel time = 2.99, resource = 0.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-CU: iteration 19: total_gap=, 168.863281,total_relative_gap=, 0.000243,
-Update link resource: link 1->3: tau = 0, volume = 4097.31, travel time = 41.97, resource = 6000.000
-Update link resource: link 4->2: tau = 0, volume = 4101.44, travel time = 42.01, resource = 3000.000
-Update link resource: link 3->2: tau = 0, volume = 3898.56, travel time = 45.00, resource = 0.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 3->4: tau = 0, volume = 198.75, travel time = 2.99, resource = 0.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 1->4: tau = 0, volume = 3902.69, travel time = 45.00, resource = 3000.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-CU: iteration 20: total_gap=, 161.785843,total_relative_gap=, 0.000232,
-Update link resource: link 1->4: tau = 0, volume = 3902.52, travel time = 45.00, resource = 3000.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 3->4: tau = 0, volume = 198.74, travel time = 2.99, resource = 0.000
-Update link resource: link 4->2: tau = 0, volume = 4101.26, travel time = 42.01, resource = 3000.000
-Update link resource: link 1->3: tau = 0, volume = 4097.48, travel time = 41.97, resource = 6000.000
-Update link resource: link 3->2: tau = 0, volume = 3898.74, travel time = 45.00, resource = 0.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-CU: iteration 21: total_gap=, 147.559326,total_relative_gap=, 0.000212,
-Update link resource: link 1->3: tau = 0, volume = 4097.63, travel time = 41.98, resource = 6000.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 4->2: tau = 0, volume = 4101.11, travel time = 42.01, resource = 3000.000
-Update link resource: link 1->4: tau = 0, volume = 3902.37, travel time = 45.00, resource = 3000.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 3->4: tau = 0, volume = 198.74, travel time = 2.99, resource = 0.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 3->2: tau = 0, volume = 3898.89, travel time = 45.00, resource = 0.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-CU: iteration 22: total_gap=, 147.607880,total_relative_gap=, 0.000212,
-Update link resource: link 1->3: tau = 0, volume = 4097.77, travel time = 41.98, resource = 6000.000
-Update link resource: link 1->4: tau = 0, volume = 3902.23, travel time = 45.00, resource = 3000.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 3->4: tau = 0, volume = 198.88, travel time = 2.99, resource = 0.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 3->2: tau = 0, volume = 3898.88, travel time = 45.00, resource = 0.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 4->2: tau = 0, volume = 4101.12, travel time = 42.01, resource = 3000.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-CU: iteration 23: total_gap=, 130.578491,total_relative_gap=, 0.000188,
-Update link resource: link 1->3: tau = 0, volume = 4097.89, travel time = 41.98, resource = 6000.000
-Update link resource: link 3->2: tau = 0, volume = 3899.01, travel time = 45.00, resource = 0.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 1->4: tau = 0, volume = 3902.11, travel time = 45.00, resource = 3000.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 3->4: tau = 0, volume = 198.88, travel time = 2.99, resource = 0.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 4->2: tau = 0, volume = 4100.99, travel time = 42.01, resource = 3000.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-CU: iteration 24: total_gap=, 130.540802,total_relative_gap=, 0.000188,
-Update link resource: link 1->3: tau = 0, volume = 4098.01, travel time = 41.98, resource = 6000.000
-Update link resource: link 1->4: tau = 0, volume = 3901.99, travel time = 45.00, resource = 3000.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 4->2: tau = 0, volume = 4101.00, travel time = 42.01, resource = 3000.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 3->4: tau = 0, volume = 199.00, travel time = 2.99, resource = 0.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 3->2: tau = 0, volume = 3899.00, travel time = 45.00, resource = 0.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-CU: iteration 25: total_gap=, 116.727562,total_relative_gap=, 0.000168,
-Update link resource: link 1->3: tau = 0, volume = 4098.11, travel time = 41.98, resource = 6000.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 1->4: tau = 0, volume = 3901.89, travel time = 45.00, resource = 3000.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 4->2: tau = 0, volume = 4101.00, travel time = 42.01, resource = 3000.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 3->4: tau = 0, volume = 199.10, travel time = 2.99, resource = 0.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 3->2: tau = 0, volume = 3899.00, travel time = 45.00, resource = 0.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-CU: iteration 26: total_gap=, 112.906227,total_relative_gap=, 0.000162,
-Update link resource: link 1->3: tau = 0, volume = 4098.20, travel time = 41.98, resource = 6000.000
-Update link resource: link 3->4: tau = 0, volume = 199.10, travel time = 2.99, resource = 0.000
-Update link resource: link 3->2: tau = 0, volume = 3899.10, travel time = 45.00, resource = 0.000
-Update link resource: link 4->2: tau = 0, volume = 4100.90, travel time = 42.01, resource = 3000.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 1->4: tau = 0, volume = 3901.80, travel time = 45.00, resource = 3000.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-CU: iteration 27: total_gap=, 105.231094,total_relative_gap=, 0.000151,
-Update link resource: link 1->3: tau = 0, volume = 4098.29, travel time = 41.98, resource = 6000.000
-Update link resource: link 1->4: tau = 0, volume = 3901.71, travel time = 45.00, resource = 3000.000
-Update link resource: link 4->2: tau = 0, volume = 4100.90, travel time = 42.01, resource = 3000.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 3->4: tau = 0, volume = 199.19, travel time = 2.99, resource = 0.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 3->2: tau = 0, volume = 3899.10, travel time = 45.00, resource = 0.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-CU: iteration 28: total_gap=, 102.003983,total_relative_gap=, 0.000147,
-Update link resource: link 1->3: tau = 0, volume = 4098.37, travel time = 41.98, resource = 6000.000
-Update link resource: link 4->2: tau = 0, volume = 4100.82, travel time = 42.01, resource = 3000.000
-Update link resource: link 3->2: tau = 0, volume = 3899.18, travel time = 45.00, resource = 0.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link resource: link 3->4: tau = 0, volume = 199.18, travel time = 2.99, resource = 0.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 1->4: tau = 0, volume = 3901.63, travel time = 45.00, resource = 3000.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-CU: iteration 29: total_gap=, 95.492813,total_relative_gap=, 0.000137,
-Update link resource: link 1->3: tau = 0, volume = 4098.44, travel time = 41.98, resource = 6000.000
-Update link resource: link 3->4: tau = 0, volume = 199.18, travel time = 2.99, resource = 0.000
-Update link resource: link 1->4: tau = 0, volume = 3901.56, travel time = 45.00, resource = 3000.000
-Update link cost: link 3->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->4: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->3: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->3: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 1->4: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 1->3: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
-Update link resource: link 4->2: tau = 0, volume = 4100.74, travel time = 42.01, resource = 3000.000
-Update link resource: link 3->2: tau = 0, volume = 3899.26, travel time = 45.00, resource = 0.000
-Update link cost: link 4->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 0, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 4->2: tau = 0, at = 1, travel_marginal =  0.000; penalty derivative = 0.000
-Update link cost: link 3->2: tau = 0, at = 2, travel_marginal =  0.000; penalty derivative = -9681377022088873410297856.000
-Update link cost: link 4->2: tau = 0, at = 2, travel_marginal =  1.000; penalty derivative = -9681377022088873410297856.000
+CU: iteration 0: total_gap=, 0.000000,total_relative_gap=, 0.000000,
+CU: iteration 1: total_gap=, 0.000000,total_relative_gap=, 0.000000,
+CU: iteration 2: total_gap=, 0.000000,total_relative_gap=, 0.000000,
+CU: iteration 3: total_gap=, 0.000000,total_relative_gap=, 0.000000,
+CU: iteration 4: total_gap=, 0.000000,total_relative_gap=, 0.000000,
+CU: iteration 5: total_gap=, 0.000000,total_relative_gap=, 0.000000,
+CU: iteration 6: total_gap=, 0.000000,total_relative_gap=, 0.000000,
+CU: iteration 7: total_gap=, 0.000000,total_relative_gap=, 0.000000,
+CU: iteration 8: total_gap=, 0.000000,total_relative_gap=, 0.000000,
+CU: iteration 9: total_gap=, 0.000000,total_relative_gap=, 0.000000,
+CU: iteration 10: total_gap=, 0.000000,total_relative_gap=, 0.000000,
+CU: iteration 11: total_gap=, 0.000000,total_relative_gap=, 0.000000,
+CU: iteration 12: total_gap=, 0.000000,total_relative_gap=, 0.000000,
+CU: iteration 13: total_gap=, 0.000000,total_relative_gap=, 0.000000,
+CU: iteration 14: total_gap=, 0.000000,total_relative_gap=, 0.000000,
+CU: iteration 15: total_gap=, 0.000000,total_relative_gap=, 0.000000,
+CU: iteration 16: total_gap=, 0.000000,total_relative_gap=, 0.000000,
+CU: iteration 17: total_gap=, 0.000000,total_relative_gap=, 0.000000,
+CU: iteration 18: total_gap=, 0.000000,total_relative_gap=, 0.000000,
+CU: iteration 19: total_gap=, 0.000000,total_relative_gap=, 0.000000,
+CU: iteration 20: total_gap=, 0.000000,total_relative_gap=, 0.000000,
+CU: iteration 21: total_gap=, 0.000000,total_relative_gap=, 0.000000,
+CU: iteration 22: total_gap=, 0.000000,total_relative_gap=, 0.000000,
+CU: iteration 23: total_gap=, 0.000000,total_relative_gap=, 0.000000,
+CU: iteration 24: total_gap=, 0.000000,total_relative_gap=, 0.000000,
+CU: iteration 25: total_gap=, 0.000000,total_relative_gap=, 0.000000,
+CU: iteration 26: total_gap=, 0.000000,total_relative_gap=, 0.000000,
+CU: iteration 27: total_gap=, 0.000000,total_relative_gap=, 0.000000,
+CU: iteration 28: total_gap=, 0.000000,total_relative_gap=, 0.000000,
+CU: iteration 29: total_gap=, 0.000000,total_relative_gap=, 0.000000,

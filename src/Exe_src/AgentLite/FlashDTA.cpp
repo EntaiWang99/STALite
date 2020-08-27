@@ -23,7 +23,7 @@ int main(int argc, TCHAR* argv[], TCHAR* envp[])
 
 	int signal_updating_output = 0;
 
-	int assignment_mode = 0;
+	int assignment_mode = 1;  // generate link performance and agent file
 
 	CCSVParser parser_settings;
 

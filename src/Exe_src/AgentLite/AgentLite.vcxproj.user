@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LocalDebuggerWorkingDirectory>C:\Sandbox\STALite with  Signal API\STALite with  Signal API\dataset\mesonet_20200808</LocalDebuggerWorkingDirectory>
+    <LocalDebuggerWorkingDirectory>C:\temp\mesonet_0818\mesonet_0818</LocalDebuggerWorkingDirectory>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LocalDebuggerWorkingDirectory>C:\temp\mesonet_0818\mesonet_0818</LocalDebuggerWorkingDirectory>
+    <LocalDebuggerWorkingDirectory>C:\GitHub\learning-transportation-engineering-and-traffic-analysis\lesson_1_learning_NeXTA_GMNS\Tempe_ASU_network</LocalDebuggerWorkingDirectory>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

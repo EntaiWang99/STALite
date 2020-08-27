@@ -992,7 +992,7 @@ public:
 	int b_debug_detail_flag;
 	std::map<int, int> g_internal_node_to_seq_no_map;  // hash table, map external node number to internal node sequence no. 
 	std::map<int, int> g_zoneid_to_zone_seq_no_mapping;// from integer to integer map zone_id to zone_seq_no
-	std::map<string, int> g_road_link_id_map;
+	std::map<string, int> g_link_id_map;
 
 
 	CColumnVector**** g_column_pool;
@@ -1143,9 +1143,13 @@ public:
 
 	float  PerformBPR(float volume)
 	{
+
 		volume = max(0, volume);  // take nonnegative values
 
-
+		if (volume > 1.0)
+		{
+			int debug = 1;
+		}
 		VOC = volume / max(0.00001f, capacity);
 		avg_travel_time = FFTT + FFTT * alpha * pow(volume / max(0.00001f, capacity), beta);
 
@@ -1680,8 +1684,8 @@ public:
 
 			if (NodeForwardStarArray[i].OutgoingLinkSize > 0)
 			{
-				delete NodeForwardStarArray[i].OutgoingLinkNoArray;
-				delete NodeForwardStarArray[i].OutgoingNodeNoArray;
+				//delete NodeForwardStarArray[i].OutgoingLinkNoArray;
+				//delete NodeForwardStarArray[i].OutgoingNodeNoArray;
 			}
 
 		}
@@ -3495,7 +3499,7 @@ void g_ReadInputData(Assignment& assignment)
 
 	CCSVParser parser_link;
 
-	if (parser_link.OpenCSVFile("road_link.csv", true))
+	if (parser_link.OpenCSVFile("link.csv", true))
 	{
 		while (parser_link.ReadRecord())  // if this line contains [] mark, then we will also read field headers.
 		{
@@ -3507,26 +3511,26 @@ void g_ReadInputData(Assignment& assignment)
 				continue;
 
 			string linkID;
-			parser_link.GetValueByFieldName("road_link_id", linkID);
+			parser_link.GetValueByFieldName("link_id", linkID);
 
 
 			// add the to node id into the outbound (adjacent) node list
 
 			if (assignment.g_internal_node_to_seq_no_map.find(from_node_id) == assignment.g_internal_node_to_seq_no_map.end())
 			{
-				cout << "Error: from_node_id " << from_node_id << " in file road_link.csv is not defined in node.csv." << endl;
+				cout << "Error: from_node_id " << from_node_id << " in file link.csv is not defined in node.csv." << endl;
 
 				continue; //has not been defined
 			}
 			if (assignment.g_internal_node_to_seq_no_map.find(to_node_id) == assignment.g_internal_node_to_seq_no_map.end())
 			{
-				cout << "Error: to_node_id " << to_node_id << " in file road_link.csv is not defined in node.csv." << endl;
+				cout << "Error: to_node_id " << to_node_id << " in file link.csv is not defined in node.csv." << endl;
 				continue; //has not been defined
 			}
 
-			if (assignment.g_road_link_id_map.find(linkID) != assignment.g_road_link_id_map.end())
+			if (assignment.g_link_id_map.find(linkID) != assignment.g_link_id_map.end())
 			{
-				cout << "Error: road_link_id " << linkID.c_str() << " has been defined more than once. Please check road_link.csv." << endl;
+				cout << "Error: link_id " << linkID.c_str() << " has been defined more than once. Please check link.csv." << endl;
 				continue; //has not been defined
 			}
 
@@ -3543,7 +3547,7 @@ void g_ReadInputData(Assignment& assignment)
 			link.to_node_seq_no = internal_to_node_seq_no;
 			link.link_id = linkID;
 
-			assignment.g_road_link_id_map[link.link_id] = 1;
+			assignment.g_link_id_map[link.link_id] = 1;
 
 
 
@@ -3573,7 +3577,7 @@ void g_ReadInputData(Assignment& assignment)
 
 			if (assignment.g_LinkTypeMap.find(link.link_type) == assignment.g_LinkTypeMap.end())
 			{
-				cout << "link type " << link.link_type << " in road_link.csv is not defined in link_type.csv" <<endl;
+				cout << "link type " << link.link_type << " in link.csv is not defined for link " << from_node_id << "->"<< to_node_id << " in link_type.csv" <<endl;
 				g_ProgramStop();
 
 			}
@@ -3784,7 +3788,7 @@ void g_reload_service_arc_data(Assignment& assignment)
 				}
 				else
 				{
-					cout << "Error: Link " << from_node_id << "->" << to_node_id << " in file service_arc.csv is not defined in road_link.csv." << endl;
+					cout << "Error: Link " << from_node_id << "->" << to_node_id << " in file service_arc.csv is not defined in link.csv." << endl;
 					continue;
 				}
 
@@ -4396,7 +4400,7 @@ void g_output_simulation_result(Assignment& assignment)
 		if(assignment.assignment_mode <=1)
 		{
 		// Option 2: BPR-X function
-		fprintf(g_pFileLinkMOE, "road_link_id,from_node_id,to_node_id,time_period,volume,travel_time,speed,VOC,");
+		fprintf(g_pFileLinkMOE, "link_id,from_node_id,to_node_id,time_period,volume,travel_time,speed,VOC,");
 
 		for (int at = 0; at < assignment.g_AgentTypeVector.size(); at++)
 		{
@@ -4456,7 +4460,7 @@ void g_output_simulation_result(Assignment& assignment)
 		if (assignment.assignment_mode == 2)  // space time based simulation
 		{
 			// Option 2: BPR-X function
-			fprintf(g_pFileLinkMOE, "road_link_id,from_node_id,to_node_id,time_period,volume,CA,CD,queue,travel_time,waiting_time_in_sec,speed,");
+			fprintf(g_pFileLinkMOE, "link_id,from_node_id,to_node_id,time_period,volume,CA,CD,queue,travel_time,waiting_time_in_sec,speed,");
 			fprintf(g_pFileLinkMOE, "notes\n");
 
 
@@ -4715,6 +4719,13 @@ void g_output_simulation_result(Assignment& assignment)
 									buffer_len += sprintf(str_buffer + buffer_len, "%.2f;", path_time_vector[nt]);
 								}
 
+								buffer_len += sprintf(str_buffer + buffer_len, ",");
+
+								for (int nt = 0; nt < it->second.m_link_size; nt++)
+								{
+									buffer_len += sprintf(str_buffer + buffer_len, "%.2f;", path_time_vector[nt+1]- path_time_vector[nt]);
+								}
+
 								buffer_len += sprintf(str_buffer + buffer_len, "\n");
 
 								if (buffer_len >= STRING_LENGTH_PER_LINE - 1)
@@ -4925,7 +4936,7 @@ void g_output_simulation_result_for_signal_api(Assignment& assignment)
 		if (assignment.assignment_mode <= 1)
 		{
 			// Option 2: BPR-X function
-			fprintf(g_pFileLinkMOE, "road_link_id,from_node_id,to_node_id,demand_period,time_period,movement_str,main_node_id,NEMA_phase_number,volume,travel_time,speed,VOC,");
+			fprintf(g_pFileLinkMOE, "link_id,from_node_id,to_node_id,demand_period,time_period,movement_str,main_node_id,NEMA_phase_number,volume,travel_time,speed,VOC,");
 
 			fprintf(g_pFileLinkMOE, "notes\n");
 
@@ -4967,7 +4978,7 @@ void g_output_simulation_result_for_signal_api(Assignment& assignment)
 		if (assignment.assignment_mode == 2)  // space time based simulation
 		{
 			// Option 2: BPR-X function
-			fprintf(g_pFileLinkMOE, "road_link_id,from_node_id,to_node_id,time_period,volume,CA,CD,queue,travel_time,waiting_time_in_sec,speed,");
+			fprintf(g_pFileLinkMOE, "link_id,from_node_id,to_node_id,time_period,volume,CA,CD,queue,travel_time,waiting_time_in_sec,speed,");
 			fprintf(g_pFileLinkMOE, "notes\n");
 
 
@@ -5387,6 +5398,8 @@ void  CLink::CalculateTD_VDFunction()
 		float starting_time_slot_no = assignment.g_DemandPeriodVector[tau].starting_time_slot_no;
 		float ending_time_slot_no = assignment.g_DemandPeriodVector[tau].ending_time_slot_no;
 
+
+
 		if (this->movement_str.length() > 1 && /*signalized*/
 			VDF_period[tau].red_time > 1)
 		{  // arterial streets with the data from sigal API
@@ -5395,6 +5408,7 @@ void  CLink::CalculateTD_VDFunction()
 			float cycle_length = VDF_period[tau].cycle_length;
 			//we dynamically update cycle length, and green time/red time, so we have dynamically allocated capacity and average delay
 			travel_time_per_period[tau] = VDF_period[tau].PerformSignalVDF(hourly_per_lane_volume, red_time, cycle_length);
+			travel_time_per_period[tau] += VDF_period[tau].PerformBPR(flow_volume_per_period[tau]);
 
 			VDF_period[tau].capacity = (1 - red_time / cycle_length) * _default_saturation_flow_rate * number_of_lanes;  // update capacity using the effective discharge rates, will be passed in to the following BPR function
 
@@ -5407,7 +5421,7 @@ void  CLink::CalculateTD_VDFunction()
 				)
 		
 			{ 
-				travel_time_per_period[tau] += VDF_period[tau].PerformBPR(flow_volume_per_period[tau]);
+				travel_time_per_period[tau] = VDF_period[tau].PerformBPR(flow_volume_per_period[tau]);
 			}
 			
 

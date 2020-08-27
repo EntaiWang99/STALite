@@ -68,7 +68,7 @@ public:
 	std::map<int, int> g_internal_node_to_seq_no_map;  // hash table, map external node number to internal node sequence no. 
 
 
-	std::map<string, int> g_road_link_id_map;
+	std::map<string, int> g_link_id_map;
 
 
 	int g_number_of_links;
@@ -489,7 +489,7 @@ public:
 			while (parser_link_Performance.ReadRecord())  // if this line contains [] mark, then we will also read field headers.
 			{
 				string linkID;
-				parser_link_Performance.GetValueByFieldName("road_link_id", linkID);
+				parser_link_Performance.GetValueByFieldName("link_id", linkID);
 
 				string demand_period;
 				parser_link_Performance.GetValueByFieldName("time_period", demand_period);
@@ -1390,7 +1390,7 @@ void g_sig_ReadInputData(CMainSigModual& MainSigModual)
 	// step 4: read link file 
 
 	CCSVParser parser_link;
-	if (parser_link.OpenCSVFile("road_link.csv", true))
+	if (parser_link.OpenCSVFile("link.csv", true))
 	{
 		while (parser_link.ReadRecord())  // if this line contains [] mark, then we will also read field headers.
 		{
@@ -1402,26 +1402,26 @@ void g_sig_ReadInputData(CMainSigModual& MainSigModual)
 				continue;
 
 			string linkID;
-			parser_link.GetValueByFieldName("road_link_id", linkID);
+			parser_link.GetValueByFieldName("link_id", linkID);
 
 
 			// add the to node id into the outbound (adjacent) node list
 
 			if (MainSigModual.g_internal_node_to_seq_no_map.find(from_node_id) == MainSigModual.g_internal_node_to_seq_no_map.end())
 			{
-				cout << "Error: from_node_id " << from_node_id << " in file road_link.csv is not defined in node.csv." << endl;
+				cout << "Error: from_node_id " << from_node_id << " in file link.csv is not defined in node.csv." << endl;
 
 				continue; //has not been defined
 			}
 			if (MainSigModual.g_internal_node_to_seq_no_map.find(to_node_id) == MainSigModual.g_internal_node_to_seq_no_map.end())
 			{
-				cout << "Error: to_node_id " << to_node_id << " in file road_link.csv is not defined in node.csv." << endl;
+				cout << "Error: to_node_id " << to_node_id << " in file link.csv is not defined in node.csv." << endl;
 				continue; //has not been defined
 			}
 
-			if (MainSigModual.g_road_link_id_map.find(linkID) != MainSigModual.g_road_link_id_map.end())
+			if (MainSigModual.g_link_id_map.find(linkID) != MainSigModual.g_link_id_map.end())
 			{
-				cout << "Error: road_link_id " << linkID.c_str() << " has been defined more than once. Please check road_link.csv." << endl;
+				cout << "Error: link_id " << linkID.c_str() << " has been defined more than once. Please check link.csv." << endl;
 				continue; //has not been defined
 			}
 
@@ -1438,7 +1438,7 @@ void g_sig_ReadInputData(CMainSigModual& MainSigModual)
 			link.to_node_seq_no = internal_to_node_seq_no;
 			link.link_id = linkID;
 
-			MainSigModual.g_road_link_id_map[link.link_id] = 1;
+			MainSigModual.g_link_id_map[link.link_id] = 1;
 
 
 
@@ -1562,7 +1562,7 @@ double SignalAPI(int iteration_number, int MainSigModual_mode, int signal_updati
 	}
 	else
 	{
-		fprintf(g_pFileServiceArc, "road_link_id,from_node_id,to_node_id,time_window,time_interval,travel_time_delta,capacity,cycle_no,cycle_length,green_time,red_time,main_node_id,stage,movement_str,notes,\n");
+		fprintf(g_pFileServiceArc, "link_id,from_node_id,to_node_id,time_window,time_interval,travel_time_delta,capacity,cycle_no,cycle_length,green_time,red_time,main_node_id,stage,movement_str,notes,\n");
 
 		for (std::map<int, CSignalNode>::iterator it = g_signal_node_map.begin(); it != g_signal_node_map.end(); ++it)
 		{
