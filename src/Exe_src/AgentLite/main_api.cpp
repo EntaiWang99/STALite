@@ -1045,6 +1045,7 @@ public:
 	int g_number_of_loading_simulation_intervals;
 
 	void STTrafficSimulation();
+	void Demand_ODME();   //OD demand estimation estimation
 };
 
 Assignment assignment;
@@ -1280,6 +1281,7 @@ public:
 		service_arc_flag = false;
 		traffic_flow_code = 0;
 		spatial_capacity_in_vehicles = 999999;
+		obs_count = -1;
 	}
 
 	~CLink()
@@ -1361,6 +1363,9 @@ public:
 
 	int RUC_type;
 	int number_of_periods;
+
+	float obs_count;
+	float est_count_dev;
 
 	float length;
 	//std::vector <SLinkMOE> m_LinkMOEAry;
@@ -1528,9 +1533,30 @@ extern std::vector<CServiceArc> g_service_arc_vector;
 class COZone
 {
 public:
+	COZone()
+	{
+		obs_production = -1;
+		obs_attraction = -1;
+
+		est_production = -1;
+		est_attraction = -1;
+
+		est_production_dev = 0;
+		est_attraction_dev = 0;
+
+	}
 	int zone_seq_no;  // 0, 1, 
 	int zone_id;  // external zone id // this is origin zone
 	int node_seq_no;
+
+	float obs_production;
+	float obs_attraction;
+
+	float est_production;
+	float est_attraction;
+
+	float est_production_dev;
+	float est_attraction_dev;
 
 
 };
@@ -4112,6 +4138,203 @@ void update_link_travel_time_and_cost()
 }
 
 
+void g_reset_and_update_link_volume_based_on_ODME_columns(int number_of_links)
+{
+
+	int tau;
+	int at;
+	int l;
+	for (l = 0; l < number_of_links; l++)
+	{
+		for (tau = 0; tau < assignment.g_number_of_demand_periods; tau++)
+		{
+			g_link_vector[l].flow_volume_per_period[tau] = 0; // used in travel time calculation
+
+		}
+	}
+
+	for (int o = 0; o < g_zone_vector.size(); o++)  // o
+	{
+		g_zone_vector[o].est_attraction = 0;
+		g_zone_vector[o].est_production = 0;
+	}
+
+
+
+		for (int at = 0; at < assignment.g_AgentTypeVector.size(); at++)  //m
+		{
+			//#pragma omp parallel for
+
+			std::map<int, CColumnPath>::iterator it;
+			int o, d, tau;
+			int zone_size = g_zone_vector.size();
+			int tau_size = assignment.g_DemandPeriodVector.size();
+
+			float link_volume_contributed_by_path_volume;
+
+			int link_seq_no;
+			float PCE_ratio;
+			float CRU;
+			int nl;
+
+			std::map<int, CColumnPath>::iterator it_begin;
+			std::map<int, CColumnPath>::iterator it_end;
+
+			int column_vector_size;
+			CColumnVector* p_column;
+
+			for (o = 0; o < zone_size; o++)  // o
+				for (d = 0; d < zone_size; d++) //d
+					for (tau = 0; tau < tau_size; tau++)  //tau
+					{
+						p_column = &(assignment.g_column_pool[o][d][at][tau]);
+						if (p_column->od_volume > 0)
+						{
+							// continuous: type 0
+							column_vector_size = p_column->path_node_sequence_map.size();
+
+							it_begin = p_column->path_node_sequence_map.begin();
+							it_end = p_column->path_node_sequence_map.end();
+
+							for (it = it_begin; it != it_end; it++)
+							{
+
+								link_volume_contributed_by_path_volume = it->second.path_volume;  // assign all OD flow to this first path
+
+								g_zone_vector[o].est_production += it->second.path_volume;
+								g_zone_vector[d].est_attraction += it->second.path_volume;
+
+								// add path volume to link volume
+								for (nl = 0; nl < it->second.m_link_size; nl++)  // arc a
+								{
+									link_seq_no = it->second.path_link_vector[nl];
+
+									// MSA updating for the existing column pools
+									// if iteration_index = 0; then update no flow discount is used (for the column pool case)
+									PCE_ratio = g_link_vector[link_seq_no].PCE_at[at];
+									//#pragma omp critical
+									{
+
+										g_link_vector[link_seq_no].flow_volume_per_period[tau] += link_volume_contributed_by_path_volume * PCE_ratio;
+										g_link_vector[link_seq_no].volume_per_period_per_at[tau][at] += link_volume_contributed_by_path_volume;  // pure volume, not consider PCE
+
+									}
+								}
+
+							}
+
+						}
+					}
+
+
+		}
+
+		// calcualte deviation for each measurement type
+		for (l = 0; l < number_of_links; l++)
+		{
+			g_link_vector[l].CalculateTD_VDFunction();
+
+			if (g_link_vector[l].obs_count >= 1)  // with data
+			{
+				
+				int tau = 0;
+				g_link_vector[l].est_count_dev = g_link_vector[l].flow_volume_per_period[tau] - g_link_vector[l].obs_count;
+			
+			
+			}
+		}
+
+
+		for (int o = 0; o < g_zone_vector.size(); o++)  // o
+		{
+			if (g_zone_vector[o].obs_attraction >= 1)  // with observation
+			{
+				g_zone_vector[o].est_attraction_dev = g_zone_vector[o].est_attraction - g_zone_vector[o].obs_attraction;
+
+			}
+
+			if (g_zone_vector[o].obs_production >= 1)  // with observation
+			{
+				g_zone_vector[o].est_production_dev = g_zone_vector[o].est_production - g_zone_vector[o].obs_production;
+
+			}
+			// print out the deviatio as log
+		}
+}
+
+
+
+void update_link_travel_time_and_measurement_error()
+{
+	if (assignment.assignment_mode == 2)
+	{   //compute the time-dependent delay from simulation  
+		//for (int l = 0; l < g_link_vector.size(); l++)
+		//{ 
+		//	float volume = assignment.m_LinkCumulativeDeparture[l][assignment.g_number_of_simulation_intervals - 1];  // link flow rates
+		//	float waiting_time_count = 0;
+
+		//for (int tt = 0; tt < assignment.g_number_of_simulation_intervals; tt++)
+		//{
+		//	waiting_time_count += assignment.m_LinkTDWaitingTime[l][tt];   // tally total waiting cou
+		//}
+
+		//for (int tau = 0; tau < assignment.g_DemandPeriodVector.size(); tau++)
+		//{
+		//	float travel_time = g_link_vector[l].free_flow_travel_time_in_min  + waiting_time_count* number_of_seconds_per_interval / max(1, volume) / 60;
+		//	g_link_vector[l].travel_time_per_period[tau] = travel_time;
+
+		//}
+	}
+
+#pragma omp parallel for
+	for (int l = 0; l < g_link_vector.size(); l++)
+	{
+		int tau;
+		// step 1: travel time based on VDF
+		g_link_vector[l].CalculateTD_VDFunction();
+
+
+		for (tau = 0; tau < assignment.g_DemandPeriodVector.size(); tau++)
+		{
+			if (g_debugging_flag >= 2 && assignment.g_pFileDebugLog != NULL)
+				fprintf(assignment.g_pFileDebugLog, "Update link resource: link %d->%d: tau = %d, volume = %.2f, travel time = %.2f, resource = %.3f\n",
+
+					g_node_vector[g_link_vector[l].from_node_seq_no].node_id,
+					g_node_vector[g_link_vector[l].to_node_seq_no].node_id,
+					tau,
+					g_link_vector[l].flow_volume_per_period[tau],
+					g_link_vector[l].travel_time_per_period[tau],
+					g_link_vector[l].resource_per_period[tau]);
+
+
+			for (int at = 0; at < assignment.g_AgentTypeVector.size(); at++)
+			{
+
+				float PCE_agent_type = assignment.g_AgentTypeVector[at].PCE_link_type_map[g_link_vector[l].link_type];
+
+				// step 2: marginal cost for SO
+				g_link_vector[l].calculate_marginal_cost_for_agent_type(tau, at, PCE_agent_type);
+
+				float CRU_agent_type = assignment.g_AgentTypeVector[at].CRU_link_type_map[g_link_vector[l].link_type];
+
+				// setp 3: penalty for resource constraints 
+				g_link_vector[l].calculate_penalty_for_agent_type(tau, at, CRU_agent_type);
+
+
+				if (g_debugging_flag >= 2 && assignment.assignment_mode >= 2 && assignment.g_pFileDebugLog != NULL)
+					fprintf(assignment.g_pFileDebugLog, "Update link cost: link %d->%d: tau = %d, at = %d, travel_marginal =  %.3f; penalty derivative = %.3f\n",
+
+						g_node_vector[g_link_vector[l].from_node_seq_no].node_id,
+						g_node_vector[g_link_vector[l].to_node_seq_no].node_id,
+						tau, at,
+						g_link_vector[l].travel_marginal_cost_per_period[tau][at],
+						g_link_vector[l].exterior_penalty_derivative_per_period[tau][at]);
+
+			}
+		}
+	}
+}
+
 void g_reset_and_update_Gauss_Seidel_link_volume_and_cost(int number_of_links, int at_current, int o_current, int d_current, int tau_current, int ai_current)
 {
 	for (int l = 0; l < number_of_links; l++)
@@ -5637,6 +5860,11 @@ double network_assignment(int iteration_number, int assignment_mode, int column_
 		assignment.STTrafficSimulation();
 	}
 
+	if (assignment.assignment_mode == 3)
+	{
+		assignment.Demand_ODME();
+	}
+
 	end_t = clock();
 	total_t = (end_t - start_t);
 	cout << "Done!" << endl;
@@ -6060,4 +6288,197 @@ void Assignment::STTrafficSimulation()
 
 			} // conditions
 		}  // departure time events
+}
+
+void Assignment::Demand_ODME()
+{
+	// step 1: read measurement.csv
+	CCSVParser parser_measurement;
+
+	if (parser_measurement.OpenCSVFile("measurement.csv", true))
+	{
+
+
+		while (parser_measurement.ReadRecord())  // if this line contains [] mark, then we will also read field headers.
+		{
+			string measurement_type;
+			parser_measurement.GetValueByFieldName("measurement_type", measurement_type);
+
+			if (measurement_type == "link")
+			{
+				int from_node_id;
+				int to_node_id;
+				if (parser_measurement.GetValueByFieldName("from_node_id", from_node_id) == false)
+					continue;
+				if (parser_measurement.GetValueByFieldName("to_node_id", to_node_id) == false)
+					continue;
+
+				// add the to node id into the outbound (adjacent) node list
+				if (g_internal_node_to_seq_no_map.find(from_node_id) == assignment.g_internal_node_to_seq_no_map.end())
+				{
+					cout << "Error: from_node_id " << from_node_id << " in file measurement.csv is not defined in node.csv." << endl;
+
+					continue; //has not been defined
+				}
+				if (g_internal_node_to_seq_no_map.find(to_node_id) == assignment.g_internal_node_to_seq_no_map.end())
+				{
+					cout << "Error: to_node_id " << to_node_id << " in file measurement.csv is not defined in node.csv." << endl;
+					continue; //has not been defined
+				}
+
+				float count = -1;
+				parser_measurement.GetValueByFieldName("count", count);
+
+
+				int internal_from_node_seq_no = assignment.g_internal_node_to_seq_no_map[from_node_id];  // map external node number to internal node seq no. 
+				int internal_to_node_seq_no = assignment.g_internal_node_to_seq_no_map[to_node_id];
+
+				if (g_node_vector[internal_from_node_seq_no].m_to_node_2_link_seq_no_map.find(internal_to_node_seq_no) != g_node_vector[internal_from_node_seq_no].m_to_node_2_link_seq_no_map.end())
+				{
+					int link_seq_no = g_node_vector[internal_from_node_seq_no].m_to_node_2_link_seq_no_map[internal_to_node_seq_no];
+
+					g_link_vector[link_seq_no].obs_count = count;
+				}
+				else
+				{
+					cout << "Error: Link " << from_node_id << "->" << to_node_id << " in file service_arc.csv is not defined in link.csv." << endl;
+					continue;
+				}
+			}
+			if (measurement_type == "p")
+			{
+				int o_zone_id;
+
+				if (parser_measurement.GetValueByFieldName("o_zone_id", o_zone_id) == false)
+					continue;
+
+				if (g_zoneid_to_zone_seq_no_mapping.find(o_zone_id) != g_zoneid_to_zone_seq_no_mapping.end())
+				{
+					float obs_production = -1;
+					if (parser_measurement.GetValueByFieldName("count", obs_production) != false)
+					{
+						g_zone_vector[g_zoneid_to_zone_seq_no_mapping[o_zone_id]].obs_production = obs_production;
+					}
+				}
+			}
+
+			if (measurement_type == "a")
+			{
+				int o_zone_id;
+
+				if (parser_measurement.GetValueByFieldName("d_zone_id", o_zone_id) == false)
+					continue;
+
+				if (g_zoneid_to_zone_seq_no_mapping.find(o_zone_id) != g_zoneid_to_zone_seq_no_mapping.end())
+				{
+					float obs_attraction = -1;
+					if (parser_measurement.GetValueByFieldName("count", obs_attraction) != false)
+					{
+						g_zone_vector[g_zoneid_to_zone_seq_no_mapping[o_zone_id]].obs_attraction = obs_attraction;
+					}
+				}
+			}
+		}
+
+		parser_measurement.CloseCSVFile();
+	}
+	// Pi
+	// Dj
+	// link l
+
+	// step 2: loop for adjusting OD demand
+	int OD_updating_iterations;
+	for (int s = 0; s < OD_updating_iterations; s++)
+	{
+		cout << "column pool updating: no.  " << s << endl;
+
+		float total_gap = 0;
+		float total_relative_gap = 0;
+		float total_gap_count = 0;
+		//step 2.1
+		g_reset_and_update_link_volume_based_on_ODME_columns(g_link_vector.size());  // we can have a recursive formulat to reupdate the current link volume by a factor of k/(k+1), and use the newly generated path flow to add the additional 1/(k+1)
+		//step 2.2: based on newly calculated path volumn, update volume based travel time, and update volume based measurement error
+		// step 0
+
+		//step 3: calculate shortest path at inner iteration of column flow updating
+#pragma omp parallel for
+		for (int o = 0; o < g_zone_vector.size(); o++)  // o
+		{
+			int d, at, tau;
+			CColumnVector* p_column;
+			std::map<int, CColumnPath>::iterator it, it_begin, it_end;
+			int column_vector_size;
+			int path_seq_count = 0;
+
+			float path_toll = 0;
+			float path_gradient_cost = 0;
+			float path_distance = 0;
+			float path_travel_time = 0;
+			int nl;
+			int link_seq_no;
+
+			float link_travel_time;
+			float total_switched_out_path_volume = 0;
+
+			float step_size = 0;
+			float previous_path_volume = 0;
+
+			for (d = 0; d < g_zone_vector.size(); d++) //d
+				for (at = 0; at < assignment.g_AgentTypeVector.size(); at++)  //m
+					for (tau = 0; tau < assignment.g_DemandPeriodVector.size(); tau++)  //tau
+					{
+						p_column = &(assignment.g_column_pool[o][d][at][tau]);
+						if (p_column->od_volume > 0)
+						{
+							column_vector_size = p_column->path_node_sequence_map.size();
+
+							path_seq_count = 0;
+
+							it_begin = p_column->path_node_sequence_map.begin();
+							it_end = p_column->path_node_sequence_map.end();
+
+							for (it = it_begin; it != it_end; it++) // for each k 
+							{
+								path_gradient_cost = 0;
+								path_distance = 0;
+								path_travel_time = 0;
+
+								// step 3.1 origin production flow gradient 
+								path_gradient_cost -= g_zone_vector[o].est_production_dev;
+
+								// step 3.2 destination attraction flow gradient 
+
+								path_gradient_cost -= g_zone_vector[d].est_attraction_dev;
+
+								for (nl = 0; nl < it->second.m_link_size; nl++)  // arc a
+								{
+									// step 3.3 link flow gradient 
+
+									link_seq_no = it->second.path_link_vector[nl];
+
+									if(g_link_vector[link_seq_no].obs_count>=1)
+									{ 
+										path_gradient_cost -= g_link_vector[link_seq_no].est_count_dev;
+									}
+								}
+
+
+								it->second.path_gradient_cost = path_gradient_cost;
+
+								step_size = 1.0 / (s + 2);  
+								it->second.path_volume = max(1, it->second.path_volume - step_size * it->second.path_gradient_cost);
+
+							}
+
+
+						}
+
+
+					}
+
+			}
+		}
+		//if (assignment.g_pFileDebugLog != NULL)
+		//	fprintf(assignment.g_pFileDebugLog, "CU: iteration %d: total_gap=, %f,total_relative_gap=, %f,\n", s, total_gap, total_gap / max(0.0001, total_gap_count));
+
 }
