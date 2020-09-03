@@ -16,45 +16,48 @@ extern double SignalAPI(int iteration_number, int MainSigModual_mode, int signal
 
 int main(int argc, TCHAR* argv[], TCHAR* envp[])
 {
-	int iteration_number = 2;
-	int column_updating_iterations = 0;
-
+	int iteration_number = 20;
+	int column_updating_iterations = 40;
 	int signal_updating_iterations = -1;
-
 	int signal_updating_output = 0;
-
 	int assignment_mode = 1;  // generate link performance and agent file
 
 	CCSVParser parser_settings;
+	parser_settings.IsFirstLineHeader = false;
 
-	if (parser_settings.OpenCSVFile("settings.csv", true))
+	if (parser_settings.OpenCSVFile("settings.csv", false))
 	{
-
-		while (parser_settings.ReadRecord())
+			while (parser_settings.ReadRecord_Section())
 		{
-			string field;
+			if (parser_settings.SectionName == "[assignment]")
+			{
+			
 			int value_int;
+			string assignment_mode_str;
+			parser_settings.GetValueByFieldName("number_of_iterations", iteration_number,true,true);
+			parser_settings.GetValueByFieldName("assignment_mode", assignment_mode_str);
+			
+			if (assignment_mode_str == "ue")
+				assignment_mode = 1;
 
-			parser_settings.GetValueByFieldName("field", field);
-			parser_settings.GetValueByFieldName("value", value_int);
+			if (assignment_mode_str == "dta")
+				assignment_mode = 2;
 
-			if (field == "number_of_iterations")
-				iteration_number = value_int;
+			if (assignment_mode_str == "odme")
+				assignment_mode = 3;
 
-			if (field == "assignment_mode")
-				assignment_mode = value_int;
+			
+			parser_settings.GetValueByFieldName("column_updating_iterations", column_updating_iterations, true, true);
 
-			if (field == "column_updating_iterations")
-				column_updating_iterations = value_int;
+			parser_settings.GetValueByFieldName("signal_updating_iterations", signal_updating_iterations, false, false);
+			parser_settings.GetValueByFieldName("signal_updating_output", signal_updating_output, false, true);
 
-			if (field == "signal_updating_iterations")
-				signal_updating_iterations = value_int;
 
-			if (field == "signal_updating_output")
-				signal_updating_output = value_int;
-
+			break;  // just one record
+			}
 		}
 	}
+
 
 	network_assignment(iteration_number, assignment_mode, column_updating_iterations, signal_updating_iterations);  // obtain initial flow values
 }

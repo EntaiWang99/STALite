@@ -54,7 +54,7 @@ public:
 		SYSTEMTIME st;
 		GetLocalTime(&st);
 		g_pFileDebugLog = fopen("log.txt", "at");
-		fprintf(g_pFileDebugLog, "Logging Time: %d/%d/%d_%d:%d:%d:%d---------------------------------------¡ý\n",st.wYear,st.wMonth,st.wDay, st.wHour, st.wMinute, st.wSecond, st.wMilliseconds);
+		fprintf(g_pFileDebugLog, "Logging Time: %d/%d/%d_%d:%d:%d:%d---------------------------------------\n",st.wYear,st.wMonth,st.wDay, st.wHour, st.wMinute, st.wSecond, st.wMilliseconds);
 		fclose(g_pFileDebugLog);
 		messageType_int_to_string[0] = "MSG";//message
 		messageType_int_to_string[1] = "OUT";//output
@@ -1273,69 +1273,10 @@ void g_sig_ReadInputData(CMainSigModual& MainSigModual)
 	if (MainSigModual.b_with_loaded_data == true)
 		return;
 
-	MainSigModual.g_LoadingStartTimeInMin = 99999;
-	MainSigModual.g_LoadingEndTimeInMin = 0;
-
 	//step 0:read demand period file
-	CCSVParser parser_demand_period;
-	MainSigModual.WriteLog(0, "Step 1: Reading file demand_period.csv...", 1);
-	//g_LogFile << "Step 7.1: Reading file input_agent_type.csv..." << g_GetUsedMemoryDataInMB() << endl;
-	if (!parser_demand_period.OpenCSVFile("demand_period.csv", true))
-	{
-		MainSigModual.WriteLog(2, "demand_period.csv cannot be opened.", 1);
+	MainSigModual.g_LoadingStartTimeInMin = assignment.g_LoadingStartTimeInMin;
+	MainSigModual.g_LoadingEndTimeInMin = assignment.g_LoadingEndTimeInMin;
 
-		g_ProgramStop();
-
-	}
-
-	if (parser_demand_period.inFile.is_open() || parser_demand_period.OpenCSVFile("demand_period.csv", true))
-	{
-
-		while (parser_demand_period.ReadRecord())
-		{
-			int demand_period_id;
-
-			if (parser_demand_period.GetValueByFieldName("demand_period_id", demand_period_id) == false)
-			{
-				MainSigModual.WriteLog(2, "Error: Field demand_period_id in file demand_period cannot be read.", 1);
-				g_ProgramStop();
-				break;
-			}
-
-
-			vector<float> global_minute_vector;
-			string time_period;
-			if (parser_demand_period.GetValueByFieldName("time_period", time_period) == false)
-			{
-				MainSigModual.WriteLog(2, "Error: Field time_period in file demand_period cannot be read.", 1);
-
-				g_ProgramStop();
-				break;
-			}
-
-			vector<string> input_string;
-			input_string.push_back(time_period);
-			//input_string includes the start and end time of a time period with hhmm format
-			global_minute_vector = g_time_parser(input_string); //global_minute_vector incldue the starting and ending time
-			if (global_minute_vector.size() == 2)
-			{
-
-
-				if (global_minute_vector[0] < MainSigModual.g_LoadingStartTimeInMin)
-					MainSigModual.g_LoadingStartTimeInMin = global_minute_vector[0];
-
-				if (global_minute_vector[1] > MainSigModual.g_LoadingEndTimeInMin)
-					MainSigModual.g_LoadingEndTimeInMin = global_minute_vector[1];
-
-
-
-				//cout << global_minute_vector[0] << endl;
-				//cout << global_minute_vector[1] << endl;
-			}
-
-		}
-		parser_demand_period.CloseCSVFile();
-	}
 
 	MainSigModual.g_number_of_nodes = 0;
 	MainSigModual.g_number_of_links = 0;  // initialize  the counter to 0
@@ -1442,7 +1383,6 @@ void g_sig_ReadInputData(CMainSigModual& MainSigModual)
 
 
 
-			parser_link.GetValueByFieldName("facility_type", link.type, true, false);
 			parser_link.GetValueByFieldName("link_type", link.link_type);
 
 

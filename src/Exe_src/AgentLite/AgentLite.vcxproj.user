@@ -3,13 +3,14 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LocalDebuggerWorkingDirectory>C:\SourceCode\STALite_sourcecode\STALite_sourcecode\dataset\1_two_corridor</LocalDebuggerWorkingDirectory>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+    <LocalDebuggerAttach>false</LocalDebuggerAttach>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LocalDebuggerWorkingDirectory>C:\GitHub\learning-transportation-engineering-and-traffic-analysis\lesson_1_learning_NeXTA_GMNS\Tempe_ASU_network</LocalDebuggerWorkingDirectory>
+    <LocalDebuggerWorkingDirectory>C:\GitHub\STALite\dataset\7_3_corridor</LocalDebuggerWorkingDirectory>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LocalDebuggerWorkingDirectory>C:\temp\mesonet_0818\mesonet_0818</LocalDebuggerWorkingDirectory>
+    <LocalDebuggerWorkingDirectory>C:\DTAdataset\Tempe Network_V2</LocalDebuggerWorkingDirectory>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
